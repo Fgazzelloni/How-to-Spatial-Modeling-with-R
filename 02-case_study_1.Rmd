@@ -1,0 +1,234 @@
+# Case study 1
+
+
+```{r intro-3, message=FALSE, warning=FALSE, paged.print=FALSE}
+## Load the libraries we will be using
+library(tidyverse)
+library(oregonfrogs)
+```
+
+Hear Rana Pretiosa: https://amphibiaweb.org/species/5131
+
+More about Rana pretiosa:
+
+- [species](https://www.gbif.org/species/2426776)
+- https://berkeleymapper.berkeley.edu/index.html?tabfile=https://amphibiaweb.org/tmpfiles/379355&configfile=https://amphibiaweb.org/tmpfiles/bm_config_478347.xml&ViewResults=tab&sourcename=AmphibiaWeb+Species+Map:+Rana+pretiosa&amphibiaweb=true&label=1&opacity=0.50&pointDisplay=pointMarkers
+
+- https://www.gbif.org/dataset/8935e64a-f762-11e1-a439-00145eb45e9a
+
+Lake and Reservoir in Deschutes County in Oregon
+- [map data](https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore)
+
+
+```{r intro-4}
+oregonfrogs%>%head
+```
+
+A common projection is the Universal Transverse Mercator (UTM) which preserves local angles and shapes. The UTM system divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^1]
+
+[^1]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
+
+
+```{r intro-5}
+# Build a tibble with the geo-location information
+frogs_coord <- oregonfrogs %>%
+  select(UTME_83, UTMN_83)
+
+# Tranform it to lat and long
+frogs_coord <- 
+  frogs_coord %>% 
+  # transform to simple features as geometry
+  sf::st_as_sf(coords = c(1,2), 
+               crs = "+proj=utm +zone=10") %>%
+  # utm tranformation to longlat
+  sf::st_transform(crs = "+proj=longlat +datum=WGS84")  %>%
+  tibble()
+```
+
+All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^1]
+
+[^1]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
+
+
+```{r intro-6}
+frogs_location <- tibble(Detection = oregonfrogs$Detection,
+                         Subsite = oregonfrogs$Subsite,
+                         Frequency = oregonfrogs$Frequency,
+                         lat = unlist(map(frogs_coord$geometry, 2)),
+                         long = unlist(map(frogs_coord$geometry, 1)))
+
+frogs_location%>%head
+```
+
+
+
+## Look at Data
+
+Crane Prairie Reservoir is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^1]
+
+[^1]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
+
+```{r intro-7, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplot(data = frogs_location, aes(x=long,y=lat))+
+  geom_point() +
+  geom_smooth(method = "loess") +
+  theme_bw()
+```
+
+
+## Get Started
+
+Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc
+
+
+```{r intro-8, cache=T}
+library(OpenStreetMap)
+map <- openmap(c(43.764375,-121.824775),
+               c(43.814821,-121.764923))
+```
+
+
+
+## Make a Plot
+
+A first level map can be mad with the `plot()` function.
+
+```{r intro-9}
+OpenStreetMap::plot.OpenStreetMap(map)
+#plot(map)
+```
+
+
+
+```{r intro-11, cache=T}
+map2 <- openmap(c(43.764375,-121.824775),
+               c(43.814821,-121.764923),
+               mergeTiles = TRUE)
+wider_map <- openproj(map2)
+
+
+base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + 
+  geom_point(data = frogs_location,
+             aes(x = long, y = lat), 
+             shape=21,stroke=0.2, size =  4,
+             color="grey40") +
+  xlab("Longitude (°E)") + ylab("Latitude (°S)")
+
+base_map
+```
+
+
+## Time as coordinate
+
+```{r intro-12}
+oregonfrogs%>%
+  mutate(SurveyDate=as.Date(SurveyDate,"%m/%d/%Y"))%>%
+  arrange(SurveyDate)%>%
+  count(SurveyDate,Ordinal)%>%
+  head
+```
+
+
+```{r intro-13}
+library(purrr)
+frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
+                            geometry=frogs_coord$geometry) %>%
+  mutate(time = as.Date("2018-01-01") + ReportedDay,
+         month=lubridate::month(time))
+
+
+ggplot(frogs_location_tm) + 
+  geom_sf(aes(col = factor(month),geometry=geometry),
+          size=5, alpha=0.5) +
+  scale_y_continuous(limits = c(43.788,43.815))+
+  coord_sf() + # ylim = c(43.785,43.815)
+  theme_bw()
+```
+
+Add this to the main map
+
+```{r intro-14}
+base_map +
+   geom_sf(data = frogs_location_tm,
+           mapping = aes(col = factor(month),geometry=geometry),
+           inherit.aes = F)
+```
+
+
+Then, see the difference in time.
+```{r intro-15}
+base_map+
+  geom_sf(data = frogs_location_tm,
+          aes(col = factor(month), geometry=geometry),
+          inherit.aes = F) +
+  facet_wrap(~cut(time, "1 months")) + 
+  theme_void()
+```
+
+
+
+## More Graph Tables, Make Labels, Add Notes
+
+```{r intro-16}
+oregonfrogs %>%
+  ggplot() +
+  geom_point(aes(x=UTME_83,y=UTMN_83,color=factor(Frequency)),
+             size=4,alpha=0.5)
+  facet_wrap(~Frequency)
+```
+
+## Make a grid
+```{r 02-case-study-1-1}
+require(tidyverse)
+require(oregonfrogs)
+require(sf)
+
+# make a grid
+frogs_coord <- tibble(oregonfrogs$UTME_83, oregonfrogs$UTMN_83,
+                      oregonfrogs$Frequency)
+
+points <- sf::st_as_sf(x = frogs_coord, 
+                       coords = c(1,2), 
+                       crs = "+proj=utm +zone=10") %>%
+  sf::st_transform(frogs_coord, 
+                   crs = "+proj=longlat +datum=WGS84")  
+
+grid = sf::st_make_grid(
+  sf::st_as_sfc(sf::st_bbox(points)),
+  what = "centers",
+  cellsize = .002, 
+  square = F)
+
+
+ggplot()+
+  geom_sf(data=grid,size=0.3)+
+  geom_sf(data=points)+
+  coord_sf()+
+  ggthemes::theme_map()
+
+
+```
+
+## Work with Models
+
+```{r 02-case-study-1-2}
+library(tidymodels)
+tidymodels_prefer()
+library(spatialsample)
+# help(spatialsample)
+```
+
+
+```{r 02-case-study-1-3}
+oregonfrogs %>%
+  select_if(is.character)%>%names
+```
+
+```{r intro-17}
+oregonfrogs %>%
+  select_if(is.numeric)%>%
+  pairs()
+```
+
+
+---

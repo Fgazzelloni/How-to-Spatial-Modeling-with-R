@@ -1,0 +1,23 @@
+Package: How-to-Spatial-Modeling-with-R
+Type: Book
+Title: Spatial Model with R
+Version: 0.0.1
+Authors@R: c(
+  person(
+    "Federica Gazzelloni",
+    email = "fede.gazzelloni@gmail.com",
+    role = c("aut", "cre", "cph")
+  )
+  )
+URL: https://fgazzelloni.github.io/How-to-Spatial-Modeling-with-R, https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R
+Imports: 
+    bookdown,
+    OpenStreetMap,
+    oregonfrogs,
+    purrr,
+    sf,
+    SpatialEpi,
+    spatialsample,
+    tidymodels,
+    tidyverse
+    

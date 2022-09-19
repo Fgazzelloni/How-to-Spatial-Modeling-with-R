@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+_book
+_bookdown_files
+How-to-Spatial-Modeling-with-R.Rmd
+How-to-Spatial-Modeling-with-R.html
+How-to-Spatial-Modeling-with-R.knit.md
+How-to-Spatial-Modeling-with-R_files
+libs

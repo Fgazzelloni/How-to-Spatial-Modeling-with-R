@@ -1,0 +1,55 @@
+--- 
+title: "Spatial model with R"
+author: "Federica Gazzelloni"
+date: "2022 September 19"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+#bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: fgazzelloni/How-to-Spatial-Modeling-with-R
+description: "This is an ice breaking activity to spatial model with R."
+---
+
+# Prerequisites
+
+
+This ice-breaking activity to spatial model with R includes two case studies:
+
+- Oregon spotted frog habitat study
+- A type of cancer spread in Scotland
+
+
+It is required a good manner of RStudio and a little practice in making plots with {ggplot2}. 
+
+To set up install the following packages:
+
+```{r setup, include=F,	message = FALSE,warning = FALSE}
+
+knitr::opts_chunk$set(
+	eval = FALSE,
+	fig.align = "center",
+	fig.height = 5,
+	fig.width = 8,
+	message = FALSE,
+	warning = FALSE,
+	comment = "",
+	include = FALSE
+)
+```
+
+
+If these packages are missing in your RStudio they would need to be installed.
+
+```{r install, eval=FALSE, include=TRUE}
+
+my_packages <- c("tidyverse", "purrr",
+                "spdep","sf","OpenStreetMap",
+                 "oregonfrogs","SpatialEpi")
+
+install.packages(my_packages, repos = "http://cran.rstudio.com")
+```
+
+The GitHub repository for this workshop is here: https://github.com/Fgazzelloni/How-to-Spatial-Modeling-with-R
+
