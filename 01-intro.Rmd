@@ -81,6 +81,11 @@ A spatial model is a representation of various social and natural processes:
 
 So, to be more explicit, spatial modeling combines spatial analysis and predictions. 
 
+```{r intro-2, echo=FALSE, fig.align='center',fig.cap="Credits:https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116"}
+knitr::include_graphics("images/framework.png")
+```
+
+
 **Krinking** is even the term that defines the best model performance, and so, the best prediction. This term is considered as synonym of *prediction* in classical data forecasting model techniques.
 
 ---
