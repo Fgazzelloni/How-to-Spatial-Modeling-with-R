@@ -28,14 +28,13 @@ To set up install the following packages:
 ```{r setup, include=F,	message = FALSE,warning = FALSE}
 
 knitr::opts_chunk$set(
-	eval = FALSE,
+  include=TRUE,
+	#eval = FALSE,
 	fig.align = "center",
-	fig.height = 5,
-	fig.width = 8,
-	message = FALSE,
-	warning = FALSE,
-	comment = "",
-	include = FALSE
+  message=FALSE, 
+  warning=FALSE, 
+  paged.print=FALSE,
+	comment = ""
 )
 ```
 
@@ -43,10 +42,10 @@ knitr::opts_chunk$set(
 If these packages are missing in your RStudio they would need to be installed.
 
 ```{r install, eval=FALSE, include=TRUE}
-
-my_packages <- c("tidyverse", "purrr",
+my_packages <- c("dplyr", "ggplot2","purrr",
                 "spdep","sf","OpenStreetMap",
-                 "oregonfrogs","SpatialEpi")
+                "spocc","dismo",
+                "oregonfrogs","SpatialEpi")
 
 install.packages(my_packages, repos = "http://cran.rstudio.com")
 ```

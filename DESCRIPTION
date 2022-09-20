@@ -12,12 +12,11 @@ Authors@R: c(
 URL: https://fgazzelloni.github.io/How-to-Spatial-Modeling-with-R, https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R
 Imports: 
     bookdown,
+    dismo,
     OpenStreetMap,
     oregonfrogs,
     purrr,
     sf,
     SpatialEpi,
-    spatialsample,
     spocc,
-    tidymodels,
     tidyverse

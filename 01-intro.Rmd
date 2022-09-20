@@ -36,7 +36,7 @@ As said, one more important distinction is that geographic information systems (
 [^1]: [Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)
 
 
-```{r intro-1, echo=FALSE,fig.dim="50%",fig.align='center', fig.cap="Credits:[Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)"}
+```{r intro-1, echo=FALSE,fig.align='center', fig.cap="Credits:[Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)"}
 knitr::include_graphics("images/layers.jpg")
 ```
 
