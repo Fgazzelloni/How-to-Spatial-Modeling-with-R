@@ -1,5 +1,10 @@
 # Conclusion
 
-Practice is gold.
+This is the end of our tutorial on how to spatial modeling with R. 
+
+The most interesting part of this overall introduction is how to manage different packages dealing with both raster and vector data. 
+We now know how to deal with different type of data for making a map, and are aware of the model adjustments that are required for making a spatial model. Important to mention are the weights and the distances, these two factors are very important for influencing the results of a model predictor.
+
+Good luck with your maps! An I look forward to seeing your future Twitter posts for the next #30DayMapChallenge ediction 2022 which starts on the first of October. 
 
 

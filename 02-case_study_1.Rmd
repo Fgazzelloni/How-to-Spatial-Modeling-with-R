@@ -1,35 +1,108 @@
-# Case study 1
+# Case study: Rana Pretiosa
 
 
-```{r intro-3, message=FALSE, warning=FALSE, paged.print=FALSE}
-## Load the libraries we will be using
+The first case study is about animal ecology, we will be looking at a frog particular specie **Rana Pretiosa**, scientific name **Rana pretiosa Baird & Girard, 1853**, and use some interesting data from Oregon as well as downloading more data from **GBIF | Global Biodiversity Information Facility**.
+
+The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.
+
+### Get started making a map!
+
+The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 library(tidyverse)
-library(oregonfrogs)
+library(spocc)
+
+
+do_gbif <- occ("Rana pretiosa Baird & Girard, 1853",
+               from = "gbif",
+               limit = 1000,
+               has_coords = TRUE
+               )
+
+do_gbif <- data.frame(do_gbif$gbif$data)
+
+
+states<- map_data("state")
+oregon <- states %>% filter(region=="oregon")
+
+ggplot(states, aes(long,lat,group=region))+
+  geom_polygon(color="grey",fill=NA) +
+  geom_polygon(data = oregon, inherit.aes = T, color="pink",fill="pink") +
+  geom_point(data=do_gbif,
+             aes(Rana_pretiosa_Baird_._Girard._1853.longitude,
+                 Rana_pretiosa_Baird_._Girard._1853.latitude),
+             inherit.aes = F, alpha=0.5,size=0.5)+
+  coord_quickmap() +
+  theme_bw()
 ```
 
-Hear Rana Pretiosa: https://amphibiaweb.org/species/5131
 
-More about Rana pretiosa:
+Once visualized, we will be making some assumptions about their movement and habitat use based on the results of a study by Dr. Michael J Adams from the Forest and Rangeland Ecosystem Science Center in Oregon.
 
-- [species](https://www.gbif.org/species/2426776)
-- https://berkeleymapper.berkeley.edu/index.html?tabfile=https://amphibiaweb.org/tmpfiles/379355&configfile=https://amphibiaweb.org/tmpfiles/bm_config_478347.xml&ViewResults=tab&sourcename=AmphibiaWeb+Species+Map:+Rana+pretiosa&amphibiaweb=true&label=1&opacity=0.50&pointDisplay=pointMarkers
-
-- https://www.gbif.org/dataset/8935e64a-f762-11e1-a439-00145eb45e9a
-
-Lake and Reservoir in Deschutes County in Oregon
-- [map data](https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore)
+More information about this study can be found here: https://doi.org/10.1670/20-060
 
 
-```{r intro-4}
+The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02
+
+Or, you can install the package from github: https://github.com/Fgazzelloni/oregonfrogs
+
+```{r include=FALSE,fig.dim="30%",fig.align='center',fig.cap="Credits: oregonfrog package"}
+knitr::include_graphics("images/oregonfrogs_logo.jpeg")
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=T, paged.print=FALSE}
+# install.packages("remotes")
+remotes::install_github("fgazzelloni/oregonfrogs")
+```
+
+
+One of the most important step of spatial modeling, and modeling in general, is to have a good knowledge of the argument. So, the more we know about **Rana Pretiosa** the better!
+
+Let's hear **Rana Pretiosa** sound: https://amphibiaweb.org/species/5131
+
+More information about Rana pretiosa can be found here:
+
+- [GBIF](https://www.gbif.org/species/2426776)
+
+In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^1]
+
+[^1]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
+
+An interesting map of the lake with related data can be found here: [Lake and Reservoir in Deschutes County in Oregon map data](https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore)
+
+
+We will require more packages while performing our analysis. 
+
+```{r intro-3, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(oregonfrogs)  
+```
+
+Let's have a look at the data, we have 311 observations and 16 variables which include the habitat type, the date, the radio frequency, and other variables such as gender, type of water, presence of beavers, and if they are captured, located or just visualized.
+
+So, many interesting hypothesis can be done about their movements habitat use.
+
+```{r intro-4, comment=""}
 oregonfrogs%>%head
 ```
 
-A common projection is the Universal Transverse Mercator (UTM) which preserves local angles and shapes. The UTM system divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^1]
+
+One more interesting information is about the location, in this case a **UTM distance** (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location. 
+
+The **Universal Transverse Mercator (UTM)** is a common projection is  which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^1]
 
 [^1]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
+Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into **longitude** and **latitude**. For doing this we need the {sf} package by Edzer Pebesma.
 
-```{r intro-5}
+Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting. 
+
+To transform the UTM values into long and lat we use the `sf::st_as_sf()` function with some arguments which are compulsory for what we do.
+
+We need to specify where the coordinates are located in our set, and set a **CRS** or coordinate reference system information. 
+
+
+```{r intro-5, comment=""}
 # Build a tibble with the geo-location information
 frogs_coord <- oregonfrogs %>%
   select(UTME_83, UTMN_83)
@@ -43,6 +116,15 @@ frogs_coord <-
   # utm tranformation to longlat
   sf::st_transform(crs = "+proj=longlat +datum=WGS84")  %>%
   tibble()
+
+frogs_coord%>%head
+```
+
+As you can see the first projection points to *utm* as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.
+
+
+```{r include=FALSE,fig.dim="50%",fig.align='center',fig.cap="Credits: https://epsg.io/4326"}
+knitr::include_graphics("images/epsg_4326.png")
 ```
 
 All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^1]
@@ -50,7 +132,7 @@ All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^1]
 [^1]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
 
-```{r intro-6}
+```{r intro-6,comment=""}
 frogs_location <- tibble(Detection = oregonfrogs$Detection,
                          Subsite = oregonfrogs$Subsite,
                          Frequency = oregonfrogs$Frequency,
@@ -61,12 +143,9 @@ frogs_location%>%head
 ```
 
 
+## Look at oregonfrogs data
 
-## Look at Data
-
-Crane Prairie Reservoir is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^1]
-
-[^1]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
+Let's have a first sight at the data based on location. The first thing to notice is that points (frogs) are aligned following some sort of linearity. But, what is the difference from other data, is that now these points are following an environment. Let's have a look at it.
 
 ```{r intro-7, message=FALSE, warning=FALSE, paged.print=FALSE}
 ggplot(data = frogs_location, aes(x=long,y=lat))+
@@ -76,36 +155,28 @@ ggplot(data = frogs_location, aes(x=long,y=lat))+
 ```
 
 
-## Get Started
+### Let's map the lake! 
+
+How do we set the map for the location of our **Rana Pretiosa** in the Crane Prairie Reservoir?
+
+In the study page we can find the **BOX**, the box is the four corner reference points, bounding our interested area. 
 
 Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc
 
+Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
-```{r intro-8, cache=T}
+The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function.
+
+```{r intro-8, message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
 library(OpenStreetMap)
-map <- openmap(c(43.764375,-121.824775),
-               c(43.814821,-121.764923))
-```
-
-
-
-## Make a Plot
-
-A first level map can be mad with the `plot()` function.
-
-```{r intro-9}
+map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
 OpenStreetMap::plot.OpenStreetMap(map)
-#plot(map)
 ```
 
-
+In this map we project the points location of the frogs.
 
 ```{r intro-11, cache=T}
-map2 <- openmap(c(43.764375,-121.824775),
-               c(43.814821,-121.764923),
-               mergeTiles = TRUE)
-wider_map <- openproj(map2)
-
+wider_map <- openproj(map)
 
 base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + 
   geom_point(data = frogs_location,
@@ -120,16 +191,9 @@ base_map
 
 ## Time as coordinate
 
-```{r intro-12}
-oregonfrogs%>%
-  mutate(SurveyDate=as.Date(SurveyDate,"%m/%d/%Y"))%>%
-  arrange(SurveyDate)%>%
-  count(SurveyDate,Ordinal)%>%
-  head
-```
+With a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.
 
-
-```{r intro-13}
+```{r intro-13, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(purrr)
 frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
                             geometry=frogs_coord$geometry) %>%
@@ -137,26 +201,6 @@ frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
          month=lubridate::month(time))
 
 
-ggplot(frogs_location_tm) + 
-  geom_sf(aes(col = factor(month),geometry=geometry),
-          size=5, alpha=0.5) +
-  scale_y_continuous(limits = c(43.788,43.815))+
-  coord_sf() + # ylim = c(43.785,43.815)
-  theme_bw()
-```
-
-Add this to the main map
-
-```{r intro-14}
-base_map +
-   geom_sf(data = frogs_location_tm,
-           mapping = aes(col = factor(month),geometry=geometry),
-           inherit.aes = F)
-```
-
-
-Then, see the difference in time.
-```{r intro-15}
 base_map+
   geom_sf(data = frogs_location_tm,
           aes(col = factor(month), geometry=geometry),
@@ -165,29 +209,22 @@ base_map+
   theme_void()
 ```
 
-
-
-## More Graph Tables, Make Labels, Add Notes
-
-```{r intro-16}
-oregonfrogs %>%
-  ggplot() +
-  geom_point(aes(x=UTME_83,y=UTMN_83,color=factor(Frequency)),
-             size=4,alpha=0.5)
-  facet_wrap(~Frequency)
-```
+Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.  
 
 ## Make a grid
-```{r 02-case-study-1-1}
+
+Let's create a grid of points around the frogs' locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a **Simple feature** collection of points and not a tibble with coordinates as before. The functions `sf::st_make_grid()` and `sf::st_as_sfc(sf::st_bbox(points))` with the bbox reference for the points let us create a grid.
+
+```{r 02-case-study-1-1, message=FALSE, warning=FALSE, paged.print=FALSE}
 require(tidyverse)
 require(oregonfrogs)
 require(sf)
 
 # make a grid
-frogs_coord <- tibble(oregonfrogs$UTME_83, oregonfrogs$UTMN_83,
+frogs_coord_freq <- tibble(oregonfrogs$UTME_83, oregonfrogs$UTMN_83,
                       oregonfrogs$Frequency)
 
-points <- sf::st_as_sf(x = frogs_coord, 
+points <- sf::st_as_sf(x = frogs_coord_freq, 
                        coords = c(1,2), 
                        crs = "+proj=utm +zone=10") %>%
   sf::st_transform(frogs_coord, 
@@ -205,30 +242,88 @@ ggplot()+
   geom_sf(data=points)+
   coord_sf()+
   ggthemes::theme_map()
-
-
 ```
+
+What we do now is to group the frogs by date. 
+
+```{r intro-12}
+oregonfrogs%>%
+  mutate(SurveyDate=as.Date(SurveyDate,"%m/%d/%Y"))%>%
+  arrange(SurveyDate)%>%
+  count(SurveyDate,Ordinal)%>%
+  head
+```
+
 
 ## Work with Models
 
-```{r 02-case-study-1-2}
-library(tidymodels)
-tidymodels_prefer()
-library(spatialsample)
-# help(spatialsample)
+```{r}
+library(rgeos)
+library(raster)
+library(rgdal)
+library(dismo)
+
+
+library(maptools)
+world <- data("wrld_simpl")
+
+
+library(spocc)
+do_gbif <- occ("Rana pretiosa Baird & Girard, 1853",
+               from = "gbif",
+               limit = 1000,
+               has_coords = TRUE
+)
+do_gbif <- data.frame(do_gbif$gbif$data)
+
+
+plot(wrld_simpl,xlim=c(-125,-100),ylim=c(35,55),axes=T)
+points(do_gbif$Rana_pretiosa_Baird_._Girard._1853.longitude,
+       do_gbif$Rana_pretiosa_Baird_._Girard._1853.latitude)
 ```
 
 
-```{r 02-case-study-1-3}
-oregonfrogs %>%
-  select_if(is.character)%>%names
+```{r}
+frogs <-data.frame(long=do_gbif$Rana_pretiosa_Baird_._Girard._1853.longitude,lat=do_gbif$Rana_pretiosa_Baird_._Girard._1853.latitude)
+climate <- getData("worldclim",download = T,var="bio",res=2.5)
+# saveRDS(climate,"climate.rds")
+plot(climate)
+
+df <- extract(climate,frogs)
+
+# saveRDS(df,"df.rds")
 ```
 
-```{r intro-17}
-oregonfrogs %>%
-  select_if(is.numeric)%>%
-  pairs()
+```{r}
+library(dismo)
+bioclim.mod <- dismo::bioclim(df)
+pairs(bioclim.mod,pa="p")
 ```
 
+```{r eval=FALSE, include=T}
+doParallel::registerDoParallel()
+predictors <- stack(climate$bio1,climate$bio2,climate$bio3,
+                    climate$bio4,climate$bio5,
+                    climate$bio6,climate$bio7,climate$bio8,
+                    climate$bio9,climate$bio10,climate$bio11,
+                    climate$bio12,climate$bio13,climate$bio14,
+                    climate$bio15,climate$bio16,climate$bio17,
+                    climate$bio18,climate$bio19)
+predictions <- predict(predictors,bioclim.mod)
+# saveRDS(predictions,"predictions.rds")
+
+plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
+```
+
+
+```{r echo=FALSE}
+knitr::include_graphics("images/frogs_location_raster.png")
+```
 
 ---
+
+
+
+
+
+
