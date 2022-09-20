@@ -140,7 +140,7 @@ frogs_coord%>%head(3)
 As you can see the first projection points to *utm* as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.
 
 
-```{r ch2-07,include=FALSE,fig.dim="50%",fig.align='center',fig.cap="Credits: https://epsg.io/4326"}
+```{r ch2-07,echo=FALSE,fig.dim="50%",fig.align='center',fig.cap="Credits: https://epsg.io/4326"}
 knitr::include_graphics("images/epsg_4326.png")
 ```
 
@@ -187,7 +187,7 @@ The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visu
 
 So, don't run this part if you encurr issues with {OpenStreetMap}, jump on the next one.
 
-```{r ch2-9-1, eval=FALSE}
+```{r ch2-09-1, eval=FALSE}
 library(OpenStreetMap)
 map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
 
@@ -302,16 +302,17 @@ library(dismo)  # for modeling
 Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separately, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global environment
       
       
-```{r ch2-14-2, eval= FALSE}
-library(maptools) # 'maptools' will be retired by the end of 2023,
-                  # some functionality will be moved to 'sp'
-world <- maptools::data("wrld_simpl")
-```
+```{r ch2-15, eval= FALSE}
+world <- map_data("world")
+gbi_coords<- tibble(x=do_gbif2$longitude,y=do_gbif2$latitude)
 
-
-```{r ch2-15}
-plot(wrld_simpl,xlim=c(-125,-100),ylim=c(35,65),axes=T)
-points(do_gbif2$longitude,do_gbif2$latitude,col="pink")
+ggplot(world)+
+  geom_polygon(aes(long,lat,group=group),fill="grey90",color="grey30") +
+  geom_polygon(data=states, aes(long,lat,group=group),color="grey40") +
+  geom_point(data = gbi_coords, aes(x,y),
+             color="pink") +
+  coord_sf(xlim=c(-125,-90),ylim=c(35,65))+
+  ggthemes::theme_map()
 ```
 
 This is a raster stack composed of 19 raster layers.
@@ -319,11 +320,11 @@ This is a raster stack composed of 19 raster layers.
 ```{r ch2-16, cache=TRUE, eval=FALSE, include=TRUE}
 frogs <-data.frame(long=do_gbif2$longitude,lat=do_gbif2$latitude)
 climate <- dismo::getData("worldclim",download = T,var="bio",res=2.5)
-# saveRDS(climate,"climate.rds")
+
 plot(climate,legend=FALSE)
 ```
 
-```{r ch2-16-1, include=FALSE,eval=TRUE}
+```{r ch2-16-1, echo=FALSE,eval=TRUE}
 knitr::include_graphics("images/climate_plot.png")
 ```
 
@@ -352,7 +353,7 @@ bioclim.mod <- dismo::bioclim(frog_climate)
 pairs(bioclim.mod,pa="pa")
 ```
 
-```{r ch2-17-2, include=TRUE,eval=TRUE,echo=FALSE}
+```{r ch2-17-2, echo=FALSE,eval=TRUE,echo=FALSE}
 knitr::include_graphics("images/pairs_bioclim.png")
 ```
 
@@ -381,7 +382,7 @@ plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
 ```
 
 
-```{r ch2-19,eval=TRUE, include=TRUE,echo=FALSE}
+```{r ch2-19, echo=FALSE}
 knitr::include_graphics("images/frogs_location_raster.png")
 ```
 
