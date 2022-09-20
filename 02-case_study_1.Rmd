@@ -185,8 +185,12 @@ Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
 The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function.
 
-```{r ch2-10, eval=FALSE,message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
+```{r ch2-9-1}
 library(OpenStreetMap)
+```
+
+
+```{r ch2-10, eval=FALSE,message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
 map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
 ```
 
@@ -314,6 +318,8 @@ knitr::include_graphics("images/climate_plot.png")
 ```{r ch2-16-2, eval=FALSE, include=TRUE}
 frog_climate <- extract(climate,frogs)
 ```
+
+
 ```{r ch2-16-3}
 frog_climate %>% head(3)
 ```
