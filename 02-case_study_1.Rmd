@@ -288,7 +288,7 @@ library(dismo)  # for modeling
 ```
 
 
-Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separatley, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global envrionment.
+Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separately, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global environment
       
       
 ```{r ch2-14-2, eval= FALSE}
