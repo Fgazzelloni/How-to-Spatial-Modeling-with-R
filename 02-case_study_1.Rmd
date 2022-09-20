@@ -183,38 +183,49 @@ Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d
 
 Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
-The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function.
+The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} doesn't work the same for all systems. You'll might need to use another package, such as {ggmap} which provide the same backround map to use with {ggplot2}.
 
-```{r ch2-9-1}
+So, don't run this part if you encurr issues with {OpenStreetMap}, jump on the next one.
+
+```{r ch2-9-1, eval=FALSE}
 library(OpenStreetMap)
-```
-
-
-```{r ch2-10, eval=FALSE,message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
 map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
-```
 
-```{r ch2-10-1}
 OpenStreetMap::plot.OpenStreetMap(map)
-```
-
-
-In this map we project the points location of the frogs.
-
-```{r ch2-10-2, eval=FALSE}
 wider_map <- openproj(map)
-```
-
-
-```{r ch2-11, cache=TRUE}
 base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + 
   geom_point(data = frogs_location,
              aes(x = long, y = lat), 
              shape=21,stroke=0.2, size =  4,
              color="grey40") +
   xlab("Longitude (°E)") + ylab("Latitude (°S)")
+```
 
-base_map
+```{r ch2-10, echo=FALSE,out.width="50%",fig.cap="Crane Prairie Reservoir"}
+knitr::include_graphics("images/background_map.png")
+```
+
+
+In this map is made with {ggmap} and {ggplot2} for the frogs locations.
+
+```{r ch2-11, eval=FALSE}
+library(ggmap)
+
+box=c(43.764375,-121.824775,43.814821,-121.764923)
+crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775, 
+                                          bottom = 43.764375, 
+                                          right = -121.764923, 
+                                          top = 43.814821),
+                                 zoom = 13, color = c("color"),
+                                 maptype = "terrain-background")
+
+
+ggmap(crane_reservoir) + 
+    geom_point(data = frogs_location,
+             aes(x = long, y = lat), 
+             shape=21,stroke=0.2, size =  4,
+             color="grey40") +
+  xlab("Longitude (°E)") + ylab("Latitude (°S)")
 ```
 
 

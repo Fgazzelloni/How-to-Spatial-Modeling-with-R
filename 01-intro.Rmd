@@ -10,7 +10,7 @@ In geostatistical models, sampled data are interpreted as the result of a random
 [^1]: https://en.wikipedia.org/wiki/Kriging
 
 
-Spatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometrics, general ecology, as well as public transportation and real-estate.
+Spatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometric, general ecology, as well as public transportation and real-estate.
 
 The development of spatial models and modeling techniques evolved along the times allowing for workflows implementation of geospatial analysis.[^x]
 
@@ -22,7 +22,7 @@ While *data models* are important connections between the individual perception 
 
 *Spatial models* are defined as *process models*. Dynamic spatial processes are phenomena that change in time, such as a virus spread, flood formation, and land cover change. 
 
-A heuristic explanation of how point distances are calculated is to considered wheather the Eulerian or the Lagrangian views are the most suitable ones.
+A heuristic explanation of how point distances are calculated is to considered whether the Eulerian or the Lagrangian views are the most suitable ones.
 
 > Eulerian models concern about the change of properties (e.g. temperature, land cover) at fixed locations, while Lagrangian models tracks the movement of objects in space. 
 
@@ -48,7 +48,7 @@ In this workshop only vector data will be examined to provide insight into geogr
 
 [^1]: [Vector data models](https://saylordotorg.github.io/text_essentials-of-geographic-information-systems/s08-data-models-for-gis.html)
 
-In particular, will be examined location clustering and disese clustering.
+In particular, will be examined location clustering and disease clustering.
 
 We will be looking at two case studies:
 
@@ -60,7 +60,7 @@ Spatial models allows for spatial autocorrelation. In general modeling, multicol
 
 [^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm
 
-Spatial data is considered typically autocorrelated and/or clustered.[^1] A simple explanation is concerining with the independency of correlated clusters with the changing data-information in the spatial cluster.
+Spatial data is considered typically autocorrelated and/or clustered.[^1] A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.
 
 [^1]: [developing a cancer atlas](https://atlas.cancer.org.au/developing-a-cancer-atlas/Chapter_4.html)
 
@@ -110,11 +110,11 @@ Model types:
 
 - LR linear regression
 - multivariate logistic regression modeling of weights ($w_i$) (animal habitat)
-- discriminant analysis (community resilince to environmental disasters)
+- discriminant analysis (community resilience to environmental disasters)
 - support vector machine (SVM)
 - decision-trees 
 - genetic algorithm (GA)
-- artificail neural network (ANN) or deep neural network (DNN)
+- artificial neural network (ANN) or deep neural network (DNN)
 
 ---
 
@@ -122,12 +122,12 @@ Model adjustment
 
 Base spatial models are adjusted to data-type based on the type of phenomenon that is investigated. As an example, a virus spread would be best represented with a Poisson distribution, of which a log transformation can be applied.
 
-A list of the *tools* for making models adjustment is to decide wheather to use:
+A list of the *tools* for making models adjustment is to decide whether to use:
 
 - CAR
-- Poisson or spatial effect of the log of the poisson
+- Poisson or spatial effect of the log of the Poisson
 - Markov chain Monte Carlo (MCMC)
-- spaial cross validation resampling
+- spatial cross validation resampling
 - deterministic or Bayesian model (Integrated nested Laplace approximation (INLA) is a computational less-intensive alternative to MCMC designed to perform approximate Bayesian inference in latent Gaussian models)
 
 ---
@@ -136,7 +136,7 @@ There are a number of spatial models that can be used, but my favorite is Krigin
 
 [^1]: [article towardsdatascience](https://towardsdatascience.com/building-kriging-models-in-r-b94d7c9750d8#:~:text=R%20Code%20for%20Data%20Prep%3A&text=The%20idea%20behind%20kriging%20is,which%20saves%20time%20and%20money.)
 
-Finally, **validation** is an important step in *spatial modeling work*. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatailly correlated risk factors.[^1]
+Finally, **validation** is an important step in *spatial modeling work*. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatially correlated risk factors.[^1]
 
 [^1]: [r-project article](https://journal.r-project.org/archive/2018/RJ-2018-036/RJ-2018-036.pdf)
 
