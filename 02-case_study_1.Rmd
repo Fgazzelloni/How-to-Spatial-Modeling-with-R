@@ -185,11 +185,15 @@ Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
 The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function.
 
-```{r ch2-10, message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
+```{r ch2-10, eval=FALSE,message=FALSE, warning=FALSE, cache=T, paged.print=FALSE}
 library(OpenStreetMap)
 map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
+```
+
+```{r ch2-10-1}
 OpenStreetMap::plot.OpenStreetMap(map)
 ```
+
 
 In this map we project the points location of the frogs.
 
@@ -270,10 +274,9 @@ oregonfrogs%>%
 
 ## Work with Models
 
-Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismod} 
-so we don't need to load them.
+Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don't need to load them.
 
-```{r ch2-14-1}
+```{r ch2-14-1, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(dismo)  # for modeling
 ```
 
