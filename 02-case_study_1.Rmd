@@ -201,9 +201,12 @@ OpenStreetMap::plot.OpenStreetMap(map)
 
 In this map we project the points location of the frogs.
 
-```{r ch2-11, cache=TRUE}
+```{r ch2-10-2, eval=FALSE}
 wider_map <- openproj(map)
+```
 
+
+```{r ch2-11, cache=TRUE}
 base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + 
   geom_point(data = frogs_location,
              aes(x = long, y = lat), 
