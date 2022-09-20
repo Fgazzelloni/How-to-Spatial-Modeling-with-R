@@ -18,9 +18,3 @@ install.packages(my_packages, repos = "http://cran.rstudio.com")
 install.packages("remotes")
 remotes::install_github("fgazzelloni/oregonfrogs")
 ```
-
-install.packages("remotes")
-remotes::install_github("fgazzelloni/oregonfrogs")
-```
-
-
