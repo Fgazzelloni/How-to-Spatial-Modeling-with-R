@@ -132,9 +132,14 @@ A list of the *tools* for making models adjustment is to decide whether to use:
 
 ---
 
-There are a number of spatial models that can be used, but my favorite is Kriging. While other methods such as Geographically Weighted Regression (GWR) or Inverse Distance Weighting (IDW)[^1]
+There are a number of spatial models that can be used, for Spatial and Spatio-Temporal Modelling, Prediction and Simulation. One is Kriging, while other methods are the Geographically Weighted Regression (GWR) or Inverse Distance Weighting (IDW)[^1]
 
 [^1]: [article towardsdatascience](https://towardsdatascience.com/building-kriging-models-in-r-b94d7c9750d8#:~:text=R%20Code%20for%20Data%20Prep%3A&text=The%20idea%20behind%20kriging%20is,which%20saves%20time%20and%20money.)
+
+One example can be found in the {gstat} package, which provide the `kringe()` function.[^1]
+
+[^1]: [gstat](https://cran.r-project.org/web/packages/gstat/gstat.pdf)
+
 
 Finally, **validation** is an important step in *spatial modeling work*. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatially correlated risk factors.[^1]
 
