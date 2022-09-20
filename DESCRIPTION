@@ -13,6 +13,7 @@ URL: https://fgazzelloni.github.io/How-to-Spatial-Modeling-with-R, https://githu
 Imports: 
     bookdown,
     dismo,
+    maptools,
     OpenStreetMap,
     oregonfrogs,
     purrr,

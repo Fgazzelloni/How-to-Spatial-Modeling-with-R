@@ -270,19 +270,25 @@ oregonfrogs%>%
 
 ## Work with Models
 
-```{r}
-# library(rgeos)
-# library(raster) # included in sf
-# library(rgdal)  # library(terra)
+Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismod} 
+so we don't need to load them.
+
+```{r ch2-14-1}
 library(dismo)  # for modeling
 ```
 
 
-```{r ch2-15, message=FALSE, warning=FALSE, paged.print=FALSE}
-# library(maptools) # 'maptools' will be retired by the end of 2023,
+Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separatley, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global envrionment.
+      
+      
+```{r ch2-14-2, eval= FALSE}
+library(maptools) # 'maptools' will be retired by the end of 2023,
                   # some functionality will be moved to 'sp'
-world <- data("wrld_simpl")
+world <- maptools::data("wrld_simpl")
+```
 
+
+```{r ch2-15}
 plot(wrld_simpl,xlim=c(-125,-100),ylim=c(35,65),axes=T)
 points(do_gbif2$longitude,do_gbif2$latitude,col="pink")
 ```
