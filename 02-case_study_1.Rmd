@@ -9,13 +9,13 @@ The scope is to visualize the presence of these nice little frogs across differe
 
 The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.
 
-```{r ch2-01-1, eval=TRUE}
+```{r ch2-01-1, eval=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(tidyverse)
 library(oregonfrogs)
 library(spocc)
 ```
 
-```{r ch2-01-2,echo=FALSE}
+```{r ch2-01-2}
 load("data/case_study_1.RData")
 ```
 
