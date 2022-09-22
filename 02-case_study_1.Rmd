@@ -183,9 +183,9 @@ Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d
 
 Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
-The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} doesn't work the same for all systems. You'll might need to use another package, such as {ggmap} which provide the same backround map to use with {ggplot2}.
+The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} doesn't work the same for all systems. You'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
 
-So, don't run this part if you encurr issues with {OpenStreetMap}, jump on the next one.
+So, don't run this part if you incurr issues with {OpenStreetMap}, jump on the next one.
 
 ```{r ch2-09-1, eval=FALSE}
 library(OpenStreetMap)
