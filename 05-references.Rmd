@@ -26,6 +26,6 @@ usethis:
 
 Extra: 
 
-- [a free introduction to geo](https://mapschool.io/)
+- [A free introduction to geo](https://mapschool.io/)
 
 

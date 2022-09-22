@@ -82,9 +82,9 @@ More information about Rana pretiosa can be found here:
 
 - [GBIF](https://www.gbif.org/species/2426776)
 
-In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^1]
+In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^14]
 
-[^1]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
+[^14]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
 
 An interesting map of the lake with related data can be found here: [Lake and Reservoir in Deschutes County in Oregon map data](https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore)
 
@@ -106,9 +106,9 @@ oregonfrogs%>%head(3)
 
 One more interesting information is about the location, in this case a **UTM distance** (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location. 
 
-The **Universal Transverse Mercator (UTM)** is a common projection is  which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^1]
+The **Universal Transverse Mercator (UTM)** is a common projection is  which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^15]
 
-[^1]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
+[^15]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
 Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into **longitude** and **latitude**. For doing this we need the {sf} package by Edzer Pebesma.
 
@@ -144,9 +144,9 @@ As you can see the first projection points to *utm* as the type of data provided
 knitr::include_graphics("images/epsg_4326.png")
 ```
 
-All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^1]
+All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^16]
 
-[^1]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
+[^16]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
 
 ```{r ch2-08,comment=""}

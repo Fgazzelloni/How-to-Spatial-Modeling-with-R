@@ -5,16 +5,16 @@ Spatial data is most often represented by one of two data models, vector or rast
 
 [^1]: [Cran Spatial](https://cran.r-project.org/web/views/Spatial.html)
 
-In geostatistical models, sampled data are interpreted as the result of a random process.[^1]
+In geostatistical models, sampled data are interpreted as the result of a random process.[^2]
 
-[^1]: https://en.wikipedia.org/wiki/Kriging
+[^2]: https://en.wikipedia.org/wiki/Kriging
 
 
 Spatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometric, general ecology, as well as public transportation and real-estate.
 
-The development of spatial models and modeling techniques evolved along the times allowing for workflows implementation of geospatial analysis.[^x]
+The development of spatial models and modeling techniques evolved along the times allowing for workflows implementation of geospatial analysis.[^3]
 
-[^x]: [Geospatial Analysis and Model Building](https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building)
+[^3]: [Geospatial Analysis and Model Building](https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building)
 
 An important distinction has to be made between **spatial model** and **spatial data model**. 
 
@@ -31,9 +31,9 @@ A heuristic explanation of how point distances are calculated is to considered w
 ---
 
 
-As said, one more important distinction is that geographic information systems (GISs) are composed of raster and vector data.[^1]
+As said, one more important distinction is that geographic information systems (GISs) are composed of raster and vector data.[^4]
 
-[^1]: [Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)
+[^4]: [Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)
 
 
 ```{r intro-1, echo=FALSE,fig.align='center', fig.cap="Credits:[Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)"}
@@ -42,11 +42,11 @@ knitr::include_graphics("images/layers.jpg")
 
 
 
-In this workshop only vector data will be examined to provide insight into geographic variations in distribution of data (such as species, frogs in Oregon and/or diseases risk spread).[^1]
+In this workshop only vector data will be examined to provide insight into geographic variations in distribution of data (such as species, frogs in Oregon and/or diseases risk spread).[^5]
 
 > In vector data models space is not quantized into discrete grid cells like the raster model, but use points and associated X, Y coordinate pairs to represent the vertices of spatial feature.
 
-[^1]: [Vector data models](https://saylordotorg.github.io/text_essentials-of-geographic-information-systems/s08-data-models-for-gis.html)
+[^5]: [Vector data models](https://saylordotorg.github.io/text_essentials-of-geographic-information-systems/s08-data-models-for-gis.html)
 
 In particular, will be examined location clustering and disease clustering.
 
@@ -56,21 +56,21 @@ We will be looking at two case studies:
 - Cancer expected development in a particular location
 
 
-Spatial models allows for spatial autocorrelation. In general modeling, multicollinearity, or correlation among predictors in the model is used to make predictor selection. In case of spatial modeling, predictors such as longitude and latitude are evidence of important underlying spatial processes at work; an integral component of the data. [^1]
+Spatial models allows for spatial autocorrelation. In general modeling, multicollinearity, or correlation among predictors in the model is used to make predictor selection. In case of spatial modeling, predictors such as longitude and latitude are evidence of important underlying spatial processes at work; an integral component of the data. [^6]
 
-[^1]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm
+[^6]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm
 
-Spatial data is considered typically autocorrelated and/or clustered.[^1] A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.
+Spatial data is considered typically autocorrelated and/or clustered.[^7] A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.
 
-[^1]: [developing a cancer atlas](https://atlas.cancer.org.au/developing-a-cancer-atlas/Chapter_4.html)
+[^7]: [developing a cancer atlas](https://atlas.cancer.org.au/developing-a-cancer-atlas/Chapter_4.html)
 
-Hence, data may be spatially correlated and observations in neighboring areas may be more similar than observations in areas that are farther away.[^1]
+Hence, data may be spatially correlated and observations in neighboring areas may be more similar than observations in areas that are farther away.[^8]
 
-[^1]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
+[^8]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
 
-The analysis of the residual spatial autocorrelation and the prediction of continuous spatial process is called **Kriging**(geo interpolation named after Danie Kringe (South Africa)) (also known as *Wiener–Kolmogorov* prediction / distance-weighted average).[^1]
+The analysis of the residual spatial autocorrelation and the prediction of continuous spatial process is called **Kriging**(geo interpolation named after Danie Kringe (South Africa)) (also known as *Wiener–Kolmogorov* prediction / distance-weighted average).[^9]
 
-[^1]: Drew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And https://en.wikipedia.org/wiki/Kriging
+[^9]: Drew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And https://en.wikipedia.org/wiki/Kriging
 
 
 A spatial model is a representation of various social and natural processes:
@@ -92,9 +92,9 @@ knitr::include_graphics("images/framework.png")
 
 The integration of **GIS** and **Multicriteria Decision-Making Analysis (MCDA)** is key in providing help to decision makers in different areas. 
 
-GIS-based MCDA use a linear weighted equation to combine the spatial variables.[^1]
+GIS-based MCDA use a linear weighted equation to combine the spatial variables.[^10]
 
-[^1]: [geospatial analysis and model building](https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building)
+[^10]: [geospatial analysis and model building](https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building)
 
 $$y=\sum_{i=1}^n{w_if(x_i)}$$ 
 
@@ -132,18 +132,18 @@ A list of the *tools* for making models adjustment is to decide whether to use:
 
 ---
 
-There are a number of spatial models that can be used, for Spatial and Spatio-Temporal Modelling, Prediction and Simulation. One is Kriging, while other methods are the Geographically Weighted Regression (GWR) or Inverse Distance Weighting (IDW)[^1]
+There are a number of spatial models that can be used, for Spatial and Spatio-Temporal Modelling, Prediction and Simulation. One is Kriging, while other methods are the Geographically Weighted Regression (GWR) or Inverse Distance Weighting (IDW)[^11]
 
-[^1]: [article towardsdatascience](https://towardsdatascience.com/building-kriging-models-in-r-b94d7c9750d8#:~:text=R%20Code%20for%20Data%20Prep%3A&text=The%20idea%20behind%20kriging%20is,which%20saves%20time%20and%20money.)
+[^11]: [article towardsdatascience](https://towardsdatascience.com/building-kriging-models-in-r-b94d7c9750d8#:~:text=R%20Code%20for%20Data%20Prep%3A&text=The%20idea%20behind%20kriging%20is,which%20saves%20time%20and%20money.)
 
-One example can be found in the {gstat} package, which provide the `kringe()` function.[^1]
+One example can be found in the {gstat} package, which provide the `kringe()` function.[^12]
 
-[^1]: [gstat](https://cran.r-project.org/web/packages/gstat/gstat.pdf)
+[^12]: [gstat](https://cran.r-project.org/web/packages/gstat/gstat.pdf)
 
 
-Finally, **validation** is an important step in *spatial modeling work*. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatially correlated risk factors.[^1]
+Finally, **validation** is an important step in *spatial modeling work*. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatially correlated risk factors.[^13]
 
-[^1]: [r-project article](https://journal.r-project.org/archive/2018/RJ-2018-036/RJ-2018-036.pdf)
+[^13]: [r-project article](https://journal.r-project.org/archive/2018/RJ-2018-036/RJ-2018-036.pdf)
 
 
 ---
