@@ -208,9 +208,12 @@ knitr::include_graphics("images/background_map.png")
 
 In this map is made with {ggmap} and {ggplot2} for the frogs locations.
 
-```{r ch2-11, eval=FALSE,cache=TRUE}
-library(ggmap)
 
+```{r ch2-10-1, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(ggmap)
+```
+
+```{r ch2-11, eval=FALSE,cache=TRUE}
 box=c(43.764375,-121.824775,43.814821,-121.764923)
 crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775, 
                                           bottom = 43.764375, 
@@ -220,6 +223,8 @@ crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775,
                                  maptype = "terrain-background")
 
 ```
+
+
 
 ```{r ch2-11-1}
 base_map <- ggmap(crane_reservoir) + 

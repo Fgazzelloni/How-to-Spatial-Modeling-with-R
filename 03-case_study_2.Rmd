@@ -6,4 +6,4 @@ The aim of disease mapping is to provide a representation of the spatial distrib
 
 A simple measure of disease risk in areas is the standardized incidence ratio (SIR). [^18]
 
-[^19]: [areal data theory](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
+[^18]: [areal data theory](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
