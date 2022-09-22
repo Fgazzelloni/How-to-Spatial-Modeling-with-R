@@ -37,7 +37,7 @@ do_gbif2 <- do_gbif1%>%
 ```
 
 
-```{r ch2-01-5}
+```{r ch2-01-5, message=FALSE, warning=FALSE, paged.print=FALSE}
 states<- map_data("state")
 oregon <- states %>% filter(region=="oregon")
 
@@ -208,7 +208,7 @@ knitr::include_graphics("images/background_map.png")
 
 In this map is made with {ggmap} and {ggplot2} for the frogs locations.
 
-```{r ch2-11, eval=TRUE,cache=TRUE}
+```{r ch2-11, eval=FALSE,cache=TRUE}
 library(ggmap)
 
 box=c(43.764375,-121.824775,43.814821,-121.764923)
@@ -219,7 +219,9 @@ crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775,
                                  zoom = 13, color = c("color"),
                                  maptype = "terrain-background")
 
+```
 
+```{r ch2-11-1}
 base_map <- ggmap(crane_reservoir) + 
     geom_point(data = frogs_location,
              aes(x = long, y = lat), 
@@ -231,11 +233,12 @@ base_map
 ```
 
 
+
 ## Time as coordinate
 
 With a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.
 
-```{r ch2-12}
+```{r ch2-12, message=FALSE, warning=FALSE, paged.print=FALSE}
 frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
                             geometry=frogs_coord$geometry) %>%
   mutate(time = as.Date("2018-01-01") + ReportedDay,
@@ -247,6 +250,8 @@ base_map+
           aes(col = factor(month), geometry=geometry),
           inherit.aes = F) +
   facet_wrap(~cut(time, "1 months")) + 
+  scale_color_discrete(labels=c("September","October","November"))+
+  labs(color="Month")+
   theme_void()
 ```
 
@@ -345,7 +350,7 @@ Apply the **Bioclim algorithm** used for species distribution modeling, the clas
 
 We use the `pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)` function to plot the results of the model, with options from the {dismo} package.
 
-```{r ch2-17}
+```{r ch2-17, eval=FALSE}
 require(dismo)
 bioclim.mod <- dismo::bioclim(frog_climate)
 ```
@@ -355,7 +360,7 @@ bioclim.mod <- dismo::bioclim(frog_climate)
 pairs(bioclim.mod,pa="pa")
 ```
 
-```{r ch2-17-2, echo=FALSE,eval=TRUE,echo=FALSE}
+```{r ch2-17-2, echo=FALSE,eval=TRUE}
 knitr::include_graphics("images/pairs_bioclim.png")
 ```
 
