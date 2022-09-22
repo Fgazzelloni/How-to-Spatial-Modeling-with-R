@@ -44,7 +44,7 @@ If these packages are missing in your RStudio they would need to be installed.
 Please choose between {OpenStreetMap} and {ggmap}, {OpenStreetMap} has some extra Java requirement and it is not always available for the most updated versions of Mac.
 
 ```{r install, eval=FALSE, include=TRUE}
-my_packages <- c("tidyverse","purrr","ggthemes",
+my_packages <- c("tidyverse","ggthemes",
                  "maptools","OpenStreetMap","ggmap",
                  "spdep","sf","spocc",
                  "dismo","SpatialEpi")

@@ -16,9 +16,10 @@ Imports:
     ggmap,
     maptools,
     OpenStreetMap,
-    oregonfrogs,
-    purrr,
+    oregonfrogs (>= 0.1.0),
     sf,
     SpatialEpi,
     spocc,
     tidyverse
+Remotes:  
+    github::fgazzelloni/oregonfrogs
