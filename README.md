@@ -18,3 +18,13 @@ install.packages(my_packages, repos = "http://cran.rstudio.com")
 install.packages("remotes")
 remotes::install_github("fgazzelloni/oregonfrogs")
 ```
+
+
+Full video here:
+[![Full video here](images/canvas.png)](https://youtu.be/oYRnA-8ncPU)
+
+Presentation: [presentation of the tutorial in pdf format](presentation.pdf)
+
+
+
+
