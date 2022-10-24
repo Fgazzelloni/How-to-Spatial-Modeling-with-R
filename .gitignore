@@ -6,15 +6,6 @@
 _book
 _bookdown_files
 How-to-Spatial-Modeling-with-R.Rmd
-How-to-Spatial-Modeling-with-R.html
-How-to-Spatial-Modeling-with-R.knit.md
 How-to-Spatial-Modeling-with-R_files
+*.html
 libs
-How-to-Spatial-Modeling-with-R.Rcheck/
-How-to-Spatial-Modeling-with-R*.tar.gz
-How-to-Spatial-Modeling-with-R*.tgz
-How-to-Spatial-Modeling-with-R.Rproj
-https:
-preamble.tex
-style.css
-docs
