@@ -10,6 +10,7 @@ biblio-style: apalike
 link-citations: yes
 github-repo: fgazzelloni/How-to-Spatial-Modeling-with-R
 description: "This is an ice breaking activity to spatial model with R."
+# cover-image: "images/cover.png"
 ---
 
 # Prerequisites
