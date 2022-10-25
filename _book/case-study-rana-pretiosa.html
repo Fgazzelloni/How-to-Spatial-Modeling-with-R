@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Case study: Rana Pretiosa | Spatial model with R</title>
+  <meta name="description" content="This is an ice breaking activity to spatial model with R." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Case study: Rana Pretiosa | Spatial model with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an ice breaking activity to spatial model with R." />
+  <meta name="github-repo" content="fgazzelloni/How-to-Spatial-Modeling-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Case study: Rana Pretiosa | Spatial model with R" />
+  
+  <meta name="twitter:description" content="This is an ice breaking activity to spatial model with R." />
+  
+
+<meta name="author" content="Federica Gazzelloni" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="look-at-oregonfrogs-data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatial modeling with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="case-study-rana-pretiosa.html"><a href="case-study-rana-pretiosa.html"><i class="fa fa-check"></i><b>3</b> Case study: Rana Pretiosa</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="case-study-rana-pretiosa.html"><a href="case-study-rana-pretiosa.html#get-started-making-a-map"><i class="fa fa-check"></i><b>3.0.1</b> Get started making a map!</a></li>
+<li class="chapter" data-level="3.1" data-path="look-at-oregonfrogs-data.html"><a href="look-at-oregonfrogs-data.html"><i class="fa fa-check"></i><b>3.1</b> Look at oregonfrogs data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="look-at-oregonfrogs-data.html"><a href="look-at-oregonfrogs-data.html#lets-map-the-lake"><i class="fa fa-check"></i><b>3.1.1</b> Let’s map the lake!</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="time-as-coordinate.html"><a href="time-as-coordinate.html"><i class="fa fa-check"></i><b>3.2</b> Time as coordinate</a></li>
+<li class="chapter" data-level="3.3" data-path="make-a-grid.html"><a href="make-a-grid.html"><i class="fa fa-check"></i><b>3.3</b> Make a grid</a></li>
+<li class="chapter" data-level="3.4" data-path="work-with-models.html"><a href="work-with-models.html"><i class="fa fa-check"></i><b>3.4</b> Work with Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="case-study-2-disease-mapping.html"><a href="case-study-2-disease-mapping.html"><i class="fa fa-check"></i><b>4</b> Case study 2: Disease mapping</a></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatial model with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="case-study-rana-pretiosa" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Case study: Rana Pretiosa<a href="case-study-rana-pretiosa.html#case-study-rana-pretiosa" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The first case study is about animal ecology, we will be looking at a frog particular specie <strong>Rana Pretiosa</strong>, scientific name <strong>Rana pretiosa Baird &amp; Girard, 1853</strong>, and use some interesting data from Oregon as well as downloading more data from <strong>GBIF | Global Biodiversity Information Facility</strong>.</p>
+<p>The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.</p>
+<div id="get-started-making-a-map" class="section level3 hasAnchor" number="3.0.1">
+<h3><span class="header-section-number">3.0.1</span> Get started making a map!<a href="case-study-rana-pretiosa.html#get-started-making-a-map" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="case-study-rana-pretiosa.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="case-study-rana-pretiosa.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(oregonfrogs)</span>
+<span id="cb2-3"><a href="case-study-rana-pretiosa.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spocc)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="case-study-rana-pretiosa.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/case_study_1.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="case-study-rana-pretiosa.html#cb4-1" aria-hidden="true" tabindex="-1"></a>do_gbif <span class="ot">&lt;-</span> <span class="fu">occ</span>(<span class="st">&quot;Rana pretiosa Baird &amp; Girard, 1853&quot;</span>,</span>
+<span id="cb4-2"><a href="case-study-rana-pretiosa.html#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">from =</span> <span class="st">&quot;gbif&quot;</span>,</span>
+<span id="cb4-3"><a href="case-study-rana-pretiosa.html#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">limit =</span> <span class="dv">1000</span>,</span>
+<span id="cb4-4"><a href="case-study-rana-pretiosa.html#cb4-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">has_coords =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-5"><a href="case-study-rana-pretiosa.html#cb4-5" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb4-6"><a href="case-study-rana-pretiosa.html#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="case-study-rana-pretiosa.html#cb4-7" aria-hidden="true" tabindex="-1"></a>do_gbif1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(do_gbif<span class="sc">$</span>gbif<span class="sc">$</span>data)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="case-study-rana-pretiosa.html#cb5-1" aria-hidden="true" tabindex="-1"></a>do_gbif2 <span class="ot">&lt;-</span> do_gbif1<span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="case-study-rana-pretiosa.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">longitude=</span>Rana_pretiosa_Baird_._Girard._1853.longitude,</span>
+<span id="cb5-3"><a href="case-study-rana-pretiosa.html#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">latitude=</span>Rana_pretiosa_Baird_._Girard._1853.latitude)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="case-study-rana-pretiosa.html#cb6-1" aria-hidden="true" tabindex="-1"></a>states<span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&quot;state&quot;</span>)</span>
+<span id="cb6-2"><a href="case-study-rana-pretiosa.html#cb6-2" aria-hidden="true" tabindex="-1"></a>oregon <span class="ot">&lt;-</span> states <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region<span class="sc">==</span><span class="st">&quot;oregon&quot;</span>)</span>
+<span id="cb6-3"><a href="case-study-rana-pretiosa.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="case-study-rana-pretiosa.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> states, <span class="at">mapping =</span> <span class="fu">aes</span>(long,lat,<span class="at">group=</span>region))<span class="sc">+</span></span>
+<span id="cb6-5"><a href="case-study-rana-pretiosa.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">color=</span><span class="st">&quot;grey&quot;</span>,<span class="at">fill=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="case-study-rana-pretiosa.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">data =</span> oregon, </span>
+<span id="cb6-7"><a href="case-study-rana-pretiosa.html#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">inherit.aes =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb6-8"><a href="case-study-rana-pretiosa.html#cb6-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">color=</span><span class="st">&quot;pink&quot;</span>,<span class="at">fill=</span><span class="st">&quot;pink&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="case-study-rana-pretiosa.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> do_gbif2,</span>
+<span id="cb6-10"><a href="case-study-rana-pretiosa.html#cb6-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>longitude, <span class="at">y=</span>latitude),</span>
+<span id="cb6-11"><a href="case-study-rana-pretiosa.html#cb6-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb6-12"><a href="case-study-rana-pretiosa.html#cb6-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb6-13"><a href="case-study-rana-pretiosa.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_quickmap</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="case-study-rana-pretiosa.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="How-to-Spatial-Modeling-with-R_files/figure-html/ch2-01-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Once visualized, we will be making some assumptions about their movement and habitat use based on the results of a study by Dr. Michael J Adams from the Forest and Rangeland Ecosystem Science Center in Oregon.</p>
+<p>More information about this study can be found here: <a href="https://doi.org/10.1670/20-060" class="uri">https://doi.org/10.1670/20-060</a></p>
+<p>The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02" class="uri">https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02</a></p>
+<p>Or, you can install the package from github: <a href="https://github.com/Fgazzelloni/oregonfrogs" class="uri">https://github.com/Fgazzelloni/oregonfrogs</a></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-02"></span>
+<img src="images/oregonfrogs.png" alt="Credits: oregonfrogs package" width="30%" />
+<p class="caption">
+Figure 3.1: Credits: oregonfrogs package
+</p>
+</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="case-study-rana-pretiosa.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
+<span id="cb7-2"><a href="case-study-rana-pretiosa.html#cb7-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;fgazzelloni/oregonfrogs&quot;</span>)</span></code></pre></div>
+<p>One of the most important step of spatial modeling, and modeling in general, is to have a good knowledge of the argument. So, the more we know about <strong>Rana Pretiosa</strong> the better!</p>
+<p>Let’s hear <strong>Rana Pretiosa</strong> sound: <a href="https://amphibiaweb.org/species/5131" class="uri">https://amphibiaweb.org/species/5131</a></p>
+<p>More information about Rana pretiosa can be found here:</p>
+<ul>
+<li><a href="https://www.gbif.org/species/2426776">GBIF</a></li>
+</ul>
+<p>In particular, we will be looking at the location where <strong>rana pretiosa</strong> has been located with the use of radio telemetry frequencies in the <strong>Crane Prairie Reservoir</strong>, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+<p>An interesting map of the lake with related data can be found here: <a href="https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore">Lake and Reservoir in Deschutes County in Oregon map data</a></p>
+<p>We will require more packages while performing our analysis.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="case-study-rana-pretiosa.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(oregonfrogs)  </span></code></pre></div>
+<p>Let’s have a look at the data, we have 311 observations and 16 variables which include the habitat type, the date, the radio frequency, and other variables such as gender, type of water, presence of beavers, and if they are captured, located or just visualized.</p>
+<p>So, many interesting hypothesis can be done about their movements habitat use.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="case-study-rana-pretiosa.html#cb9-1" aria-hidden="true" tabindex="-1"></a>oregonfrogs<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code># A tibble: 3 × 16
+  Site    Subsite HabType Surve…¹ Ordinal Frequ…² UTME_83 UTMN_83 Inter…³ Female
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 Crane … SE Pond Pond    9/25/2…     268    164.  597369 4846486       0      0
+2 Crane … SE Pond Pond    10/2/2…     275    164.  597352 4846487       1      0
+3 Crane … SE Pond Pond    10/9/2…     282    164.  597345 4846458       2      0
+# … with 6 more variables: Water &lt;chr&gt;, Type &lt;chr&gt;, Structure &lt;chr&gt;,
+#   Substrate &lt;chr&gt;, Beaver &lt;chr&gt;, Detection &lt;chr&gt;, and abbreviated variable
+#   names ¹​SurveyDate, ²​Frequency, ³​Interval</code></pre>
+<p>One more interesting information is about the location, in this case a <strong>UTM distance</strong> (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location.</p>
+<p>The <strong>Universal Transverse Mercator (UTM)</strong> is a common projection is which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. <a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
+<p>Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into <strong>longitude</strong> and <strong>latitude</strong>. For doing this we need the {sf} package by Edzer Pebesma.</p>
+<p>Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting.</p>
+<p>To transform the UTM values into long and lat we use the <code>sf::st_as_sf()</code> function with some arguments which are compulsory for what we do.</p>
+<p>We need to specify where the coordinates are located in our set, and set a <strong>CRS</strong> or coordinate reference system information.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="case-study-rana-pretiosa.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a tibble with the geo-location information</span></span>
+<span id="cb11-2"><a href="case-study-rana-pretiosa.html#cb11-2" aria-hidden="true" tabindex="-1"></a>frogs_coord <span class="ot">&lt;-</span> oregonfrogs <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="case-study-rana-pretiosa.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(UTME_83, UTMN_83)</span>
+<span id="cb11-4"><a href="case-study-rana-pretiosa.html#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="case-study-rana-pretiosa.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tranform it to lat and long</span></span>
+<span id="cb11-6"><a href="case-study-rana-pretiosa.html#cb11-6" aria-hidden="true" tabindex="-1"></a>frogs_coord <span class="ot">&lt;-</span> </span>
+<span id="cb11-7"><a href="case-study-rana-pretiosa.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  frogs_coord <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="case-study-rana-pretiosa.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform to simple features as geometry</span></span>
+<span id="cb11-9"><a href="case-study-rana-pretiosa.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), </span>
+<span id="cb11-10"><a href="case-study-rana-pretiosa.html#cb11-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">crs =</span> <span class="st">&quot;+proj=utm +zone=10&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="case-study-rana-pretiosa.html#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># utm tranformation to longlat</span></span>
+<span id="cb11-12"><a href="case-study-rana-pretiosa.html#cb11-12" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb11-13"><a href="case-study-rana-pretiosa.html#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>()</span>
+<span id="cb11-14"><a href="case-study-rana-pretiosa.html#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="case-study-rana-pretiosa.html#cb11-15" aria-hidden="true" tabindex="-1"></a>frogs_coord<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code># A tibble: 3 × 1
+              geometry
+           &lt;POINT [°]&gt;
+1 (-121.7903 43.76502)
+2 (-121.7905 43.76503)
+3 (-121.7906 43.76477)</code></pre>
+<p>As you can see the first projection points to <em>utm</em> as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch2-07"></span>
+<img src="images/epsg_4326.png" alt="Credits: https://epsg.io/4326" width="282" />
+<p class="caption">
+Figure 3.2: Credits: <a href="https://epsg.io/4326" class="uri">https://epsg.io/4326</a>
+</p>
+</div>
+<p>All the available CRS in R can be seen by typing <code>View(rgdal::make_EPSG())</code> <a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="case-study-rana-pretiosa.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb13-2"><a href="case-study-rana-pretiosa.html#cb13-2" aria-hidden="true" tabindex="-1"></a>frogs_location <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Detection =</span> oregonfrogs<span class="sc">$</span>Detection,</span>
+<span id="cb13-3"><a href="case-study-rana-pretiosa.html#cb13-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Subsite =</span> oregonfrogs<span class="sc">$</span>Subsite,</span>
+<span id="cb13-4"><a href="case-study-rana-pretiosa.html#cb13-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Frequency =</span> oregonfrogs<span class="sc">$</span>Frequency,</span>
+<span id="cb13-5"><a href="case-study-rana-pretiosa.html#cb13-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">lat =</span> <span class="fu">unlist</span>(<span class="fu">map</span>(frogs_coord<span class="sc">$</span>geometry, <span class="dv">2</span>)),</span>
+<span id="cb13-6"><a href="case-study-rana-pretiosa.html#cb13-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">long =</span> <span class="fu">unlist</span>(<span class="fu">map</span>(frogs_coord<span class="sc">$</span>geometry, <span class="dv">1</span>)))</span>
+<span id="cb13-7"><a href="case-study-rana-pretiosa.html#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="case-study-rana-pretiosa.html#cb13-8" aria-hidden="true" tabindex="-1"></a>frogs_location<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code># A tibble: 3 × 5
+  Detection Subsite Frequency   lat  long
+  &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Captured  SE Pond      164.  43.8 -122.
+2 No visual SE Pond      164.  43.8 -122.
+3 No visual SE Pond      164.  43.8 -122.</code></pre>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="14">
+<li id="fn14"><p><a href="https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir">Crane Prairie Reservoir</a><a href="case-study-rana-pretiosa.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p><a href="https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html">Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny</a><a href="case-study-rana-pretiosa.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p><a href="https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html">book geospatial</a><a href="case-study-rana-pretiosa.html#fnref16" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="look-at-oregonfrogs-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R/edit/main/02-case_study_1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction | Spatial model with R</title>
+  <meta name="description" content="This is an ice breaking activity to spatial model with R." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction | Spatial model with R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is an ice breaking activity to spatial model with R." />
+  <meta name="github-repo" content="fgazzelloni/How-to-Spatial-Modeling-with-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction | Spatial model with R" />
+  
+  <meta name="twitter:description" content="This is an ice breaking activity to spatial model with R." />
+  
+
+<meta name="author" content="Federica Gazzelloni" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="case-study-rana-pretiosa.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatial modeling with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="case-study-rana-pretiosa.html"><a href="case-study-rana-pretiosa.html"><i class="fa fa-check"></i><b>3</b> Case study: Rana Pretiosa</a>
+<ul>
+<li class="chapter" data-level="3.0.1" data-path="case-study-rana-pretiosa.html"><a href="case-study-rana-pretiosa.html#get-started-making-a-map"><i class="fa fa-check"></i><b>3.0.1</b> Get started making a map!</a></li>
+<li class="chapter" data-level="3.1" data-path="look-at-oregonfrogs-data.html"><a href="look-at-oregonfrogs-data.html"><i class="fa fa-check"></i><b>3.1</b> Look at oregonfrogs data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="look-at-oregonfrogs-data.html"><a href="look-at-oregonfrogs-data.html#lets-map-the-lake"><i class="fa fa-check"></i><b>3.1.1</b> Let’s map the lake!</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="time-as-coordinate.html"><a href="time-as-coordinate.html"><i class="fa fa-check"></i><b>3.2</b> Time as coordinate</a></li>
+<li class="chapter" data-level="3.3" data-path="make-a-grid.html"><a href="make-a-grid.html"><i class="fa fa-check"></i><b>3.3</b> Make a grid</a></li>
+<li class="chapter" data-level="3.4" data-path="work-with-models.html"><a href="work-with-models.html"><i class="fa fa-check"></i><b>3.4</b> Work with Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="case-study-2-disease-mapping.html"><a href="case-study-2-disease-mapping.html"><i class="fa fa-check"></i><b>4</b> Case study 2: Disease mapping</a></li>
+<li class="chapter" data-level="5" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>5</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatial model with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Spatial data is most often represented by one of two data models, vector or raster.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>In geostatistical models, sampled data are interpreted as the result of a random process.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Spatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometric, general ecology, as well as public transportation and real-estate.</p>
+<p>The development of spatial models and modeling techniques evolved along the times allowing for workflows implementation of geospatial analysis.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>An important distinction has to be made between <strong>spatial model</strong> and <strong>spatial data model</strong>.</p>
+<p>While <em>data models</em> are important connections between the individual perception of certain events and how those events are being represented and processed with an algorithm as spatial primitives and relationships.</p>
+<p><em>Spatial models</em> are defined as <em>process models</em>. Dynamic spatial processes are phenomena that change in time, such as a virus spread, flood formation, and land cover change.</p>
+<p>A heuristic explanation of how point distances are calculated is to considered whether the Eulerian or the Lagrangian views are the most suitable ones.</p>
+<blockquote>
+<p>Eulerian models concern about the change of properties (e.g. temperature, land cover) at fixed locations, while Lagrangian models tracks the movement of objects in space.</p>
+</blockquote>
+<hr />
+<p>As said, one more important distinction is that geographic information systems (GISs) are composed of raster and vector data.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intro-1"></span>
+<img src="images/layers.jpg" alt="Credits:[Spatial data models](https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm)" width="150" />
+<p class="caption">
+Figure 2.1: Credits:<a href="https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm">Spatial data models</a>
+</p>
+</div>
+<p>In this workshop only vector data will be examined to provide insight into geographic variations in distribution of data (such as species, frogs in Oregon and/or diseases risk spread).<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<blockquote>
+<p>In vector data models space is not quantized into discrete grid cells like the raster model, but use points and associated X, Y coordinate pairs to represent the vertices of spatial feature.</p>
+</blockquote>
+<p>In particular, will be examined location clustering and disease clustering.</p>
+<p>We will be looking at two case studies:</p>
+<ul>
+<li>Oregon frogs habitat locations</li>
+<li>Cancer expected development in a particular location</li>
+</ul>
+<p>Spatial models allows for spatial autocorrelation. In general modeling, multicollinearity, or correlation among predictors in the model is used to make predictor selection. In case of spatial modeling, predictors such as longitude and latitude are evidence of important underlying spatial processes at work; an integral component of the data. <a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>Spatial data is considered typically autocorrelated and/or clustered.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.</p>
+<p>Hence, data may be spatially correlated and observations in neighboring areas may be more similar than observations in areas that are farther away.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
+<p>The analysis of the residual spatial autocorrelation and the prediction of continuous spatial process is called <strong>Kriging</strong>(geo interpolation named after Danie Kringe (South Africa)) (also known as <em>Wiener–Kolmogorov</em> prediction / distance-weighted average).<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></p>
+<p>A spatial model is a representation of various social and natural processes:</p>
+<ul>
+<li>land cover change</li>
+<li>spread of invasive species</li>
+<li>population migration</li>
+</ul>
+<p>So, to be more explicit, spatial modeling combines spatial analysis and predictions.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intro-2"></span>
+<img src="images/framework.png" alt="Credits:https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116" width="554" />
+<p class="caption">
+Figure 2.2: Credits:<a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116" class="uri">https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116</a>
+</p>
+</div>
+<p><strong>Krinking</strong> is even the term that defines the best model performance, and so, the best prediction. This term is considered as synonym of <em>prediction</em> in classical data forecasting model techniques.</p>
+<hr />
+<p>The integration of <strong>GIS</strong> and <strong>Multicriteria Decision-Making Analysis (MCDA)</strong> is key in providing help to decision makers in different areas.</p>
+<p>GIS-based MCDA use a linear weighted equation to combine the spatial variables.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
+<p><span class="math display">\[y=\sum_{i=1}^n{w_if(x_i)}\]</span></p>
+<p>Where <span class="math inline">\(W\)</span> defines a spatial neighborhood structure over the entire study region, and its elements can be viewed as weights.</p>
+<p>Under this structure, the total number of neighbors in each area is adjusted to obtain a standardized matrix:</p>
+<p><span class="math display">\[w_\text{std(i,j)}=\frac{w_{ij}}{\sum_{j=1}^{n}{w_{ij}}}\]</span></p>
+<p>Model types:</p>
+<ul>
+<li>LR linear regression</li>
+<li>multivariate logistic regression modeling of weights (<span class="math inline">\(w_i\)</span>) (animal habitat)</li>
+<li>discriminant analysis (community resilience to environmental disasters)</li>
+<li>support vector machine (SVM)</li>
+<li>decision-trees</li>
+<li>genetic algorithm (GA)</li>
+<li>artificial neural network (ANN) or deep neural network (DNN)</li>
+</ul>
+<hr />
+<p>Model adjustment</p>
+<p>Base spatial models are adjusted to data-type based on the type of phenomenon that is investigated. As an example, a virus spread would be best represented with a Poisson distribution, of which a log transformation can be applied.</p>
+<p>A list of the <em>tools</em> for making models adjustment is to decide whether to use:</p>
+<ul>
+<li>CAR</li>
+<li>Poisson or spatial effect of the log of the Poisson</li>
+<li>Markov chain Monte Carlo (MCMC)</li>
+<li>spatial cross validation resampling</li>
+<li>deterministic or Bayesian model (Integrated nested Laplace approximation (INLA) is a computational less-intensive alternative to MCMC designed to perform approximate Bayesian inference in latent Gaussian models)</li>
+</ul>
+<hr />
+<p>There are a number of spatial models that can be used, for Spatial and Spatio-Temporal Modelling, Prediction and Simulation. One is Kriging, while other methods are the Geographically Weighted Regression (GWR) or Inverse Distance Weighting (IDW)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p>
+<p>One example can be found in the {gstat} package, which provide the <code>kringe()</code> function.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
+<p>Finally, <strong>validation</strong> is an important step in <em>spatial modeling work</em>. A model can be validated by testing its prediction in another dataset or study area that is different from the dataset or study area where the model was trained, allowing for spatial correlation and spatially correlated risk factors.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
+<hr />
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://cran.r-project.org/web/views/Spatial.html">Cran Spatial</a><a href="intro.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://en.wikipedia.org/wiki/Kriging" class="uri">https://en.wikipedia.org/wiki/Kriging</a><a href="intro.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building">Geospatial Analysis and Model Building</a><a href="intro.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://planet.uwc.ac.za/nisl/gis/web_page/page_15.htm">Spatial data models</a><a href="intro.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://saylordotorg.github.io/text_essentials-of-geographic-information-systems/s08-data-models-for-gis.html">Vector data models</a><a href="intro.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm" class="uri">https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm</a><a href="intro.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p><a href="https://atlas.cancer.org.au/developing-a-cancer-atlas/Chapter_4.html">developing a cancer atlas</a><a href="intro.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p><a href="https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html">Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny</a><a href="intro.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Drew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And <a href="https://en.wikipedia.org/wiki/Kriging" class="uri">https://en.wikipedia.org/wiki/Kriging</a><a href="intro.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://gistbok.ucgis.org/bok-topics/geospatial-analysis-and-model-building">geospatial analysis and model building</a><a href="intro.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p><a href="https://towardsdatascience.com/building-kriging-models-in-r-b94d7c9750d8#:~:text=R%20Code%20for%20Data%20Prep%3A&amp;text=The%20idea%20behind%20kriging%20is,which%20saves%20time%20and%20money.">article towardsdatascience</a><a href="intro.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p><a href="https://cran.r-project.org/web/packages/gstat/gstat.pdf">gstat</a><a href="intro.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p><a href="https://journal.r-project.org/archive/2018/RJ-2018-036/RJ-2018-036.pdf">r-project article</a><a href="intro.html#fnref13" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="case-study-rana-pretiosa.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R/edit/main/01-intro.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
