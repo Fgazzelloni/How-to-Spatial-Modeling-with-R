@@ -1,0 +1,23 @@
+{
+  "index.qmd": {
+    "index.html": "71d77687"
+  },
+  "intro.qmd": {
+    "intro.html": "c4c28eda"
+  },
+  "summary.qmd": {
+    "summary.html": "82da06d9"
+  },
+  "references.qmd": {
+    "references.html": "7cdad63a"
+  },
+  "case_study_1.qmd": {
+    "case_study_1.html": "a65b612e"
+  },
+  "case_study_2.qmd": {
+    "case_study_2.html": "d47484fe"
+  },
+  "conclusions.qmd": {
+    "conclusions.html": "64680706"
+  }
+}

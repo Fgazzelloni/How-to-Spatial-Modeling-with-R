@@ -1,0 +1,25 @@
+project:
+  type: book
+
+book:
+  title: "How-to-Spatial-Modeling-with-R"
+  author: "FG"
+  date: "10/26/2022"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - case_study_1.qmd
+    - case_study_2.qmd
+    - conclusions.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
