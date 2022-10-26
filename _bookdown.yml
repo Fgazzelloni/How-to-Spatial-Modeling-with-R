@@ -1,8 +1,0 @@
-book_filename: "How-to-Spatial-Modeling-with-R"
-repo: https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R
-edit: "https://github.com/fgazzelloni/How-to-Spatial-Modeling-with-R/edit/main/%s"
-output_dir: "_book"
-delete_merged_file: true
-language:
-  ui:
-    chapter_name: "Chapter "
