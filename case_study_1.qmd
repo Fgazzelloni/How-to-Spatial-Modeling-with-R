@@ -10,10 +10,12 @@ The first map that we make is a general frog location map of the United States. 
 
 ```{r}
 #| label: ch2
-#| eval: TRUE
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| eval: true
+#| message: false
+#| warning: false
+#| paged.print: false
+
+
 library(tidyverse)
 library(oregonfrogs)
 library(spocc)
@@ -25,8 +27,10 @@ load("data/case_study_1.RData")
 
 ```{r}
 #| label: ch2-01
-#| eval: FALSE
-#| cache: TRUE
+#| eval: false
+#| cache: true
+
+
 do_gbif <- occ("Rana pretiosa Baird & Girard, 1853",
                from = "gbif",
                limit = 1000,
@@ -38,6 +42,8 @@ do_gbif1 <- data.frame(do_gbif$gbif$data)
 
 ```{r}
 #| label: ch2-02
+
+
 do_gbif2 <- do_gbif1%>%
   rename(longitude=Rana_pretiosa_Baird_._Girard._1853.longitude,
          latitude=Rana_pretiosa_Baird_._Girard._1853.latitude)
@@ -45,9 +51,11 @@ do_gbif2 <- do_gbif1%>%
 
 ```{r}
 #| label: ch2-03
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
+
+
 states<- map_data("state")
 oregon <- states %>% filter(region=="oregon")
 
@@ -74,20 +82,22 @@ Or, you can install the package from github: https://github.com/Fgazzelloni/oreg
 
 ```{r}
 #| label: ch2-04
-#| echo: FALSE
+#| echo: false
 #| out.width: "30%"
 #| fig.align: 'center'
 #| fig.cap: "Credits: oregonfrogs package"
+
+
 knitr::include_graphics("images/oregonfrogs.png")
 ```
 
 ```{r}
 #| label: ch2-05
-#| eval: FALSE
-#| message: FALSE
-#| warning: FALSE
-#| include: TRUE
-#| paged.print: FALSE
+#| eval: false
+#| message: false
+#| warning: false
+#| include: true
+#| paged.print: false
 
 # install.packages("remotes")
 remotes::install_github("fgazzelloni/oregonfrogs")
@@ -111,9 +121,9 @@ We will require more packages while performing our analysis.
 
 ```{r}
 #| label: ch2-06
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 library(oregonfrogs)  
 ```
 
@@ -167,7 +177,7 @@ As you can see the first projection points to *utm* as the type of data provided
 
 ```{r}
 #| label: ch2-09
-#| echo: FALSE
+#| echo: false
 #| fig.dim: "50%"
 #| fig.align: 'center'
 #| fig.cap: "Credits: https://epsg.io/4326"
@@ -197,9 +207,9 @@ Let's have a first sight at the data based on location. The first thing to notic
 
 ```{r}
 #| label: ch2-11
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 ggplot(data = frogs_location, aes(x=long,y=lat))+
   geom_point() +
   geom_smooth(method = "loess") +
@@ -222,7 +232,7 @@ So, don't run this part if you incurr issues with {OpenStreetMap}, jump on the n
 
 ```{r}
 #| label: ch2-12
-#| eval: FALSE
+#| eval: false
 library(OpenStreetMap)
 map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
 
@@ -238,7 +248,7 @@ base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) +
 
 ```{r}
 #| label: ch2-12-1
-#| echo: FALSE
+#| echo: false
 #| out.width: "50%"
 #| fig.cap: "Crane Prairie Reservoir"
 knitr::include_graphics("images/background_map.png")
@@ -248,16 +258,16 @@ In this map is made with {ggmap} and {ggplot2} for the frogs locations.
 
 ```{r}
 #| label: ch2-13
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 library(ggmap)
 ```
 
 ```{r}
 #| label: ch2-14
-#| eval: FALSE
-#| cache: TRUE
+#| eval: false
+#| cache: true
 box=c(43.764375,-121.824775,43.814821,-121.764923)
 crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775, 
                                           bottom = 43.764375, 
@@ -286,9 +296,9 @@ With a little modification of the dataset we can visualize the frogs by months. 
 
 ```{r}
 #| label: ch2-16
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 
 
 frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
@@ -310,14 +320,12 @@ base_map +
   theme_void()
 ```
 
-
 ```{r}
 #| label: ch2-16-2
 #| echo: false
 
 knitr::include_graphics("images/base_map_by_month.png")
 ```
-
 
 Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.
 
@@ -327,9 +335,9 @@ Let's create a grid of points around the frogs' locations. In order to do that w
 
 ```{r}
 #| label: ch2-17
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 
 
 # make a grid
@@ -341,19 +349,19 @@ points <- sf::st_as_sf(x = frogs_coord_freq,
                        crs = "+proj=utm +zone=10") %>%
   sf::st_transform(frogs_coord, 
                    crs = "+proj=longlat +datum=WGS84")  
+```
 
+
+```{r}
+#| label: ch2-17-1
+#| message: false
+#| warning: false
+#| paged.print: false
 grid = sf::st_make_grid(
   sf::st_as_sfc(sf::st_bbox(points)),
   what = "centers",
   cellsize = .002, 
   square = F)
-
-
-ggplot()+
-  geom_sf(data=grid,size=0.3)+
-  geom_sf(data=points)+
-  coord_sf()+
-  ggthemes::theme_map()
 ```
 
 What we do now is to group the frogs by date.
@@ -373,9 +381,9 @@ Packages functionality from rgeos,raster,rgdal,terra packages are included in {s
 
 ```{r}
 #| label: ch2-19
-#| message: FALSE
-#| warning: FALSE
-#| paged.print: FALSE
+#| message: false
+#| warning: false
+#| paged.print: false
 
 
 library(dismo)  # for modeling
@@ -385,7 +393,7 @@ Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` 
 
 ```{r}
 #| label: ch2-20
-#| eval: FALSE
+#| eval: false
 world <- map_data("world")
 gbi_coords<- tibble(x=do_gbif2$longitude,y=do_gbif2$latitude)
 
@@ -402,26 +410,26 @@ This is a raster stack composed of 19 raster layers.
 
 ```{r}
 #| label: ch2-21
-#| cache: TRUE
-#| eval: FALSE
-#| include: TRUE
+#| cache: true
+#| eval: false
+#| include: true
 frogs <-data.frame(long=do_gbif2$longitude,lat=do_gbif2$latitude)
 climate <- dismo::getData("worldclim",download = T,var="bio",res=2.5)
 
-plot(climate,legend=FALSE)
+plot(climate,legend=false)
 ```
 
 ```{r}
 #| label: ch2-22
-#| echo: FALSE
-#| eval: TRUE
+#| echo: false
+#| eval: true
 knitr::include_graphics("images/climate_plot.png")
 ```
 
 ```{r}
 #| label: ch2-23
-#| eval: FALSE
-#| include: TRUE
+#| eval: false
+#| include: true
 frog_climate <- extract(climate,frogs)
 ```
 
@@ -436,22 +444,22 @@ We use the `pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)` function to plot the
 
 ```{r}
 #| label: ch2-25
-#| eval: FALSE
+#| eval: false
 require(dismo)
 bioclim.mod <- dismo::bioclim(frog_climate)
 ```
 
 ```{r}
 #| label: ch2-26
-#| eval: FALSE
-#| include: TRUE
+#| eval: false
+#| include: true
 pairs(bioclim.mod,pa="pa")
 ```
 
 ```{r}
 #| label: ch2-27
-#| echo: FALSE
-#| eval: TRUE
+#| echo: false
+#| eval: true
 knitr::include_graphics("images/pairs_bioclim.png")
 ```
 
@@ -459,8 +467,8 @@ Now, let's build a stack with the `stack()` function, including all the bioclima
 
 ```{r}
 #| label: ch2-28
-#| eval: FALSE
-#| include: TRUE
+#| eval: false
+#| include: true
 
 
 doParallel::registerDoParallel()
@@ -476,28 +484,28 @@ predictions <- predict(predictors,bioclim.mod)
 
 ```{r}
 #| label: ch2-29
-#| eval: TRUE
-#| include: FALSE
+#| eval: true
+#| include: false
 predictions
 ```
 
 ```{r}
 #| label: ch2-30
-#| eval: FALSE
-#| include: TRUE
+#| eval: false
+#| include: true
 plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
 ```
 
 ```{r}
 #| label: ch2-31
-#| echo: FALSE
+#| echo: false
 knitr::include_graphics("images/frogs_location_raster.png")
 ```
 
 ```{r}
 #| label: ch2-32
-#| eval: FALSE
-#| echo: FALSE
+#| eval: false
+#| echo: false
 save.image("data/case_study_1.RData")
 ```
 

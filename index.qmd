@@ -10,7 +10,9 @@ It is required a good manner of RStudio and a little practice in making plots wi
 To set up install the following packages:
 
 ```{r}
-#| echo: FALSE
+#| echo: false
+
+
 knitr::opts_chunk$set(
   include=TRUE,
 	#eval = FALSE,
@@ -27,8 +29,8 @@ If these packages are missing in your RStudio they would need to be installed.
 Please choose between {OpenStreetMap} and {ggmap}, {OpenStreetMap} has some extra Java requirement and it is not always available for the most updated versions of Mac.
 
 ```{r}
-#| eval: FALSE
-#| include: TRUE
+#| eval: false
+#| include: true
 
 my_packages <- c("tidyverse","ggthemes",
                  "maptools","OpenStreetMap","ggmap",
@@ -45,6 +47,6 @@ The GitHub repository for this workshop is here: https://github.com/Fgazzelloni/
 
 Once installed the packages go to the GitHub repo above, You can fork the repository onto your RStudio, or copy and paste the code directly. Another option is to use {usethis} and some of its handling functions, for open the project in your machine.
 
-Once set go to the `/data` folder and load the RData in the environment. It will make things easier as you don't need to run some chucks of code which will require some time to compute, and for this reason are set to `eval = FALSE`.
+Once set go to the `/data` folder and load the RData in the environment. It will make things easier as you don't need to run some chucks of code which will require some time to compute, and for this reason are set to `eval = false`.
 
 For any questions please email: docksbox\@pm.me

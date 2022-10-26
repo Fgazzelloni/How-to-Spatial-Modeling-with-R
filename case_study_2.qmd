@@ -1,10 +1,9 @@
 # Case study 2: Disease mapping
 
-The aim of disease mapping is to provide a representation of the spatial distribution of the risk of a disease in the study area, which we assume is divided into several non-overlapping smaller regions. The risk may reflect actual deaths due to the disease (mortality) or, if it is not fatal, the number of people who suffer from the disease (morbidity) in a certain period of time for the population at risk. [^17]
+The aim of disease mapping is to provide a representation of the spatial distribution of the risk of a disease in the study area, which we assume is divided into several non-overlapping smaller regions. The risk may reflect actual deaths due to the disease (mortality) or, if it is not fatal, the number of people who suffer from the disease (morbidity) in a certain period of time for the population at risk. [^case_study_2-1]
 
-[^17]: [Applied Spatial Data Analysis with R](https://link.springer.com/book/10.1007/978-1-4614-7618-4)
+[^case_study_2-1]: [Applied Spatial Data Analysis with R](https://link.springer.com/book/10.1007/978-1-4614-7618-4)
 
-A simple measure of disease risk in areas is the standardized incidence ratio (SIR). [^18]
+A simple measure of disease risk in areas is the standardized incidence ratio (SIR). [^case_study_2-2]
 
-[^18]: [areal data theory](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
-
+[^case_study_2-2]: [areal data theory](https://www.paulamoraga.com/book-geospatial/sec-arealdatatheory.html)
