@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "",
+    "section": "",
+    "text": "This ice-breaking activity to spatial modeling with R includes two case studies:\n\nOregon spotted frog habitat study\nA type of cancer spread in Scotland\n\nIt is required a good manner of RStudio and a little practice in making plots with {ggplot2}.\nTo set up install the following packages:\n\n\n\nIf these packages are missing in your RStudio they would need to be installed.\nPlease choose between {OpenStreetMap} and {ggmap}, {OpenStreetMap} has some extra Java requirement and it is not always available for the most updated versions of Mac.\n\nmy_packages <- c(\"tidyverse\",\"ggthemes\",\n                 \"maptools\",\"OpenStreetMap\",\"ggmap\",\n                 \"spdep\",\"sf\",\"spocc\",\n                 \"dismo\",\"SpatialEpi\")\n\ninstall.packages(my_packages, repos = \"http://cran.rstudio.com\")\n\ninstall.packages(\"remotes\")\nremotes::install_github(\"fgazzelloni/oregonfrogs\")\n\nThe GitHub repository for this workshop is here: https://github.com/Fgazzelloni/How-to-Spatial-Modeling-with-R\nOnce installed the packages go to the GitHub repo above, You can fork the repository onto your RStudio, or copy and paste the code directly. Another option is to use {usethis} and some of its handling functions, for open the project in your machine.\nOnce set go to the /data folder and load the RData in the environment. It will make things easier as you don’t need to run some chucks of code which will require some time to compute, and for this reason are set to eval = FALSE.\nFor any questions please email: docksbox@pm.me"
+  }
+]
