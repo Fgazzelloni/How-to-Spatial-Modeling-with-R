@@ -1,7 +1,6 @@
 # Case study 1: Rana Pretiosa
 
-
-The first case study is about animal ecology, we will be looking at a frog particular specie **Rana Pretiosa**, scientific name **Rana pretiosa Baird & Girard, 1853**, and use some interesting data from Oregon as well as downloading more data from **GBIF | Global Biodiversity Information Facility**.
+The first case study is about animal ecology, we will be looking at a frog particular specie **Rana Pretiosa**, scientific name **Rana pretiosa Baird & Girard, 1853**, and use some interesting data from Oregon as well as downloading more data from **GBIF \| Global Biodiversity Information Facility**.
 
 The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.
 
@@ -37,14 +36,12 @@ do_gbif <- occ("Rana pretiosa Baird & Girard, 1853",
 do_gbif1 <- data.frame(do_gbif$gbif$data)
 ```
 
-
 ```{r}
 #| label: ch2-02
 do_gbif2 <- do_gbif1%>%
   rename(longitude=Rana_pretiosa_Baird_._Girard._1853.longitude,
          latitude=Rana_pretiosa_Baird_._Girard._1853.latitude)
 ```
-
 
 ```{r}
 #| label: ch2-03
@@ -67,11 +64,9 @@ ggplot(data = states, mapping = aes(long,lat,group=region))+
   theme_bw()
 ```
 
-
 Once visualized, we will be making some assumptions about their movement and habitat use based on the results of a study by Dr. Michael J Adams from the Forest and Rangeland Ecosystem Science Center in Oregon.
 
 More information about this study can be found here: https://doi.org/10.1670/20-060
-
 
 The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02
 
@@ -98,23 +93,21 @@ knitr::include_graphics("images/oregonfrogs.png")
 remotes::install_github("fgazzelloni/oregonfrogs")
 ```
 
-
 One of the most important step of spatial modeling, and modeling in general, is to have a good knowledge of the argument. So, the more we know about **Rana Pretiosa** the better!
 
 Let's hear **Rana Pretiosa** sound: https://amphibiaweb.org/species/5131
 
 More information about Rana pretiosa can be found here:
 
-- [GBIF](https://www.gbif.org/species/2426776)
+-   [GBIF](https://www.gbif.org/species/2426776)
 
-In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^14]
+In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^case_study_1-1]
 
-[^14]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
+[^case_study_1-1]: [Crane Prairie Reservoir](https://en.wikipedia.org/wiki/Crane_Prairie_Reservoir)
 
 An interesting map of the lake with related data can be found here: [Lake and Reservoir in Deschutes County in Oregon map data](https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore)
 
-
-We will require more packages while performing our analysis. 
+We will require more packages while performing our analysis.
 
 ```{r}
 #| label: ch2-06
@@ -134,21 +127,19 @@ So, many interesting hypothesis can be done about their movements habitat use.
 oregonfrogs%>%head(3)
 ```
 
+One more interesting information is about the location, in this case a **UTM distance** (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location.
 
-One more interesting information is about the location, in this case a **UTM distance** (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location. 
+The **Universal Transverse Mercator (UTM)** is a common projection is which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^case_study_1-2]
 
-The **Universal Transverse Mercator (UTM)** is a common projection is  which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. [^15]
-
-[^15]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
+[^case_study_1-2]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
 Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into **longitude** and **latitude**. For doing this we need the {sf} package by Edzer Pebesma.
 
-Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting. 
+Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting.
 
 To transform the UTM values into long and lat we use the `sf::st_as_sf()` function with some arguments which are compulsory for what we do.
 
-We need to specify where the coordinates are located in our set, and set a **CRS** or coordinate reference system information. 
-
+We need to specify where the coordinates are located in our set, and set a **CRS** or coordinate reference system information.
 
 ```{r}
 #| label: ch2-08
@@ -174,7 +165,6 @@ frogs_coord%>%head(3)
 
 As you can see the first projection points to *utm* as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.
 
-
 ```{r}
 #| label: ch2-09
 #| echo: FALSE
@@ -184,10 +174,9 @@ As you can see the first projection points to *utm* as the type of data provided
 knitr::include_graphics("images/epsg_4326.png")
 ```
 
-All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^16]
+All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^case_study_1-3]
 
-[^16]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
-
+[^case_study_1-3]: [book geospatial](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
 ```{r}
 #| label: ch2-10
@@ -201,7 +190,6 @@ frogs_location <- tibble(Detection = oregonfrogs$Detection,
 
 frogs_location%>%head(3)
 ```
-
 
 ## Look at oregonfrogs data
 
@@ -218,16 +206,15 @@ ggplot(data = frogs_location, aes(x=long,y=lat))+
   theme_bw()
 ```
 
-
-### Let's map the lake! 
+### Let's map the lake!
 
 How do we set the map for the location of our **Rana Pretiosa** in the Crane Prairie Reservoir?
 
-In the study page we can find the **BOX**, the box is the four corner reference points, bounding our interested area. 
+In the study page we can find the **BOX**, the box is the four corner reference points, bounding our interested area.
 
 Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc
 
-Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
+Bounding Box\[-121.824775, 43.764375, -121.764923, 43.814821\]
 
 The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} doesn't work the same for all systems. You'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
 
@@ -257,9 +244,7 @@ base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) +
 knitr::include_graphics("images/background_map.png")
 ```
 
-
 In this map is made with {ggmap} and {ggplot2} for the frogs locations.
-
 
 ```{r}
 #| label: ch2-13
@@ -283,8 +268,6 @@ crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775,
 
 ```
 
-
-
 ```{r}
 #| label: ch2-15
 base_map <- ggmap(crane_reservoir) + 
@@ -296,8 +279,6 @@ base_map <- ggmap(crane_reservoir) +
 
 base_map
 ```
-
-
 
 ## Time as coordinate
 
@@ -318,7 +299,7 @@ frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
 
 ```{r}
 #| label: ch2-16-1
-#| eval: true
+#| eval: false
 base_map +
   geom_sf(data = frogs_location_tm,
           aes(col = factor(month), geometry = geometry),
@@ -330,7 +311,15 @@ base_map +
 ```
 
 
-Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.  
+```{r}
+#| label: ch2-16-2
+#| echo: false
+
+knitr::include_graphics("images/base_map_by_month.png")
+```
+
+
+Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.
 
 ## Make a grid
 
@@ -367,7 +356,7 @@ ggplot()+
   ggthemes::theme_map()
 ```
 
-What we do now is to group the frogs by date. 
+What we do now is to group the frogs by date.
 
 ```{r}
 #| label: ch2-18
@@ -377,7 +366,6 @@ oregonfrogs%>%
   count(SurveyDate,Ordinal)%>%
   head(3)
 ```
-
 
 ## Work with Models
 
@@ -393,10 +381,8 @@ Packages functionality from rgeos,raster,rgdal,terra packages are included in {s
 library(dismo)  # for modeling
 ```
 
-
 Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separately, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global environment
-      
-      
+
 ```{r}
 #| label: ch2-20
 #| eval: FALSE
@@ -432,15 +418,12 @@ plot(climate,legend=FALSE)
 knitr::include_graphics("images/climate_plot.png")
 ```
 
-
-
 ```{r}
 #| label: ch2-23
 #| eval: FALSE
 #| include: TRUE
 frog_climate <- extract(climate,frogs)
 ```
-
 
 ```{r}
 #| label: ch2-24
@@ -458,7 +441,6 @@ require(dismo)
 bioclim.mod <- dismo::bioclim(frog_climate)
 ```
 
-
 ```{r}
 #| label: ch2-26
 #| eval: FALSE
@@ -473,8 +455,7 @@ pairs(bioclim.mod,pa="pa")
 knitr::include_graphics("images/pairs_bioclim.png")
 ```
 
-
-Now, let's build a stack with the `stack()` function, including all the bioclimatic layers from the original raster stack. 
+Now, let's build a stack with the `stack()` function, including all the bioclimatic layers from the original raster stack.
 
 ```{r}
 #| label: ch2-28
@@ -500,7 +481,6 @@ predictions <- predict(predictors,bioclim.mod)
 predictions
 ```
 
-
 ```{r}
 #| label: ch2-30
 #| eval: FALSE
@@ -508,14 +488,11 @@ predictions
 plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
 ```
 
-
 ```{r}
 #| label: ch2-31
 #| echo: FALSE
 knitr::include_graphics("images/frogs_location_raster.png")
 ```
-
-
 
 ```{r}
 #| label: ch2-32
@@ -524,11 +501,4 @@ knitr::include_graphics("images/frogs_location_raster.png")
 save.image("data/case_study_1.RData")
 ```
 
----
-
-
-
-
-
-
-
+------------------------------------------------------------------------
