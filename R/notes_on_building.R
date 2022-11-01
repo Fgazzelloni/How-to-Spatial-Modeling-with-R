@@ -34,6 +34,8 @@ quarto render
 # quarto render creates a folder
 docs
 
+# check the index.html file
+
 
 
 

@@ -1,5 +1,4 @@
 project:
-  #type: book
   type: website
   output-dir: docs
 
