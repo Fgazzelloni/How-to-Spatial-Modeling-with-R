@@ -2,7 +2,7 @@ How to Spatial Modeling with R
 
 This is meant for people new to spatial analysis and modeling with RStudio but comfortable in making simple data visualization with ggplot2.
 
-[How to Spatial Modeling with R pdf version](_book/How-to-Spatial-Modeling-with-R.pdf)
+[How to Spatial Modeling with R pdf version](book.pdf)
 
 The workshop took place on Wednesday 21st of September 2022 at 6pm EDT (10pm UTC).
 
