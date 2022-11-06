@@ -1,4 +1,5 @@
 # Step to creation:
+# https://quarto.org/docs/publishing/github-pages.html
 
 # create a new project on a new directory
 quarto book project
