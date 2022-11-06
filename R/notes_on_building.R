@@ -23,7 +23,7 @@ _files
 # publish your book on github pages
 # change the _quarto.yml file into:
 project:
-  type: website
+  type: book
   output-dir: docs
 # add a .nojekyll file ...(terminal)
 touch .nojekyll
