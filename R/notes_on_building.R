@@ -24,7 +24,7 @@ _files
 # change the _quarto.yml file into:
 project:
   type: website
-output-dir: docs
+  output-dir: docs
 # add a .nojekyll file ...(terminal)
 touch .nojekyll
 # then type
@@ -35,7 +35,12 @@ quarto render
 # quarto render creates a folder
 docs
 
-# check the index.html file
+# check the index.html file  ??????
+
+git commit
+git push
+
+
 
 
 

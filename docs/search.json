@@ -1,44 +1,72 @@
 [
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "",
-    "section": "",
-    "text": "Cran Spatial↩︎\nhttps://en.wikipedia.org/wiki/Kriging↩︎\nGeospatial Analysis and Model Building↩︎\nSpatial data models↩︎\nVector data models↩︎\nhttps://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm↩︎\ndeveloping a cancer atlas↩︎\nGeospatial Health Data: Modeling and Visualization with R-INLA and Shiny↩︎\nDrew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And https://en.wikipedia.org/wiki/Kriging↩︎\ngeospatial analysis and model building↩︎"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "",
+    "title": "How-to-Spatial-Modeling-with-R",
     "section": "",
     "text": "This ice-breaking activity to spatial modeling with R includes two case studies:\n\nOregon spotted frog habitat study\nA type of cancer spread in Scotland\n\nIt is required a good manner of RStudio and a little practice in making plots with {ggplot2}.\nTo set up install the following packages:\n\n\n\nIf these packages are missing in your RStudio they would need to be installed.\nPlease choose between {OpenStreetMap} and {ggmap}, {OpenStreetMap} has some extra Java requirement and it is not always available for the most updated versions of Mac.\n\nmy_packages <- c(\"tidyverse\",\"ggthemes\",\n                 \"maptools\",\"OpenStreetMap\",\"ggmap\",\n                 \"spdep\",\"sf\",\"spocc\",\n                 \"dismo\",\"SpatialEpi\")\n\ninstall.packages(my_packages, repos = \"http://cran.rstudio.com\")\n\ninstall.packages(\"remotes\")\nremotes::install_github(\"fgazzelloni/oregonfrogs\")\n\nThe GitHub repository for this workshop is here: https://github.com/Fgazzelloni/How-to-Spatial-Modeling-with-R\nOnce installed the packages go to the GitHub repo above, You can fork the repository onto your RStudio, or copy and paste the code directly. Another option is to use {usethis} and some of its handling functions, for open the project in your machine.\nOnce set go to the /data folder and load the RData in the environment. It will make things easier as you don’t need to run some chucks of code which will require some time to compute, and for this reason are set to eval = false.\nFor any questions please email: docksbox@pm.me"
   },
   {
-    "objectID": "conclusions.html",
-    "href": "conclusions.html",
-    "title": "",
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
     "section": "",
-    "text": "This is the end of our tutorial on how to spatial modeling with R.\nThe most interesting part of this overall introduction is how to manage different packages dealing with both raster and vector data. We now know how to deal with different type of data for making a map, and are aware of the model adjustments that are required for making a spatial model. Important to mention are the weights and the distances, these two factors are very important for influencing the results of a model predictor.\nGood luck with your maps! I look forward to seeing your future Twitter posts for the next #30DayMapChallenge edition 2022."
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "",
-    "section": "",
-    "text": "Where to start: https://rspatial.org/\nOverview by Cran on Spatials: https://cran.r-project.org/web/views/Spatial.html\nA list of packages: https://github.com/cran-task-views/Spatial/blob/main/Spatial.md\nCarpenteries: https://datacarpentry.org/lessons/#geospatial-curriculum\nBooks to start:\n\nGeocomputation with R\nApplied Spatial Data Analysis with R\n\nOther references:\n\nSpatial Data Science\nIntroduction to Spatial Data Programming with R\n\nusethis: - An Introduction to R for Spatial Analysis and Mapping - Consumer Data Research Center\nExtra:\n\nA free introduction to geo"
-  },
-  {
-    "objectID": "case_study_2.html",
-    "href": "case_study_2.html",
-    "title": "",
-    "section": "",
-    "text": "Applied Spatial Data Analysis with R↩︎\nareal data theory↩︎"
+    "text": "In geostatistical models, sampled data are interpreted as the result of a random process.2\nSpatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometric, general ecology, as well as public transportation and real-estate.\nThe development of spatial models and modeling techniques evolved along the times allowing for workflows implementation of geospatial analysis.3\nAn important distinction has to be made between spatial model and spatial data model.\nWhile data models are important connections between the individual perception of certain events and how those events are being represented and processed with an algorithm as spatial primitives and relationships.\nSpatial models are defined as process models. Dynamic spatial processes are phenomena that change in time, such as a virus spread, flood formation, and land cover change.\nA heuristic explanation of how point distances are calculated is to considered whether the Eulerian or the Lagrangian views are the most suitable ones.\n\nEulerian models concern about the change of properties (e.g. temperature, land cover) at fixed locations, while Lagrangian models tracks the movement of objects in space.\n\n\nAs said, one more important distinction is that geographic information systems (GISs) are composed of raster and vector data.4\n\n\n\n\n\nCredits:Spatial data models\n\n\n\n\nIn this workshop only vector data will be examined to provide insight into geographic variations in distribution of data (such as species, frogs in Oregon and/or diseases risk spread).5\n\nIn vector data models space is not quantized into discrete grid cells like the raster model, but use points and associated X, Y coordinate pairs to represent the vertices of spatial feature.\n\nIn particular, will be examined location clustering and disease clustering.\nWe will be looking at two case studies:\n\nOregon frogs habitat locations\nCancer expected development in a particular location\n\nSpatial models allows for spatial autocorrelation. In general modeling, multicollinearity, or correlation among predictors in the model is used to make predictor selection. In case of spatial modeling, predictors such as longitude and latitude are evidence of important underlying spatial processes at work; an integral component of the data. 6\nSpatial data is considered typically autocorrelated and/or clustered.7 A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.\nHence, data may be spatially correlated and observations in neighboring areas may be more similar than observations in areas that are farther away.8\nThe analysis of the residual spatial autocorrelation and the prediction of continuous spatial process is called Kriging(geo interpolation named after Danie Kringe (South Africa)) (also known as Wiener–Kolmogorov prediction / distance-weighted average).9\nA spatial model is a representation of various social and natural processes:\n\nland cover change\nspread of invasive species\npopulation migration\n\nSo, to be more explicit, spatial modeling combines spatial analysis and predictions.\n\n\n\n\n\nCredits:https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116\n\n\n\n\nKrinking is even the term that defines the best model performance, and so, the best prediction. This term is considered as synonym of prediction in classical data forecasting model techniques.\n\nThe integration of GIS and Multicriteria Decision-Making Analysis (MCDA) is key in providing help to decision makers in different areas.\nGIS-based MCDA use a linear weighted equation to combine the spatial variables.10\n\\[y=\\sum_{i=1}^n{w_if(x_i)}\\]\nWhere \\(W\\) defines a spatial neighborhood structure over the entire study region, and its elements can be viewed as weights.\nUnder this structure, the total number of neighbors in each area is adjusted to obtain a standardized matrix:\n\\[w_\\text{std(i,j)}=\\frac{w_{ij}}{\\sum_{j=1}^{n}{w_{ij}}}\\]\n\n\n\n\n\nCran Spatial↩︎\nhttps://en.wikipedia.org/wiki/Kriging↩︎\nGeospatial Analysis and Model Building↩︎\nSpatial data models↩︎\nVector data models↩︎\nhttps://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm↩︎\ndeveloping a cancer atlas↩︎\nGeospatial Health Data: Modeling and Visualization with R-INLA and Shiny↩︎\nDrew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And https://en.wikipedia.org/wiki/Kriging↩︎\ngeospatial analysis and model building↩︎"
   },
   {
     "objectID": "case_study_1.html",
     "href": "case_study_1.html",
-    "title": "",
+    "title": "2  Case study 1: Rana Pretiosa",
     "section": "",
-    "text": "Crane Prairie Reservoir↩︎\nGeospatial Health Data: Modeling and Visualization with R-INLA and Shiny↩︎\nbook geospatial↩︎"
+    "text": "The first case study is about animal ecology, we will be looking at a frog particular specie Rana Pretiosa, scientific name Rana pretiosa Baird & Girard, 1853, and use some interesting data from Oregon as well as downloading more data from GBIF | Global Biodiversity Information Facility.\nThe scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham."
+  },
+  {
+    "objectID": "case_study_1.html#look-at-oregonfrogs-data",
+    "href": "case_study_1.html#look-at-oregonfrogs-data",
+    "title": "2  Case study 1: Rana Pretiosa",
+    "section": "2.1 Look at oregonfrogs data",
+    "text": "2.1 Look at oregonfrogs data\nLet’s have a first sight at the data based on location. The first thing to notice is that points (frogs) are aligned following some sort of linearity. But, what is the difference from other data, is that now these points are following an environment. Let’s have a look at it.\n\nggplot(data = frogs_location, aes(x=long,y=lat))+\n  geom_point() +\n  geom_smooth(method = \"loess\") +\n  theme_bw()\n\n\n\n\n\n2.1.1 Let’s map the lake!\nHow do we set the map for the location of our Rana Pretiosa in the Crane Prairie Reservoir?\nIn the study page we can find the BOX, the box is the four corner reference points, bounding our interested area.\nBounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc\nBounding Box[-121.824775, 43.764375, -121.764923, 43.814821]\nThe area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the plot.OpenStreetMap() or simply the plot() function. The {OpenStreetMap} doesn’t work the same for all systems. You’ll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.\nSo, don’t run this part if you incurr issues with {OpenStreetMap}, jump on the next one.\n\nlibrary(OpenStreetMap)\nmap <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))\n\nOpenStreetMap::plot.OpenStreetMap(map)\nwider_map <- openproj(map)\nbase_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + \n  geom_point(data = frogs_location,\n             aes(x = long, y = lat), \n             shape=21,stroke=0.2, size =  4,\n             color=\"grey40\") +\n  xlab(\"Longitude (°E)\") + ylab(\"Latitude (°S)\")\n\n\n\n\n\n\nCrane Prairie Reservoir\n\n\n\n\nIn this map is made with {ggmap} and {ggplot2} for the frogs locations.\n\nlibrary(ggmap)\n\n\nbox=c(43.764375,-121.824775,43.814821,-121.764923)\ncrane_reservoir <- get_stamenmap(bbox = c(left = -121.824775, \n                                          bottom = 43.764375, \n                                          right = -121.764923, \n                                          top = 43.814821),\n                                 zoom = 13, color = c(\"color\"),\n                                 maptype = \"terrain-background\")\n\n\nbase_map <- ggmap(crane_reservoir) + \n    geom_point(data = frogs_location,\n             aes(x = long, y = lat), \n             shape=21,stroke=0.2, size =  4,\n             color=\"grey40\") +\n  xlab(\"Longitude (°E)\") + ylab(\"Latitude (°S)\")\n\nbase_map"
+  },
+  {
+    "objectID": "case_study_1.html#time-as-coordinate",
+    "href": "case_study_1.html#time-as-coordinate",
+    "title": "2  Case study 1: Rana Pretiosa",
+    "section": "2.2 Time as coordinate",
+    "text": "2.2 Time as coordinate\nWith a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.\n\nfrogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,\n                            geometry=frogs_coord$geometry) %>%\n  mutate(time = as.Date(\"2018-01-01\") + ReportedDay,\n         month=lubridate::month(time))\n\n\nbase_map +\n  geom_sf(data = frogs_location_tm,\n          aes(col = factor(month), geometry = geometry),\n          inherit.aes = F) +\n  facet_wrap(~cut(time, \"1 months\")) + \n  scale_color_discrete(labels = c(\"September\",\"October\",\"November\"))+\n  labs(color = \"Month\")+\n  theme_void()\n\n\n\n\n\n\nSome speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November."
+  },
+  {
+    "objectID": "case_study_1.html#make-a-grid",
+    "href": "case_study_1.html#make-a-grid",
+    "title": "2  Case study 1: Rana Pretiosa",
+    "section": "2.3 Make a grid",
+    "text": "2.3 Make a grid\nLet’s create a grid of points around the frogs’ locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a Simple feature collection of points and not a tibble with coordinates as before. The functions sf::st_make_grid() and sf::st_as_sfc(sf::st_bbox(points)) with the bbox reference for the points let us create a grid.\n\n# make a grid\nfrogs_coord_freq <- tibble(oregonfrogs$UTME_83, oregonfrogs$UTMN_83,\n                      oregonfrogs$Frequency)\n\npoints <- sf::st_as_sf(x = frogs_coord_freq, \n                       coords = c(1,2), \n                       crs = \"+proj=utm +zone=10\") %>%\n  sf::st_transform(frogs_coord, \n                   crs = \"+proj=longlat +datum=WGS84\")  \n\n\ngrid = sf::st_make_grid(\n  sf::st_as_sfc(sf::st_bbox(points)),\n  what = \"centers\",\n  cellsize = .002, \n  square = F)\n\nWhat we do now is to group the frogs by date.\n\noregonfrogs%>%\n  mutate(SurveyDate=as.Date(SurveyDate,\"%m/%d/%Y\"))%>%\n  arrange(SurveyDate)%>%\n  count(SurveyDate,Ordinal)%>%\n  head(3)\n\n# A tibble: 3 × 3\n  SurveyDate Ordinal     n\n  <date>       <dbl> <int>\n1 2018-09-12     255     3\n2 2018-09-13     256     3\n3 2018-09-18     261     7"
+  },
+  {
+    "objectID": "case_study_1.html#work-with-models",
+    "href": "case_study_1.html#work-with-models",
+    "title": "2  Case study 1: Rana Pretiosa",
+    "section": "2.4 Work with Models",
+    "text": "2.4 Work with Models\nPackages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don’t need to load them.\n\nlibrary(dismo)  # for modeling\n\nHere we use wrld_simpl data from {maptools}, to be able to use the plot() function faster, you can install the package or load it because data is included in the /data folder as .RData format. We can load the data/case_study_1.RData to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you’d like to do that separately, just type: load(\"data/case_study_1.RData\") and all data will be loaded in the global environment\n\nworld <- map_data(\"world\")\ngbi_coords<- tibble(x=do_gbif2$longitude,y=do_gbif2$latitude)\n\nggplot(world)+\n  geom_polygon(aes(long,lat,group=group),fill=\"grey90\",color=\"grey30\") +\n  geom_polygon(data=states, aes(long,lat,group=group),color=\"grey40\") +\n  geom_point(data = gbi_coords, aes(x,y),\n             color=\"pink\") +\n  coord_sf(xlim=c(-125,-90),ylim=c(35,65))+\n  ggthemes::theme_map()\n\nThis is a raster stack composed of 19 raster layers.\n\nfrogs <-data.frame(long=do_gbif2$longitude,lat=do_gbif2$latitude)\nclimate <- dismo::getData(\"worldclim\",download = T,var=\"bio\",res=2.5)\n\nplot(climate,legend=false)\n\n\n\n\n\n\n\nfrog_climate <- extract(climate,frogs)\n\n\nfrog_climate %>% head(3)\n\n     bio1 bio2 bio3 bio4 bio5 bio6 bio7 bio8 bio9 bio10 bio11 bio12 bio13 bio14\n[1,]  100   85   34 5669  237  -11  248   32  171   171    27  1737   248    53\n[2,]   72   88   33 6123  220  -43  263    1  151   151    -4  1514   225    47\n[3,]   59   83   35 5268  194  -40  234    1  127   129    -3  1731   258    49\n     bio15 bio16 bio17 bio18 bio19\n[1,]    48   731   184   184   667\n[2,]    50   656   161   161   599\n[3,]    50   749   178   195   687\n\n\nApply the Bioclim algorithm used for species distribution modeling, the classic climate-envelope-model. It computes the similarity of a location by comparing the values of environmental variables at any location to a percentile distribution of the values at known locations of occurrence. More info here: ?dismo::bioclim\nWe use the pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE) function to plot the results of the model, with options from the {dismo} package.\n\nrequire(dismo)\nbioclim.mod <- dismo::bioclim(frog_climate)\n\n\npairs(bioclim.mod,pa=\"pa\")\n\n\n\n\n\n\nNow, let’s build a stack with the stack() function, including all the bioclimatic layers from the original raster stack.\n\ndoParallel::registerDoParallel()\npredictors <- stack(climate$bio1,climate$bio2,climate$bio3,\n                    climate$bio4,climate$bio5,\n                    climate$bio6,climate$bio7,climate$bio8,\n                    climate$bio9,climate$bio10,climate$bio11,\n                    climate$bio12,climate$bio13,climate$bio14,\n                    climate$bio15,climate$bio16,climate$bio17,\n                    climate$bio18,climate$bio19)\npredictions <- predict(predictors,bioclim.mod)\n\n\nplot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)"
+  },
+  {
+    "objectID": "case_study_2.html",
+    "href": "case_study_2.html",
+    "title": "3  Case study 2: Disease mapping",
+    "section": "",
+    "text": "A simple measure of disease risk in areas is the standardized incidence ratio (SIR). 2\n\n\n\n\n\nApplied Spatial Data Analysis with R↩︎\nareal data theory↩︎"
+  },
+  {
+    "objectID": "conclusions.html",
+    "href": "conclusions.html",
+    "title": "4  Conclusions",
+    "section": "",
+    "text": "The most interesting part of this overall introduction is how to manage different packages dealing with both raster and vector data. We now know how to deal with different type of data for making a map, and are aware of the model adjustments that are required for making a spatial model. Important to mention are the weights and the distances, these two factors are very important for influencing the results of a model predictor.\nGood luck with your maps! I look forward to seeing your future Twitter posts for the next #30DayMapChallenge edition 2022."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Overview by Cran on Spatials: https://cran.r-project.org/web/views/Spatial.html\nA list of packages: https://github.com/cran-task-views/Spatial/blob/main/Spatial.md\nCarpenteries: https://datacarpentry.org/lessons/#geospatial-curriculum\nBooks to start:\n\nGeocomputation with R\nApplied Spatial Data Analysis with R\n\nOther references:\n\nSpatial Data Science\nIntroduction to Spatial Data Programming with R\n\nusethis: - An Introduction to R for Spatial Analysis and Mapping - Consumer Data Research Center\nExtra:\n\nA free introduction to geo"
   }
 ]

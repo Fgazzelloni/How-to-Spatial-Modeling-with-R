@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>case_study_1</title>
+<title>How-to-Spatial-Modeling-with-R - 2&nbsp; Case study 1: Rana Pretiosa</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,11 +87,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./case_study_2.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -124,25 +127,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Case study 1: Rana Pretiosa</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">How-to-Spatial-Modeling-with-R</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prerequisites</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./case_study_1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Case study 1: Rana Pretiosa</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./case_study_2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Case study 2: Disease mapping</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conclusions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#get-started-making-a-map" id="toc-get-started-making-a-map" class="nav-link active" data-scroll-target="#get-started-making-a-map"><span class="toc-section-number">2.0.1</span>  Get started making a map!</a></li>
+  <li><a href="#look-at-oregonfrogs-data" id="toc-look-at-oregonfrogs-data" class="nav-link" data-scroll-target="#look-at-oregonfrogs-data"><span class="toc-section-number">2.1</span>  Look at oregonfrogs data</a>
+  <ul class="collapse">
+  <li><a href="#lets-map-the-lake" id="toc-lets-map-the-lake" class="nav-link" data-scroll-target="#lets-map-the-lake"><span class="toc-section-number">2.1.1</span>  Let’s map the lake!</a></li>
+  </ul></li>
+  <li><a href="#time-as-coordinate" id="toc-time-as-coordinate" class="nav-link" data-scroll-target="#time-as-coordinate"><span class="toc-section-number">2.2</span>  Time as coordinate</a></li>
+  <li><a href="#make-a-grid" id="toc-make-a-grid" class="nav-link" data-scroll-target="#make-a-grid"><span class="toc-section-number">2.3</span>  Make a grid</a></li>
+  <li><a href="#work-with-models" id="toc-work-with-models" class="nav-link" data-scroll-target="#work-with-models"><span class="toc-section-number">2.4</span>  Work with Models</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Case study 1: Rana Pretiosa</span></h1>
+</div>
 
 
-<section id="case-study-1-rana-pretiosa" class="level1">
-<h1>Case study 1: Rana Pretiosa</h1>
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
 <p>The first case study is about animal ecology, we will be looking at a frog particular specie <strong>Rana Pretiosa</strong>, scientific name <strong>Rana pretiosa Baird &amp; Girard, 1853</strong>, and use some interesting data from Oregon as well as downloading more data from <strong>GBIF | Global Biodiversity Information Facility</strong>.</p>
 <p>The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.</p>
-<section id="get-started-making-a-map" class="level3">
-<h3 class="anchored" data-anchor-id="get-started-making-a-map">Get started making a map!</h3>
+<section id="get-started-making-a-map" class="level3" data-number="2.0.1">
+<h3 data-number="2.0.1" class="anchored" data-anchor-id="get-started-making-a-map"><span class="header-section-number">2.0.1</span> Get started making a map!</h3>
 <p>The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -293,8 +379,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="look-at-oregonfrogs-data" class="level2">
-<h2 class="anchored" data-anchor-id="look-at-oregonfrogs-data">Look at oregonfrogs data</h2>
+<section id="look-at-oregonfrogs-data" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="look-at-oregonfrogs-data"><span class="header-section-number">2.1</span> Look at oregonfrogs data</h2>
 <p>Let’s have a first sight at the data based on location. The first thing to notice is that points (frogs) are aligned following some sort of linearity. But, what is the difference from other data, is that now these points are following an environment. Let’s have a look at it.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> frogs_location, <span class="fu">aes</span>(<span class="at">x=</span>long,<span class="at">y=</span>lat))<span class="sc">+</span></span>
@@ -305,8 +391,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="case_study_1_files/figure-html/ch2-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="lets-map-the-lake" class="level3">
-<h3 class="anchored" data-anchor-id="lets-map-the-lake">Let’s map the lake!</h3>
+<section id="lets-map-the-lake" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="lets-map-the-lake"><span class="header-section-number">2.1.1</span> Let’s map the lake!</h3>
 <p>How do we set the map for the location of our <strong>Rana Pretiosa</strong> in the Crane Prairie Reservoir?</p>
 <p>In the study page we can find the <strong>BOX</strong>, the box is the four corner reference points, bounding our interested area.</p>
 <p>Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc</p>
@@ -364,8 +450,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="time-as-coordinate" class="level2">
-<h2 class="anchored" data-anchor-id="time-as-coordinate">Time as coordinate</h2>
+<section id="time-as-coordinate" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="time-as-coordinate"><span class="header-section-number">2.2</span> Time as coordinate</h2>
 <p>With a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>frogs_location_tm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ReportedDay =</span> oregonfrogs<span class="sc">$</span>Ordinal,</span>
@@ -390,8 +476,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.</p>
 </section>
-<section id="make-a-grid" class="level2">
-<h2 class="anchored" data-anchor-id="make-a-grid">Make a grid</h2>
+<section id="make-a-grid" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="make-a-grid"><span class="header-section-number">2.3</span> Make a grid</h2>
 <p>Let’s create a grid of points around the frogs’ locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a <strong>Simple feature</strong> collection of points and not a tibble with coordinates as before. The functions <code>sf::st_make_grid()</code> and <code>sf::st_as_sfc(sf::st_bbox(points))</code> with the bbox reference for the points let us create a grid.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a grid</span></span>
@@ -428,8 +514,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="work-with-models" class="level2">
-<h2 class="anchored" data-anchor-id="work-with-models">Work with Models</h2>
+<section id="work-with-models" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="work-with-models"><span class="header-section-number">2.4</span> Work with Models</h2>
 <p>Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don’t need to load them.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)  <span class="co"># for modeling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -515,7 +601,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr>
 
 
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -625,6 +710,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./case_study_2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Case study 2: Disease mapping</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
