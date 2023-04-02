@@ -210,10 +210,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
 
 </header><p>The first case study is about animal ecology, we will be looking at a frog particular specie <strong>Rana Pretiosa</strong>, scientific name <strong>Rana pretiosa Baird &amp; Girard, 1853</strong>, and use some interesting data from Oregon as well as downloading more data from <strong>GBIF | Global Biodiversity Information Facility</strong>.</p>
-<p>The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.</p>
+<p>The scope is to visualize the presence of these nice little frogs across different location with making a map using <a href="https://ggplot2.tidyverse.org">ggplot2</a> by Hadley Wickham.</p>
 <section id="get-started-making-a-map" class="level3" data-number="2.0.1"><h3 data-number="2.0.1" class="anchored" data-anchor-id="get-started-making-a-map">
 <span class="header-section-number">2.0.1</span> Get started making a map!</h3>
-<p>The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.</p>
+<p>The first map that we make is a general frog location map of the United States. In this case we need the <a href="https://docs.ropensci.org/spocc">spocc</a> package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from <strong>GBIF</strong> and make the map.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fgazzelloni.github.io/oregonfrogs/">oregonfrogs</a></span><span class="op">)</span></span>
@@ -222,7 +222,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/case_study_1.RData"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="case_study_1_cache/html/ch2-01_6bdded3e9a537a7a8ee9a48ff3a2f782">
+<p>The first step we use the <code>occ {spocc}</code> function. It searches for species occurrence data across many data sources, in this case from <em>GBIF</em>.</p>
+<div class="cell" data-hash="case_study_1_cache/html/ch2-01_4c5b92fd8caa7018a8a029c7eb0c1b98">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">do_gbif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/spocc/reference/occ.html">occ</a></span><span class="op">(</span><span class="st">"Rana pretiosa Baird &amp; Girard, 1853"</span>,</span>
 <span>               from <span class="op">=</span> <span class="st">"gbif"</span>,</span>
 <span>               limit <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -232,38 +233,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="va">do_gbif1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">do_gbif</span><span class="op">$</span><span class="va">gbif</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">do_gbif2</span> <span class="op">&lt;-</span> <span class="va">do_gbif1</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>longitude<span class="op">=</span><span class="va">Rana_pretiosa_Baird_._Girard._1853.longitude</span>,</span>
-<span>         latitude<span class="op">=</span><span class="va">Rana_pretiosa_Baird_._Girard._1853.latitude</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">do_gbif2</span> <span class="op">&lt;-</span> <span class="va">do_gbif1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>longitude <span class="op">=</span> <span class="va">Rana_pretiosa_Baird_._Girard._1853.longitude</span>,</span>
+<span>         latitude <span class="op">=</span> <span class="va">Rana_pretiosa_Baird_._Girard._1853.latitude</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">states</span><span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span></span>
-<span><span class="va">oregon</span> <span class="op">&lt;-</span> <span class="va">states</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">region</span><span class="op">==</span><span class="st">"oregon"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>,<span class="va">lat</span>,group<span class="op">=</span><span class="va">region</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"grey"</span>,fill<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">oregon</span>, </span>
-<span>               inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>               color<span class="op">=</span><span class="st">"pink"</span>,fill<span class="op">=</span><span class="st">"pink"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">do_gbif2</span>,</span>
-<span>             mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">longitude</span>, y<span class="op">=</span><span class="va">latitude</span><span class="op">)</span>,</span>
-<span>             inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>             alpha<span class="op">=</span><span class="fl">0.5</span>,size<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">oregon</span> <span class="op">&lt;-</span> <span class="va">states</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">region</span> <span class="op">==</span> <span class="st">"oregon"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">oregon</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"pink"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"pink"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">do_gbif2</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">longitude</span>, y <span class="op">=</span> <span class="va">latitude</span><span class="op">)</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_map</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="case_study_1_files/figure-html/ch2-03-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Once visualized, we will be making some assumptions about their movement and habitat use based on the results of a study by Dr.&nbsp;Michael J Adams from the Forest and Rangeland Ecosystem Science Center in Oregon.</p>
-<p>More information about this study can be found here: https://doi.org/10.1670/20-060</p>
-<p>The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02</p>
-<p>Or, you can install the package from github: https://github.com/Fgazzelloni/oregonfrogs</p>
+<p>More information about this study can be found here: <a href="https://doi.org/10.1670/20-060">Late-Season Movement and Habitat Use by Oregon Spotted Frog (Rana pretiosa) in a Large Reservoir in Oregon, USA</a></p>
+<p>The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02">oregonfrogs</a></p>
+<p>Or, you can install the package from github: <a href="https://github.com/Fgazzelloni/oregonfrogs">https://github.com/Fgazzelloni/oregonfrogs</a></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/oregonfrogs.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Credits: oregonfrogs package</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Credits: <a href="https://github.com/Fgazzelloni/oregonfrogs">oregonfrogs package</a></figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -273,54 +281,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"fgazzelloni/oregonfrogs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One of the most important step of spatial modeling, and modeling in general, is to have a good knowledge of the argument. So, the more we know about <strong>Rana Pretiosa</strong> the better!</p>
-<p>Let’s hear <strong>Rana Pretiosa</strong> sound: https://amphibiaweb.org/species/5131</p>
-<p>More information about Rana pretiosa can be found here:</p>
+<p>Let’s hear <strong>Rana Pretiosa</strong> sound <strong>hear call</strong>: <a href="https://amphibiaweb.org/species/5131">https://amphibiaweb.org/species/5131</a></p>
+<p>More information about <code>Rana pretiosa</code> can be found here:</p>
 <ul>
-<li><a href="https://www.gbif.org/species/2426776">GBIF</a></li>
+<li><a href="https://www.gbif.org/species/2426776">GBIF Species: Rana pretiosa</a></li>
 </ul>
 <p>In particular, we will be looking at the location where <strong>rana pretiosa</strong> has been located with the use of radio telemetry frequencies in the <strong>Crane Prairie Reservoir</strong>, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>An interesting map of the lake with related data can be found here: <a href="https://data.deschutes.org/datasets/deschutes::lakes-and-reservoirs-1/explore">Lake and Reservoir in Deschutes County in Oregon map data</a></p>
 <p>We will require more packages while performing our analysis.</p>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fgazzelloni.github.io/oregonfrogs/">oregonfrogs</a></span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fgazzelloni.github.io/oregonfrogs/">oregonfrogs</a></span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s have a look at the data, we have 311 observations and 16 variables which include the habitat type, the date, the radio frequency, and other variables such as gender, type of water, presence of beavers, and if they are captured, located or just visualized.</p>
 <p>So, many interesting hypothesis can be done about their movements habitat use.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oregonfrogs</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oregonfrogs</span> <span class="op">&lt;-</span> <span class="fu">oregonfrogs</span><span class="fu">::</span><span class="va"><a href="https://fgazzelloni.github.io/oregonfrogs/reference/oregonfrogs_raw.html">oregonfrogs_raw</a></span></span>
+<span><span class="va">oregonfrogs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  detection survey_date doy      long      lat sex frequency interval subsite
-1  Captured  2018-09-25 268 -121.7903 43.76502   0   164.169        0 SE Pond
-2 No visual  2018-10-02 275 -121.7905 43.76503   0   164.169        1 SE Pond
-3 No visual  2018-10-09 282 -121.7906 43.76477   0   164.169        2 SE Pond
-  hab_type         water       type      structure         substrate    beaver
-1     Pond    Deep water Marsh/Pond Herbaceous veg Unknown substrate No beaver
-2     Pond    Deep water Marsh/Pond           Open Unknown substrate No beaver
-3     Pond Shallow water Marsh/Pond Herbaceous veg Unknown substrate No beaver</code></pre>
+<pre><code># A tibble: 3 × 16
+  Site    Subsite HabType Surve…¹ Ordinal Frequ…² UTME_83 UTMN_83 Inter…³ Female
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 Crane … SE Pond Pond    9/25/2…     268    164.  597369 4846486       0      0
+2 Crane … SE Pond Pond    10/2/2…     275    164.  597352 4846487       1      0
+3 Crane … SE Pond Pond    10/9/2…     282    164.  597345 4846458       2      0
+# … with 6 more variables: Water &lt;chr&gt;, Type &lt;chr&gt;, Structure &lt;chr&gt;,
+#   Substrate &lt;chr&gt;, Beaver &lt;chr&gt;, Detection &lt;chr&gt;, and abbreviated variable
+#   names ¹​SurveyDate, ²​Frequency, ³​Interval</code></pre>
 </div>
 </div>
 <p>One more interesting information is about the location, in this case a <strong>UTM distance</strong> (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location.</p>
 <p>The <strong>Universal Transverse Mercator (UTM)</strong> is a common projection is which preserves local angles and shapes, and divides the Earth into 60 zones of 6 degrees of longitude in width. Each of the zones uses a transverse Mercator projection that maps a region of large north-south extent. <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into <strong>longitude</strong> and <strong>latitude</strong>. For doing this we need the {sf} package by Edzer Pebesma.</p>
+<p>Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into <strong>longitude</strong> and <strong>latitude</strong>. For doing this we need the <a href="https://r-spatial.github.io/sf/">sf</a> package by <strong>Edzer Pebesma</strong>.</p>
 <p>Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting.</p>
 <p>To transform the UTM values into long and lat we use the <code><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">sf::st_as_sf()</a></code> function with some arguments which are compulsory for what we do.</p>
 <p>We need to specify where the coordinates are located in our set, and set a <strong>CRS</strong> or coordinate reference system information.</p>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Build a tibble with the geo-location information</span></span>
-<span><span class="va">frogs_coord</span> <span class="op">&lt;-</span> <span class="va">oregonfrogs_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">frogs_coord</span> <span class="op">&lt;-</span> <span class="va">oregonfrogs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">UTME_83</span>, <span class="va">UTMN_83</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Tranform it to lat and long</span></span>
-<span><span class="va">frogs_coord</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">frogs_coord</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">frogs_coord</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">frogs_coord</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># transform to simple features as geometry</span></span>
-<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>               crs <span class="op">=</span> <span class="st">"+proj=utm +zone=10"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="co"># utm tranformation to longlat</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="st">"+proj=longlat +datum=WGS84"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">frogs_coord</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">frogs_coord</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
               geometry
@@ -330,12 +340,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 3 (-121.7906 43.76477)</code></pre>
 </div>
 </div>
-<p>As you can see the first projection points to <em>utm</em> as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.</p>
+<p>As you can see the first projection points to <strong>utm</strong> as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on <strong>WGS84, (World Geodetic System 1984, known as EPSG:4326)</strong>, which express the degree of longitude and latitude starting from a particular point of view, in this case <strong>EPSG:4326</strong>.</p>
 <div class="cell" data-layout-align="center" data-fig.dim="50%">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/epsg_4326.png" class="img-fluid figure-img" width="282"></p>
-<p></p><figcaption class="figure-caption">Credits: https://epsg.io/4326</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Credits: <a href="https://epsg.io/4326">https://epsg.io/4326</a></figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -343,27 +353,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>All the available CRS in R can be seen by typing <code>View(rgdal::make_EPSG())</code> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
-<span><span class="va">frogs_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>Detection <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Detection</span>,</span>
-<span>                         Subsite <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Subsite</span>,</span>
-<span>                         Frequency <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Frequency</span>,</span>
-<span>                         lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                         long <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">frogs_location</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  Detection <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Detection</span>,</span>
+<span>  Subsite <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Subsite</span>,</span>
+<span>  Frequency <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Frequency</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  long <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">frogs_location</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">frogs_location</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-    lat  long
-  &lt;dbl&gt; &lt;dbl&gt;
-1  43.8 -122.
-2  43.8 -122.
-3  43.8 -122.</code></pre>
+<pre><code># A tibble: 3 × 5
+  Detection Subsite Frequency   lat  long
+  &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Captured  SE Pond      164.  43.8 -122.
+2 No visual SE Pond      164.  43.8 -122.
+3 No visual SE Pond      164.  43.8 -122.</code></pre>
 </div>
 </div>
 </section><section id="look-at-oregonfrogs-data" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="look-at-oregonfrogs-data">
 <span class="header-section-number">2.1</span> Look at oregonfrogs data</h2>
 <p>Let’s have a first sight at the data based on location. The first thing to notice is that points (frogs) are aligned following some sort of linearity. But, what is the difference from other data, is that now these points are following an environment. Let’s have a look at it.</p>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">frogs_location</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">long</span>,y<span class="op">=</span><span class="va">lat</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">frogs_location</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -375,28 +387,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="header-section-number">2.1.1</span> Let’s map the lake!</h3>
 <p>How do we set the map for the location of our <strong>Rana Pretiosa</strong> in the Crane Prairie Reservoir?</p>
 <p>In the study page we can find the <strong>BOX</strong>, the box is the four corner reference points, bounding our interested area.</p>
-<p>Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc</p>
+<p>Bounding Box: <a href="https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc">https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc</a></p>
 <p>Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]</p>
-<p>The area can be retrieved with {OpenStreetMap} package by Ian Fellows and visualized with a nice resolution with the <code><a href="https://rdrr.io/pkg/OpenStreetMap/man/plot.OpenStreetMap.html">plot.OpenStreetMap()</a></code> or simply the <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function. The {OpenStreetMap} has changed some requirements, a turn around is to use the **MapBox** API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you’ll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.</p>
+<p>The area can be retrieved with <a href="https://github.com/ifellows/ROSM">OpenStreetMap</a> package by Ian Fellows and visualized with a nice resolution with the <code><a href="https://rdrr.io/pkg/OpenStreetMap/man/plot.OpenStreetMap.html">plot.OpenStreetMap()</a></code> or simply the <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function. The {OpenStreetMap} has changed some requirements, a turn around is to use the **MapBox** API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you’ll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.</p>
 <p>So, don’t run this part in case of arising issues with {OpenStreetMap}, but jump on the next one.</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ifellows/ROSM">OpenStreetMap</a></span><span class="op">)</span></span>
 <span><span class="va">apiKey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"?access_token="</span>,</span>
 <span>                 <span class="st">"xxxx xxxx your mapbox xxxx"</span><span class="op">)</span></span>
-<span><span class="va">baseUrl</span> <span class="op">&lt;-</span> <span class="st">"https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"</span></span>
-<span><span class="co">###### ###### ###### ###### ###### ###### ###### ###### ###### </span></span>
-<span><span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/openmap.html">openmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">43.764375</span>,<span class="op">-</span><span class="fl">121.824775</span><span class="op">)</span>,</span>
-<span>               <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">43.814821</span>,<span class="op">-</span><span class="fl">121.764923</span><span class="op">)</span>,</span>
-<span>               minNumTiles<span class="op">=</span><span class="fl">4</span>,</span>
-<span>               type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">baseUrl</span>,<span class="va">apiKey</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">baseUrl</span> <span class="op">&lt;-</span></span>
+<span>  <span class="st">"https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"</span></span>
+<span></span>
+<span><span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/openmap.html">openmap</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">43.764375</span>, <span class="op">-</span><span class="fl">121.824775</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">43.814821</span>, <span class="op">-</span><span class="fl">121.764923</span><span class="op">)</span>,</span>
+<span>  minNumTiles <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">baseUrl</span>, <span class="va">apiKey</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">OpenStreetMap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/plot.OpenStreetMap.html">plot.OpenStreetMap</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span></span>
 <span><span class="va">wider_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/openproj.html">openproj</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span></span>
-<span><span class="va">base_map</span> <span class="op">&lt;-</span> <span class="fu">OpenStreetMap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/autoplot.OpenStreetMap.html">autoplot.OpenStreetMap</a></span><span class="op">(</span><span class="va">wider_map</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">frogs_location</span>,</span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, </span>
-<span>             shape<span class="op">=</span><span class="fl">21</span>,stroke<span class="op">=</span><span class="fl">0.2</span>, size <span class="op">=</span>  <span class="fl">4</span>,</span>
-<span>             color<span class="op">=</span><span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">base_map</span> <span class="op">&lt;-</span> <span class="fu">OpenStreetMap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/OpenStreetMap/man/autoplot.OpenStreetMap.html">autoplot.OpenStreetMap</a></span><span class="op">(</span><span class="va">wider_map</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">frogs_location</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
+<span>    shape <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>    stroke <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    size <span class="op">=</span>  <span class="fl">4</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"grey40"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Longitude (°E)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Latitude (°S)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -408,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>In this map is made with {ggmap} and {ggplot2} for the frogs locations.</p>
+<p>In this map is made with <a href="https://github.com/dkahle/ggmap">ggmap</a> and <a href="https://ggplot2.tidyverse.org">ggplot2</a> for the frogs locations.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -422,11 +441,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>                                 maptype <span class="op">=</span> <span class="st">"terrain-background"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">crane_reservoir</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">frogs_location</span>,</span>
-<span>             <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, </span>
-<span>             shape<span class="op">=</span><span class="fl">21</span>,stroke<span class="op">=</span><span class="fl">0.2</span>, size <span class="op">=</span>  <span class="fl">4</span>,</span>
-<span>             color<span class="op">=</span><span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span><span class="op">(</span><span class="va">crane_reservoir</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">frogs_location</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
+<span>    shape <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>    stroke <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    size <span class="op">=</span>  <span class="fl">4</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"grey40"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Longitude (°E)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Latitude (°S)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">base_map</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -438,19 +461,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="header-section-number">2.2</span> Time as coordinate</h2>
 <p>With a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.</p>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frogs_location_tm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>ReportedDay <span class="op">=</span> <span class="va">oregonfrogs_raw</span><span class="op">$</span><span class="va">Ordinal</span>,</span>
-<span>                            geometry<span class="op">=</span><span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frogs_location_tm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>ReportedDay <span class="op">=</span> <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Ordinal</span>,</span>
+<span>                            geometry <span class="op">=</span> <span class="va">frogs_coord</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2018-01-01"</span><span class="op">)</span> <span class="op">+</span> <span class="va">ReportedDay</span>,</span>
-<span>         month<span class="op">=</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>         month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">base_map</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">frogs_location_tm</span>,</span>
 <span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>, geometry <span class="op">=</span> <span class="va">geometry</span><span class="op">)</span>,</span>
 <span>          inherit.aes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"1 months"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_color_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"September"</span>,<span class="st">"October"</span>,<span class="st">"November"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Month"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">time</span>, <span class="st">"1 months"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_color_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"September"</span>, <span class="st">"October"</span>, <span class="st">"November"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Month"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -461,30 +484,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Some speculation could be done about the reasons why the frogs are not located in some substrates of the lake in September more than in November.</p>
 </section><section id="make-a-grid" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="make-a-grid">
 <span class="header-section-number">2.3</span> Make a grid</h2>
-<p>Let’s create a grid of points around the frogs’ locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a <strong>Simple feature</strong> collection of points and not a tibble with coordinates as before. The functions <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html">sf::st_make_grid()</a></code> and <code>sf::st_as_sfc(sf::st_bbox(points))</code> with the bbox reference for the points let us create a grid.</p>
+<p>Let’s create a grid of points around the frogs’ locations. In order to do that we need the <a href="https://r-spatial.github.io/sf/">sf</a> package, initially we do the same as before, but now we want a <strong>Simple feature</strong> collection of points and not a tibble with coordinates as before. The functions <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html">sf::st_make_grid()</a></code> and <code>sf::st_as_sfc(sf::st_bbox(points))</code> with the bbox reference for the points let us create a grid.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># make a grid</span></span>
-<span><span class="va">frogs_coord_freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">oregonfrogs_raw</span><span class="op">$</span><span class="va">UTME_83</span>, <span class="va">oregonfrogs_raw</span><span class="op">$</span><span class="va">UTMN_83</span>,</span>
-<span>                      <span class="va">oregonfrogs_raw</span><span class="op">$</span><span class="va">Frequency</span><span class="op">)</span></span>
+<span><span class="va">frogs_coord_freq</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">oregonfrogs</span><span class="op">$</span><span class="va">UTME_83</span>,</span>
+<span>         <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">UTMN_83</span>,</span>
+<span>         <span class="va">oregonfrogs</span><span class="op">$</span><span class="va">Frequency</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">frogs_coord_freq</span>, </span>
-<span>                       coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, </span>
+<span><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">frogs_coord_freq</span>,</span>
+<span>                       coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                       crs <span class="op">=</span> <span class="st">"+proj=utm +zone=10"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">frogs_coord</span>, </span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">frogs_coord</span>,</span>
 <span>                   crs <span class="op">=</span> <span class="st">"+proj=longlat +datum=WGS84"</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">grid</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html">st_make_grid</a></span><span class="op">(</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html">st_as_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  what <span class="op">=</span> <span class="st">"centers"</span>,</span>
-<span>  cellsize <span class="op">=</span> <span class="fl">.002</span>, </span>
-<span>  square <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  cellsize <span class="op">=</span> <span class="fl">.002</span>,</span>
+<span>  square <span class="op">=</span> <span class="cn">F</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">grid</span>,size<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">points</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">grid</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">points</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_map.html">theme_map</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="case_study_1_files/figure-html/ch2-17-2-1.png" class="img-fluid" width="672"></p>
@@ -492,10 +518,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>What we do now is to group the frogs by date.</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oregonfrogs_raw</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>SurveyDate<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">SurveyDate</span>,<span class="st">"%m/%d/%Y"</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">SurveyDate</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">SurveyDate</span>,<span class="va">Ordinal</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">oregonfrogs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>SurveyDate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">SurveyDate</span>, <span class="st">"%m/%d/%Y"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">SurveyDate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">SurveyDate</span>, <span class="va">Ordinal</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -508,29 +534,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section><section id="work-with-models" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="work-with-models">
 <span class="header-section-number">2.4</span> Work with Models</h2>
-<p>Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don’t need to load them.</p>
+<p>Packages functionality from rgeos,raster,rgdal,terra packages are included in <a href="https://r-spatial.github.io/sf/">sf</a>,and <a href="https://rspatial.org/raster/sdm/">dismo</a> so we don’t need to load them.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster/sdm/">dismo</a></span><span class="op">)</span>  <span class="co"># for modeling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here we use <strong>wrld_simpl</strong> data from {maptools}, to be able to use the <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function faster, you can install the package or load it because data is included in the <code>/data</code> folder as <code>.RData</code> format. We can load the <code>data/case_study_1.RData</code> to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you’d like to do that separately, just type: <code>load("data/case_study_1.RData")</code> and all data will be loaded in the global environment</p>
+<p>Here we use <strong>wrld_simpl</strong> data from <a href="http://maptools.r-forge.r-project.org/">maptools</a>, to be able to use the <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> function faster, you can install the package or load it because data is included in the <code>/data</code> folder as <code>.RData</code> format. We can load the <code>data/case_study_1.RData</code> to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you’d like to do that separately, just type: <code>load("data/case_study_1.RData")</code> and all data will be loaded in the global environment</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">world</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"world"</span><span class="op">)</span></span>
-<span><span class="va">gbi_coords</span><span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">do_gbif2</span><span class="op">$</span><span class="va">longitude</span>,y<span class="op">=</span><span class="va">do_gbif2</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span>
+<span><span class="va">gbi_coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">do_gbif2</span><span class="op">$</span><span class="va">longitude</span>, y <span class="op">=</span> <span class="va">do_gbif2</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>,<span class="va">lat</span>,group<span class="op">=</span><span class="va">group</span><span class="op">)</span>,fill<span class="op">=</span><span class="st">"grey90"</span>,color<span class="op">=</span><span class="st">"grey30"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">states</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>,<span class="va">lat</span>,group<span class="op">=</span><span class="va">group</span><span class="op">)</span>,color<span class="op">=</span><span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">gbi_coords</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>,</span>
-<span>             color<span class="op">=</span><span class="st">"pink"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">125</span>,<span class="op">-</span><span class="fl">90</span><span class="op">)</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">35</span>,<span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>,</span>
+<span>               fill <span class="op">=</span> <span class="st">"grey90"</span>,</span>
+<span>               color <span class="op">=</span> <span class="st">"grey30"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">states</span>,</span>
+<span>               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>,</span>
+<span>               color <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">gbi_coords</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
+<span>             color <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">125</span>, <span class="op">-</span><span class="fl">90</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">35</span>, <span class="fl">65</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_map.html">theme_map</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a raster stack composed of 19 raster layers.</p>
-<div class="cell" data-hash="case_study_1_cache/html/ch2-21_1acb47dddbcca34b393cc63b759f77c2">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frogs</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>long<span class="op">=</span><span class="va">do_gbif2</span><span class="op">$</span><span class="va">longitude</span>,lat<span class="op">=</span><span class="va">do_gbif2</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span>
-<span><span class="va">climate</span> <span class="op">&lt;-</span> <span class="fu">dismo</span><span class="fu">::</span><span class="fu">getData</span><span class="op">(</span><span class="st">"worldclim"</span>,download <span class="op">=</span> <span class="cn">T</span>,var<span class="op">=</span><span class="st">"bio"</span>,res<span class="op">=</span><span class="fl">2.5</span><span class="op">)</span></span>
+<div class="cell" data-hash="case_study_1_cache/html/ch2-21_4646c49e3227cc35cc548fe403e8cc0b">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frogs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>long <span class="op">=</span> <span class="va">do_gbif2</span><span class="op">$</span><span class="va">longitude</span>, lat <span class="op">=</span> <span class="va">do_gbif2</span><span class="op">$</span><span class="va">latitude</span><span class="op">)</span></span>
+<span><span class="va">climate</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">dismo</span><span class="fu">::</span><span class="fu">getData</span><span class="op">(</span><span class="st">"worldclim"</span>,</span>
+<span>                 download <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                 var <span class="op">=</span> <span class="st">"bio"</span>,</span>
+<span>                 res <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">climate</span>,legend<span class="op">=</span><span class="va">false</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">climate</span>, legend <span class="op">=</span> <span class="va">false</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -538,7 +572,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frog_climate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html">extract</a></span><span class="op">(</span><span class="va">climate</span>,<span class="va">frogs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frog_climate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/extract.html">extract</a></span><span class="op">(</span><span class="va">climate</span>, <span class="va">frogs</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">frog_climate</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -554,13 +588,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Apply the <strong>Bioclim algorithm</strong> used for species distribution modeling, the classic <strong>climate-envelope-model</strong>. It computes the similarity of a location by comparing the values of environmental variables at any location to a percentile distribution of the values at known locations of occurrence. More info here: <code><a href="https://rdrr.io/pkg/dismo/man/bioclim.html">?dismo::bioclim</a></code></p>
-<p>We use the <code>pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)</code> function to plot the results of the model, with options from the {dismo} package.</p>
+<p>We use the <code>pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)</code> function to plot the results of the model, with options from the <a href="https://rspatial.org/raster/sdm/">dismo</a> package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster/sdm/">dismo</a></span><span class="op">)</span></span>
 <span><span class="va">bioclim.mod</span> <span class="op">&lt;-</span> <span class="fu">dismo</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dismo/man/bioclim.html">bioclim</a></span><span class="op">(</span><span class="va">frog_climate</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">bioclim.mod</span>,pa<span class="op">=</span><span class="st">"pa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">bioclim.mod</span>, pa <span class="op">=</span> <span class="st">"pa"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -570,17 +604,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now, let’s build a stack with the <code><a href="https://rdrr.io/pkg/raster/man/stack.html">stack()</a></code> function, including all the bioclimatic layers from the original raster stack.</p>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">doParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/doParallel/man/registerDoParallel.html">registerDoParallel</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">predictors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span><span class="op">(</span><span class="va">climate</span><span class="op">$</span><span class="va">bio1</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio2</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio3</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio4</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio5</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio6</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio7</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio8</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio9</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio10</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio11</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio12</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio13</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio14</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio15</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio16</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio17</span>,</span>
-<span>                    <span class="va">climate</span><span class="op">$</span><span class="va">bio18</span>,<span class="va">climate</span><span class="op">$</span><span class="va">bio19</span><span class="op">)</span></span>
-<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">predictors</span>,<span class="va">bioclim.mod</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">predictors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span><span class="op">(</span></span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio1</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio2</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio3</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio4</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio5</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio6</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio7</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio8</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio9</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio10</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio11</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio12</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio13</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio14</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio15</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio16</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio17</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio18</span>,</span>
+<span>  <span class="va">climate</span><span class="op">$</span><span class="va">bio19</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">predictors</span>, <span class="va">bioclim.mod</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span><span class="va">predictions</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">125</span>,<span class="op">-</span><span class="fl">100</span><span class="op">)</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">35</span>,<span class="fl">55</span><span class="op">)</span>,axes<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">predictions</span>,</span>
+<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">125</span>, <span class="op">-</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">35</span>, <span class="fl">55</span><span class="op">)</span>,</span>
+<span>  axes <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -590,7 +643,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 
 </div>
-<hr>
 
 
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>

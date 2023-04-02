@@ -6,7 +6,7 @@ The scope is to visualize the presence of these nice little frogs across differe
 
 ### Get started making a map!
 
-The first map that we make is a general frog location map of the United States. In this case we need the {spocc} package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from GBIF and make the map.
+The first map that we make is a general frog location map of the United States. In this case we need the `{spocc}` package by Hannah Owens and Vijay Barve and Scott Chamberlain, to load the data from **GBIF** and make the map.
 
 ```{r}
 #| label: ch2
@@ -14,7 +14,6 @@ The first map that we make is a general frog location map of the United States. 
 #| message: false
 #| warning: false
 #| paged.print: false
-
 
 library(tidyverse)
 library(oregonfrogs)
@@ -25,12 +24,11 @@ library(spocc)
 load("data/case_study_1.RData")
 ```
 
+The first step we use the `occ {spocc}` function. It searches for species occurrence data across many data sources, in this case from *GBIF*.
 ```{r}
 #| label: ch2-01
 #| eval: false
 #| cache: true
-
-
 do_gbif <- occ("Rana pretiosa Baird & Girard, 1853",
                from = "gbif",
                limit = 1000,
@@ -42,11 +40,9 @@ do_gbif1 <- data.frame(do_gbif$gbif$data)
 
 ```{r}
 #| label: ch2-02
-
-
-do_gbif2 <- do_gbif1%>%
-  rename(longitude=Rana_pretiosa_Baird_._Girard._1853.longitude,
-         latitude=Rana_pretiosa_Baird_._Girard._1853.latitude)
+do_gbif2 <- do_gbif1 %>%
+  rename(longitude = Rana_pretiosa_Baird_._Girard._1853.longitude,
+         latitude = Rana_pretiosa_Baird_._Girard._1853.latitude)
 ```
 
 ```{r}
@@ -55,39 +51,43 @@ do_gbif2 <- do_gbif1%>%
 #| warning: false
 #| paged.print: false
 
+states <- map_data("state")
 
-states<- map_data("state")
-oregon <- states %>% filter(region=="oregon")
+oregon <- states %>% filter(region == "oregon")
 
-ggplot(data = states, mapping = aes(long,lat,group=region))+
-  geom_polygon(color="grey",fill=NA) +
-  geom_polygon(data = oregon, 
-               inherit.aes = TRUE, 
-               color="pink",fill="pink") +
-  geom_point(data = do_gbif2,
-             mapping = aes(x=longitude, y=latitude),
-             inherit.aes = FALSE, 
-             alpha=0.5,size=0.5)+
-  coord_quickmap() +
+ggplot(data = states, mapping = aes(long, lat, group = group)) +
+  geom_polygon(color = "grey", fill = NA) +
+  geom_polygon(
+    data = oregon,
+    inherit.aes = TRUE,
+    color = "pink",
+    fill = "pink"
+  ) +
+  geom_point(
+    data = do_gbif2,
+    mapping = aes(x = longitude, y = latitude),
+    inherit.aes = FALSE,
+    alpha = 0.5,
+    size = 0.5
+  ) +
+  coord_map() +
   theme_bw()
 ```
 
 Once visualized, we will be making some assumptions about their movement and habitat use based on the results of a study by Dr. Michael J Adams from the Forest and Rangeland Ecosystem Science Center in Oregon.
 
-More information about this study can be found here: https://doi.org/10.1670/20-060
+More information about this study can be found here: [Late-Season Movement and Habitat Use by Oregon Spotted Frog (Rana pretiosa) in a Large Reservoir in Oregon, USA](https://doi.org/10.1670/20-060)
 
-The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02
+The dataset has been released for #TidyTuesday 2022 week 31 and can be downloaded here: [oregonfrogs](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02)
 
-Or, you can install the package from github: https://github.com/Fgazzelloni/oregonfrogs
+Or, you can install the package from github: [https://github.com/Fgazzelloni/oregonfrogs](https://github.com/Fgazzelloni/oregonfrogs)
 
 ```{r}
 #| label: ch2-04
 #| echo: false
 #| out.width: "30%"
 #| fig.align: 'center'
-#| fig.cap: "Credits: oregonfrogs package"
-
-
+#| fig.cap: "Credits: [oregonfrogs package](https://github.com/Fgazzelloni/oregonfrogs)"
 knitr::include_graphics("images/oregonfrogs.png")
 ```
 
@@ -105,11 +105,11 @@ remotes::install_github("fgazzelloni/oregonfrogs")
 
 One of the most important step of spatial modeling, and modeling in general, is to have a good knowledge of the argument. So, the more we know about **Rana Pretiosa** the better!
 
-Let's hear **Rana Pretiosa** sound: https://amphibiaweb.org/species/5131
+Let's hear **Rana Pretiosa** sound **hear call**: [https://amphibiaweb.org/species/5131](https://amphibiaweb.org/species/5131)
 
-More information about Rana pretiosa can be found here:
+More information about `Rana pretiosa` can be found here:
 
--   [GBIF](https://www.gbif.org/species/2426776)
+-   [GBIF Species: Rana pretiosa](https://www.gbif.org/species/2426776)
 
 In particular, we will be looking at the location where **rana pretiosa** has been located with the use of radio telemetry frequencies in the **Crane Prairie Reservoir**, which is a man-made lake located about 42 miles (68 km) southwest of Bend in Deschutes County, Oregon, United States.[^case_study_1-1]
 
@@ -124,7 +124,7 @@ We will require more packages while performing our analysis.
 #| message: false
 #| warning: false
 #| paged.print: false
-library(oregonfrogs)  
+library(oregonfrogs) 
 ```
 
 Let's have a look at the data, we have 311 observations and 16 variables which include the habitat type, the date, the radio frequency, and other variables such as gender, type of water, presence of beavers, and if they are captured, located or just visualized.
@@ -134,7 +134,8 @@ So, many interesting hypothesis can be done about their movements habitat use.
 ```{r}
 #| label: ch2-07
 #| comment: ""
-oregonfrogs%>%head(3)
+oregonfrogs <- oregonfrogs::oregonfrogs_raw
+oregonfrogs %>% head(3)
 ```
 
 One more interesting information is about the location, in this case a **UTM distance** (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location.
@@ -143,7 +144,7 @@ The **Universal Transverse Mercator (UTM)** is a common projection is which pres
 
 [^case_study_1-2]: [Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny](https://www.paulamoraga.com/book-geospatial/sec-spatialdataandCRS.html)
 
-Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into **longitude** and **latitude**. For doing this we need the {sf} package by Edzer Pebesma.
+Interesting is that it is expressed in meters, so it gives more opportunity in case one wants to consider the distance. For now, we transform these UTM projections into **longitude** and **latitude**. For doing this we need the `{sf}` package by **Edzer Pebesma**.
 
 Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting.
 
@@ -151,36 +152,36 @@ To transform the UTM values into long and lat we use the `sf::st_as_sf()` functi
 
 We need to specify where the coordinates are located in our set, and set a **CRS** or coordinate reference system information.
 
+
 ```{r}
 #| label: ch2-08
 #| comment: ""
 
-
 # Build a tibble with the geo-location information
-frogs_coord <- oregonfrogs_raw %>%
+frogs_coord <- oregonfrogs %>%
   dplyr::select(UTME_83, UTMN_83)
 
 # Tranform it to lat and long
-frogs_coord <- 
-  frogs_coord %>% 
+frogs_coord <-
+  frogs_coord %>%
   # transform to simple features as geometry
-  sf::st_as_sf(coords = c(1,2), 
+  sf::st_as_sf(coords = c(1, 2),
                crs = "+proj=utm +zone=10") %>%
   # utm tranformation to longlat
   sf::st_transform(crs = "+proj=longlat +datum=WGS84")  %>%
   tibble()
 
-frogs_coord%>%head(3)
+frogs_coord %>% head(3)
 ```
 
-As you can see the first projection points to *utm* as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on WGS84, (World Geodetic System 1984, known as EPSG:4326), which express the degree of longitude and latitude starting from a particular point of view, in this case EPSG:4326.
+As you can see the first projection points to **utm** as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on **WGS84, (World Geodetic System 1984, known as EPSG:4326)**, which express the degree of longitude and latitude starting from a particular point of view, in this case **EPSG:4326**.
 
 ```{r}
 #| label: ch2-09
 #| echo: false
 #| fig.dim: "50%"
 #| fig.align: 'center'
-#| fig.cap: "Credits: https://epsg.io/4326"
+#| fig.cap: "Credits: [https://epsg.io/4326](https://epsg.io/4326)"
 knitr::include_graphics("images/epsg_4326.png")
 ```
 
@@ -192,13 +193,15 @@ All the available CRS in R can be seen by typing `View(rgdal::make_EPSG())` [^ca
 #| label: ch2-10
 #| comment: ""
 library(purrr)
-frogs_location <- tibble(Detection = oregonfrogs$Detection,
-                         Subsite = oregonfrogs$Subsite,
-                         Frequency = oregonfrogs$Frequency,
-                         lat = unlist(map(frogs_coord$geometry, 2)),
-                         long = unlist(map(frogs_coord$geometry, 1)))
+frogs_location <- tibble(
+  Detection = oregonfrogs$Detection,
+  Subsite = oregonfrogs$Subsite,
+  Frequency = oregonfrogs$Frequency,
+  lat = unlist(map(frogs_coord$geometry, 2)),
+  long = unlist(map(frogs_coord$geometry, 1))
+)
 
-frogs_location%>%head(3)
+frogs_location %>% head(3)
 ```
 
 ## Look at oregonfrogs data
@@ -210,7 +213,7 @@ Let's have a first sight at the data based on location. The first thing to notic
 #| message: false
 #| warning: false
 #| paged.print: false
-ggplot(data = frogs_location, aes(x=long,y=lat))+
+ggplot(data = frogs_location, aes(x = long, y = lat)) +
   geom_point() +
   geom_smooth(method = "loess") +
   theme_bw()
@@ -222,11 +225,11 @@ How do we set the map for the location of our **Rana Pretiosa** in the Crane Pra
 
 In the study page we can find the **BOX**, the box is the four corner reference points, bounding our interested area.
 
-Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc
+Bounding Box: [https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc](https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc)
 
-Bounding Box\[-121.824775, 43.764375, -121.764923, 43.814821\]
+Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
-The area can be retrieved with {OpenStreetMap} package by Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} has changed some requirements, a turn around is to use the \*\*MapBox\*\* API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
+The area can be retrieved with `{OpenStreetMap}` package by Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} has changed some requirements, a turn around is to use the \*\*MapBox\*\* API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
 
 So, don't run this part in case of arising issues with {OpenStreetMap}, but jump on the next one.
 
@@ -237,20 +240,27 @@ So, don't run this part in case of arising issues with {OpenStreetMap}, but jump
 library(OpenStreetMap)
 apiKey <- paste0("?access_token=",
                  "xxxx xxxx your mapbox xxxx")
-baseUrl <- "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"
-###### ###### ###### ###### ###### ###### ###### ###### ###### 
-map <- openmap(c(43.764375,-121.824775),
-               c(43.814821,-121.764923),
-               minNumTiles=4,
-               type=paste0(baseUrl,apiKey))
+baseUrl <-
+  "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"
+
+map <- openmap(
+  c(43.764375, -121.824775),
+  c(43.814821, -121.764923),
+  minNumTiles = 4,
+  type = paste0(baseUrl, apiKey)
+)
 
 OpenStreetMap::plot.OpenStreetMap(map)
 wider_map <- openproj(map)
-base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) + 
-  geom_point(data = frogs_location,
-             aes(x = long, y = lat), 
-             shape=21,stroke=0.2, size =  4,
-             color="grey40") +
+base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) +
+  geom_point(
+    data = frogs_location,
+    aes(x = long, y = lat),
+    shape = 21,
+    stroke = 0.2,
+    size =  4,
+    color = "grey40"
+  ) +
   xlab("Longitude (°E)") + ylab("Latitude (°S)")
 ```
 
@@ -262,7 +272,7 @@ base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) +
 knitr::include_graphics("images/background_map.png")
 ```
 
-In this map is made with {ggmap} and {ggplot2} for the frogs locations.
+In this map is made with `{ggmap}` and `{ggplot2}` for the frogs locations.
 
 ```{r}
 #| label: ch2-13
@@ -288,11 +298,15 @@ crane_reservoir <- get_stamenmap(bbox = c(left = -121.824775,
 
 ```{r}
 #| label: ch2-15
-base_map <- ggmap(crane_reservoir) + 
-    geom_point(data = frogs_location,
-             aes(x = long, y = lat), 
-             shape=21,stroke=0.2, size =  4,
-             color="grey40") +
+base_map <- ggmap(crane_reservoir) +
+  geom_point(
+    data = frogs_location,
+    aes(x = long, y = lat),
+    shape = 21,
+    stroke = 0.2,
+    size =  4,
+    color = "grey40"
+  ) +
   xlab("Longitude (°E)") + ylab("Latitude (°S)")
 
 base_map
@@ -309,10 +323,10 @@ With a little modification of the dataset we can visualize the frogs by months. 
 #| paged.print: false
 
 
-frogs_location_tm <- tibble(ReportedDay = oregonfrogs_raw$Ordinal,
-                            geometry=frogs_coord$geometry) %>%
+frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
+                            geometry = frogs_coord$geometry) %>%
   mutate(time = as.Date("2018-01-01") + ReportedDay,
-         month=lubridate::month(time))
+         month = lubridate::month(time))
 ```
 
 ```{r}
@@ -322,9 +336,9 @@ base_map +
   geom_sf(data = frogs_location_tm,
           aes(col = factor(month), geometry = geometry),
           inherit.aes = F) +
-  facet_wrap(~cut(time, "1 months")) + 
-  scale_color_discrete(labels = c("September","October","November"))+
-  labs(color = "Month")+
+  facet_wrap(~ cut(time, "1 months")) +
+  scale_color_discrete(labels = c("September", "October", "November")) +
+  labs(color = "Month") +
   theme_void()
 ```
 
@@ -339,7 +353,7 @@ Some speculation could be done about the reasons why the frogs are not located i
 
 ## Make a grid
 
-Let's create a grid of points around the frogs' locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a **Simple feature** collection of points and not a tibble with coordinates as before. The functions `sf::st_make_grid()` and `sf::st_as_sfc(sf::st_bbox(points))` with the bbox reference for the points let us create a grid.
+Let's create a grid of points around the frogs' locations. In order to do that we need the `{sf}` package, initially we do the same as before, but now we want a **Simple feature** collection of points and not a tibble with coordinates as before. The functions `sf::st_make_grid()` and `sf::st_as_sfc(sf::st_bbox(points))` with the bbox reference for the points let us create a grid.
 
 ```{r}
 #| label: ch2-17
@@ -349,13 +363,15 @@ Let's create a grid of points around the frogs' locations. In order to do that w
 
 
 # make a grid
-frogs_coord_freq <- tibble(oregonfrogs_raw$UTME_83, oregonfrogs_raw$UTMN_83,
-                      oregonfrogs_raw$Frequency)
+frogs_coord_freq <-
+  tibble(oregonfrogs$UTME_83,
+         oregonfrogs$UTMN_83,
+         oregonfrogs$Frequency)
 
-points <- sf::st_as_sf(x = frogs_coord_freq, 
-                       coords = c(1,2), 
+points <- sf::st_as_sf(x = frogs_coord_freq,
+                       coords = c(1, 2),
                        crs = "+proj=utm +zone=10") %>%
-  sf::st_transform(frogs_coord, 
+  sf::st_transform(frogs_coord,
                    crs = "+proj=longlat +datum=WGS84")  
 ```
 
@@ -367,8 +383,9 @@ points <- sf::st_as_sf(x = frogs_coord_freq,
 grid = sf::st_make_grid(
   sf::st_as_sfc(sf::st_bbox(points)),
   what = "centers",
-  cellsize = .002, 
-  square = F)
+  cellsize = .002,
+  square = F
+)
 ```
 
 ```{r}
@@ -376,10 +393,10 @@ grid = sf::st_make_grid(
 #| message: false
 #| warning: false
 #| paged.print: false
-ggplot()+
-  geom_sf(data=grid,size=0.3)+
-  geom_sf(data=points)+
-  coord_sf()+
+ggplot() +
+  geom_sf(data = grid, size = 0.3) +
+  geom_sf(data = points) +
+  coord_sf() +
   ggthemes::theme_map()
 ```
 
@@ -387,16 +404,16 @@ What we do now is to group the frogs by date.
 
 ```{r}
 #| label: ch2-18
-oregonfrogs_raw%>%
-  mutate(SurveyDate=as.Date(SurveyDate,"%m/%d/%Y"))%>%
-  arrange(SurveyDate)%>%
-  count(SurveyDate,Ordinal)%>%
+oregonfrogs %>%
+  mutate(SurveyDate = as.Date(SurveyDate, "%m/%d/%Y")) %>%
+  arrange(SurveyDate) %>%
+  count(SurveyDate, Ordinal) %>%
   head(3)
 ```
 
 ## Work with Models
 
-Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don't need to load them.
+Packages functionality from rgeos,raster,rgdal,terra packages are included in `{sf}`,and `{dismo}` so we don't need to load them.
 
 ```{r}
 #| label: ch2-19
@@ -408,20 +425,24 @@ Packages functionality from rgeos,raster,rgdal,terra packages are included in {s
 library(dismo)  # for modeling
 ```
 
-Here we use **wrld_simpl** data from {maptools}, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separately, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global environment
+Here we use **wrld_simpl** data from `{maptools}`, to be able to use the `plot()` function faster, you can install the package or load it because data is included in the `/data` folder as `.RData` format. We can load the `data/case_study_1.RData` to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you'd like to do that separately, just type: `load("data/case_study_1.RData")` and all data will be loaded in the global environment
 
 ```{r}
 #| label: ch2-20
 #| eval: false
 world <- map_data("world")
-gbi_coords<- tibble(x=do_gbif2$longitude,y=do_gbif2$latitude)
+gbi_coords <- tibble(x = do_gbif2$longitude, y = do_gbif2$latitude)
 
-ggplot(world)+
-  geom_polygon(aes(long,lat,group=group),fill="grey90",color="grey30") +
-  geom_polygon(data=states, aes(long,lat,group=group),color="grey40") +
-  geom_point(data = gbi_coords, aes(x,y),
-             color="pink") +
-  coord_sf(xlim=c(-125,-90),ylim=c(35,65))+
+ggplot(world) +
+  geom_polygon(aes(long, lat, group = group),
+               fill = "grey90",
+               color = "grey30") +
+  geom_polygon(data = states,
+               aes(long, lat, group = group),
+               color = "grey40") +
+  geom_point(data = gbi_coords, aes(x, y),
+             color = "pink") +
+  coord_sf(xlim = c(-125, -90), ylim = c(35, 65)) +
   ggthemes::theme_map()
 ```
 
@@ -432,10 +453,14 @@ This is a raster stack composed of 19 raster layers.
 #| cache: true
 #| eval: false
 #| include: true
-frogs <-data.frame(long=do_gbif2$longitude,lat=do_gbif2$latitude)
-climate <- dismo::getData("worldclim",download = T,var="bio",res=2.5)
+frogs <- data.frame(long = do_gbif2$longitude, lat = do_gbif2$latitude)
+climate <-
+  dismo::getData("worldclim",
+                 download = T,
+                 var = "bio",
+                 res = 2.5)
 
-plot(climate,legend=false)
+plot(climate, legend = false)
 ```
 
 ```{r}
@@ -449,7 +474,7 @@ knitr::include_graphics("images/climate_plot.png")
 #| label: ch2-23
 #| eval: false
 #| include: true
-frog_climate <- extract(climate,frogs)
+frog_climate <- extract(climate, frogs)
 ```
 
 ```{r}
@@ -459,7 +484,7 @@ frog_climate %>% head(3)
 
 Apply the **Bioclim algorithm** used for species distribution modeling, the classic **climate-envelope-model**. It computes the similarity of a location by comparing the values of environmental variables at any location to a percentile distribution of the values at known locations of occurrence. More info here: `?dismo::bioclim`
 
-We use the `pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)` function to plot the results of the model, with options from the {dismo} package.
+We use the `pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)` function to plot the results of the model, with options from the `{dismo}` package.
 
 ```{r}
 #| label: ch2-25
@@ -472,7 +497,7 @@ bioclim.mod <- dismo::bioclim(frog_climate)
 #| label: ch2-26
 #| eval: false
 #| include: true
-pairs(bioclim.mod,pa="pa")
+pairs(bioclim.mod, pa = "pa")
 ```
 
 ```{r}
@@ -491,14 +516,28 @@ Now, let's build a stack with the `stack()` function, including all the bioclima
 
 
 doParallel::registerDoParallel()
-predictors <- stack(climate$bio1,climate$bio2,climate$bio3,
-                    climate$bio4,climate$bio5,
-                    climate$bio6,climate$bio7,climate$bio8,
-                    climate$bio9,climate$bio10,climate$bio11,
-                    climate$bio12,climate$bio13,climate$bio14,
-                    climate$bio15,climate$bio16,climate$bio17,
-                    climate$bio18,climate$bio19)
-predictions <- predict(predictors,bioclim.mod)
+predictors <- stack(
+  climate$bio1,
+  climate$bio2,
+  climate$bio3,
+  climate$bio4,
+  climate$bio5,
+  climate$bio6,
+  climate$bio7,
+  climate$bio8,
+  climate$bio9,
+  climate$bio10,
+  climate$bio11,
+  climate$bio12,
+  climate$bio13,
+  climate$bio14,
+  climate$bio15,
+  climate$bio16,
+  climate$bio17,
+  climate$bio18,
+  climate$bio19
+)
+predictions <- predict(predictors, bioclim.mod)
 ```
 
 ```{r}
@@ -512,7 +551,12 @@ predictions
 #| label: ch2-30
 #| eval: false
 #| include: true
-raster::plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
+raster::plot(
+  predictions,
+  xlim = c(-125, -100),
+  ylim = c(35, 55),
+  axes = T
+)
 ```
 
 ```{r}
@@ -525,7 +569,7 @@ knitr::include_graphics("images/frogs_location_raster.png")
 #| label: ch2-32
 #| eval: false
 #| echo: false
-save.image("data/case_study_1.RData")
+# save.image("data/case_study_1.RData")
 ```
 
-------------------------------------------------------------------------
+
