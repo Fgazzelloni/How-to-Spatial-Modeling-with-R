@@ -19,6 +19,12 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    code-fold: false
+    link-external-icon: false
+    link-external-newwindow: true
+    code-overflow: wrap
+    code-copy: true
+    code-link: true
   pdf:
     documentclass: scrreprt
 

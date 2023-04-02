@@ -49,4 +49,4 @@ Once installed the packages go to the GitHub repo above, You can fork the reposi
 
 Once set go to the `/data` folder and load the RData in the environment. It will make things easier as you don't need to run some chucks of code which will require some time to compute, and for this reason are set to `eval = false`.
 
-For any questions please email: docksbox\@pm.me
+For any questions please email: <docksbox@pm.me>

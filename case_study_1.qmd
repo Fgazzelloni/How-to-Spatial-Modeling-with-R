@@ -2,7 +2,7 @@
 
 The first case study is about animal ecology, we will be looking at a frog particular specie **Rana Pretiosa**, scientific name **Rana pretiosa Baird & Girard, 1853**, and use some interesting data from Oregon as well as downloading more data from **GBIF \| Global Biodiversity Information Facility**.
 
-The scope is to visualize the presence of these nice little frogs across different location with making a map using {ggplot2} by Hadley Wickham.
+The scope is to visualize the presence of these nice little frogs across different location with making a map using `{ggplot2}` by Hadley Wickham.
 
 ### Get started making a map!
 

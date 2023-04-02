@@ -6,7 +6,7 @@ Spatial data is most often represented by one of two data models, vector or rast
 
 In geostatistical models, sampled data are interpreted as the result of a random process.[^intro-2]
 
-[^intro-2]: https://en.wikipedia.org/wiki/Kriging
+[^intro-2]: [Kriging](https://en.wikipedia.org/wiki/Kriging)
 
 Spatial modeling is an important instrument to guide decision-making dealing with risk-management in different areas, such as public health, econometric, general ecology, as well as public transportation and real-estate.
 
@@ -53,7 +53,7 @@ We will be looking at two case studies:
 
 Spatial models allows for spatial autocorrelation. In general modeling, multicollinearity, or correlation among predictors in the model is used to make predictor selection. In case of spatial modeling, predictors such as longitude and latitude are evidence of important underlying spatial processes at work; an integral component of the data. [^intro-6]
 
-[^intro-6]: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm
+[^intro-6]: [regression-analysis-basics](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/regression-analysis-basics.htm)
 
 Spatial data is considered typically autocorrelated and/or clustered.[^intro-7] A simple explanation is concerning with the independence of correlated clusters with the changing data-information in the spatial cluster.
 
@@ -65,7 +65,7 @@ Hence, data may be spatially correlated and observations in neighboring areas ma
 
 The analysis of the residual spatial autocorrelation and the prediction of continuous spatial process is called **Kriging**(geo interpolation named after Danie Kringe (South Africa)) (also known as *Wiener--Kolmogorov* prediction / distance-weighted average).[^intro-9]
 
-[^intro-9]: Drew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. And https://en.wikipedia.org/wiki/Kriging
+[^intro-9]: Drew CA, Wiersma Y, Huettmann F. Predictive species and habitat modelling in landscape ecology: concepts and applications. 1st ed. New York: Springer; 2010. And Cressie 1993. 
 
 A spatial model is a representation of various social and natural processes:
 
@@ -79,7 +79,7 @@ So, to be more explicit, spatial modeling combines spatial analysis and predicti
 #| label: intro-2
 #| echo: false
 #| fig.align: 'center'
-#| fig.cap: "Credits:https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116"
+#| fig.cap: "Credits:[Navigating through the r packages for movement](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13116)"
 knitr::include_graphics("images/framework.png")
 ```
 
