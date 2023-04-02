@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -219,6 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -306,15 +307,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oregonfrogs<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 16
-  Site    Subsite HabType Surve…¹ Ordinal Frequ…² UTME_83 UTMN_83 Inter…³ Female
-  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-1 Crane … SE Pond Pond    9/25/2…     268    164.  597369 4846486       0      0
-2 Crane … SE Pond Pond    10/2/2…     275    164.  597352 4846487       1      0
-3 Crane … SE Pond Pond    10/9/2…     282    164.  597345 4846458       2      0
-# … with 6 more variables: Water &lt;chr&gt;, Type &lt;chr&gt;, Structure &lt;chr&gt;,
-#   Substrate &lt;chr&gt;, Beaver &lt;chr&gt;, Detection &lt;chr&gt;, and abbreviated variable
-#   names ¹​SurveyDate, ²​Frequency, ³​Interval</code></pre>
+<pre><code>  detection survey_date doy      long      lat sex frequency interval subsite
+1  Captured  2018-09-25 268 -121.7903 43.76502   0   164.169        0 SE Pond
+2 No visual  2018-10-02 275 -121.7905 43.76503   0   164.169        1 SE Pond
+3 No visual  2018-10-09 282 -121.7906 43.76477   0   164.169        2 SE Pond
+  hab_type         water       type      structure         substrate    beaver
+1     Pond    Deep water Marsh/Pond Herbaceous veg Unknown substrate No beaver
+2     Pond    Deep water Marsh/Pond           Open Unknown substrate No beaver
+3     Pond Shallow water Marsh/Pond Herbaceous veg Unknown substrate No beaver</code></pre>
 </div>
 </div>
 <p>One more interesting information is about the location, in this case a <strong>UTM distance</strong> (from the Equator or from the North) is provided, and this type of localization is the most suitable for animal location.</p>
@@ -325,7 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We need to specify where the coordinates are located in our set, and set a <strong>CRS</strong> or coordinate reference system information.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a tibble with the geo-location information</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>frogs_coord <span class="ot">&lt;-</span> oregonfrogs <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>frogs_coord <span class="ot">&lt;-</span> oregonfrogs_raw <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(UTME_83, UTMN_83)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tranform it to lat and long</span></span>
@@ -370,12 +370,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>frogs_location<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  Detection Subsite Frequency   lat  long
-  &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 Captured  SE Pond      164.  43.8 -122.
-2 No visual SE Pond      164.  43.8 -122.
-3 No visual SE Pond      164.  43.8 -122.</code></pre>
+<pre><code># A tibble: 3 × 2
+    lat  long
+  &lt;dbl&gt; &lt;dbl&gt;
+1  43.8 -122.
+2  43.8 -122.
+3  43.8 -122.</code></pre>
 </div>
 </div>
 </section>
@@ -397,20 +397,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the study page we can find the <strong>BOX</strong>, the box is the four corner reference points, bounding our interested area.</p>
 <p>Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d86bc</p>
 <p>Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]</p>
-<p>The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the <code>plot.OpenStreetMap()</code> or simply the <code>plot()</code> function. The {OpenStreetMap} doesn’t work the same for all systems. You’ll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.</p>
-<p>So, don’t run this part if you incurr issues with {OpenStreetMap}, jump on the next one.</p>
+<p>The area can be retrieved with {OpenStreetMap} package by Ian Fellows and visualized with a nice resolution with the <code>plot.OpenStreetMap()</code> or simply the <code>plot()</code> function. The {OpenStreetMap} has changed some requirements, a turn around is to use the **MapBox** API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you’ll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.</p>
+<p>So, don’t run this part in case of arising issues with {OpenStreetMap}, but jump on the next one.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OpenStreetMap)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">openmap</span>(<span class="fu">c</span>(<span class="fl">43.764375</span>,<span class="sc">-</span><span class="fl">121.824775</span>),<span class="fu">c</span>(<span class="fl">43.814821</span>,<span class="sc">-</span><span class="fl">121.764923</span>))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>OpenStreetMap<span class="sc">::</span><span class="fu">plot.OpenStreetMap</span>(map)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>wider_map <span class="ot">&lt;-</span> <span class="fu">openproj</span>(map)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> OpenStreetMap<span class="sc">::</span><span class="fu">autoplot.OpenStreetMap</span>(wider_map) <span class="sc">+</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> frogs_location,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat), </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape=</span><span class="dv">21</span>,<span class="at">stroke=</span><span class="fl">0.2</span>, <span class="at">size =</span>  <span class="dv">4</span>,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">"grey40"</span>) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Longitude (°E)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Latitude (°S)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>apiKey <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"?access_token="</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"xxxx xxxx your mapbox xxxx"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>baseUrl <span class="ot">&lt;-</span> <span class="st">"https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">###### ###### ###### ###### ###### ###### ###### ###### ###### </span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">openmap</span>(<span class="fu">c</span>(<span class="fl">43.764375</span>,<span class="sc">-</span><span class="fl">121.824775</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="fl">43.814821</span>,<span class="sc">-</span><span class="fl">121.764923</span>),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">minNumTiles=</span><span class="dv">4</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">type=</span><span class="fu">paste0</span>(baseUrl,apiKey))</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>OpenStreetMap<span class="sc">::</span><span class="fu">plot.OpenStreetMap</span>(map)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>wider_map <span class="ot">&lt;-</span> <span class="fu">openproj</span>(map)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> OpenStreetMap<span class="sc">::</span><span class="fu">autoplot.OpenStreetMap</span>(wider_map) <span class="sc">+</span> </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> frogs_location,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> long, <span class="at">y =</span> lat), </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape=</span><span class="dv">21</span>,<span class="at">stroke=</span><span class="fl">0.2</span>, <span class="at">size =</span>  <span class="dv">4</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Longitude (°E)"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Latitude (°S)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -454,7 +461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="2.2" class="anchored" data-anchor-id="time-as-coordinate"><span class="header-section-number">2.2</span> Time as coordinate</h2>
 <p>With a little modification of the dataset we can visualize the frogs by months. This study has been carried from mid September 2018 to late November of the same year, so three months of observations.</p>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>frogs_location_tm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ReportedDay =</span> oregonfrogs<span class="sc">$</span>Ordinal,</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>frogs_location_tm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ReportedDay =</span> oregonfrogs_raw<span class="sc">$</span>Ordinal,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">geometry=</span>frogs_coord<span class="sc">$</span>geometry) <span class="sc">%&gt;%</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">as.Date</span>(<span class="st">"2018-01-01"</span>) <span class="sc">+</span> ReportedDay,</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">month=</span>lubridate<span class="sc">::</span><span class="fu">month</span>(time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -481,8 +488,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s create a grid of points around the frogs’ locations. In order to do that we need the {sf} package, initially we do the same as before, but now we want a <strong>Simple feature</strong> collection of points and not a tibble with coordinates as before. The functions <code>sf::st_make_grid()</code> and <code>sf::st_as_sfc(sf::st_bbox(points))</code> with the bbox reference for the points let us create a grid.</p>
 <div class="cell" data-paged.print="false">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a grid</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>frogs_coord_freq <span class="ot">&lt;-</span> <span class="fu">tibble</span>(oregonfrogs<span class="sc">$</span>UTME_83, oregonfrogs<span class="sc">$</span>UTMN_83,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                      oregonfrogs<span class="sc">$</span>Frequency)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>frogs_coord_freq <span class="ot">&lt;-</span> <span class="fu">tibble</span>(oregonfrogs_raw<span class="sc">$</span>UTME_83, oregonfrogs_raw<span class="sc">$</span>UTMN_83,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                      oregonfrogs_raw<span class="sc">$</span>Frequency)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">x =</span> frogs_coord_freq, </span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">coords =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), </span>
@@ -497,13 +504,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cellsize =</span> .<span class="dv">002</span>, </span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">square =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell" data-paged.print="false">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>grid,<span class="at">size=</span><span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>points)<span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>()<span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="case_study_1_files/figure-html/ch2-17-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>What we do now is to group the frogs by date.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>oregonfrogs<span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SurveyDate=</span><span class="fu">as.Date</span>(SurveyDate,<span class="st">"%m/%d/%Y"</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(SurveyDate)<span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(SurveyDate,Ordinal)<span class="sc">%&gt;%</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>oregonfrogs_raw<span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SurveyDate=</span><span class="fu">as.Date</span>(SurveyDate,<span class="st">"%m/%d/%Y"</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(SurveyDate)<span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(SurveyDate,Ordinal)<span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   SurveyDate Ordinal     n
@@ -518,27 +535,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="2.4" class="anchored" data-anchor-id="work-with-models"><span class="header-section-number">2.4</span> Work with Models</h2>
 <p>Packages functionality from rgeos,raster,rgdal,terra packages are included in {sf},and {dismo} so we don’t need to load them.</p>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)  <span class="co"># for modeling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)  <span class="co"># for modeling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we use <strong>wrld_simpl</strong> data from {maptools}, to be able to use the <code>plot()</code> function faster, you can install the package or load it because data is included in the <code>/data</code> folder as <code>.RData</code> format. We can load the <code>data/case_study_1.RData</code> to load all the data we need for this workshop, this is already been done at the very beginning of this chapter. In case you’d like to do that separately, just type: <code>load("data/case_study_1.RData")</code> and all data will be loaded in the global environment</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>gbi_coords<span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span>do_gbif2<span class="sc">$</span>longitude,<span class="at">y=</span>do_gbif2<span class="sc">$</span>latitude)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(world)<span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(long,lat,<span class="at">group=</span>group),<span class="at">fill=</span><span class="st">"grey90"</span>,<span class="at">color=</span><span class="st">"grey30"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">data=</span>states, <span class="fu">aes</span>(long,lat,<span class="at">group=</span>group),<span class="at">color=</span><span class="st">"grey40"</span>) <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> gbi_coords, <span class="fu">aes</span>(x,y),</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">"pink"</span>) <span class="sc">+</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">125</span>,<span class="sc">-</span><span class="dv">90</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">35</span>,<span class="dv">65</span>))<span class="sc">+</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>gbi_coords<span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span>do_gbif2<span class="sc">$</span>longitude,<span class="at">y=</span>do_gbif2<span class="sc">$</span>latitude)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(world)<span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="fu">aes</span>(long,lat,<span class="at">group=</span>group),<span class="at">fill=</span><span class="st">"grey90"</span>,<span class="at">color=</span><span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">data=</span>states, <span class="fu">aes</span>(long,lat,<span class="at">group=</span>group),<span class="at">color=</span><span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> gbi_coords, <span class="fu">aes</span>(x,y),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">"pink"</span>) <span class="sc">+</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">125</span>,<span class="sc">-</span><span class="dv">90</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">35</span>,<span class="dv">65</span>))<span class="sc">+</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_map</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a raster stack composed of 19 raster layers.</p>
 <div class="cell" data-hash="case_study_1_cache/html/ch2-21_1acb47dddbcca34b393cc63b759f77c2">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>frogs <span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">long=</span>do_gbif2<span class="sc">$</span>longitude,<span class="at">lat=</span>do_gbif2<span class="sc">$</span>latitude)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>climate <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">getData</span>(<span class="st">"worldclim"</span>,<span class="at">download =</span> T,<span class="at">var=</span><span class="st">"bio"</span>,<span class="at">res=</span><span class="fl">2.5</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(climate,<span class="at">legend=</span>false)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>frogs <span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">long=</span>do_gbif2<span class="sc">$</span>longitude,<span class="at">lat=</span>do_gbif2<span class="sc">$</span>latitude)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>climate <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">getData</span>(<span class="st">"worldclim"</span>,<span class="at">download =</span> T,<span class="at">var=</span><span class="st">"bio"</span>,<span class="at">res=</span><span class="fl">2.5</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(climate,<span class="at">legend=</span>false)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -546,10 +563,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>frog_climate <span class="ot">&lt;-</span> <span class="fu">extract</span>(climate,frogs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>frog_climate <span class="ot">&lt;-</span> <span class="fu">extract</span>(climate,frogs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>frog_climate <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>frog_climate <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     bio1 bio2 bio3 bio4 bio5 bio6 bio7 bio8 bio9 bio10 bio11 bio12 bio13 bio14
 [1,]  100   85   34 5669  237  -11  248   32  171   171    27  1737   248    53
@@ -564,11 +581,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Apply the <strong>Bioclim algorithm</strong> used for species distribution modeling, the classic <strong>climate-envelope-model</strong>. It computes the similarity of a location by comparing the values of environmental variables at any location to a percentile distribution of the values at known locations of occurrence. More info here: <code>?dismo::bioclim</code></p>
 <p>We use the <code>pairs(x, v=NULL, pa='pa', hist=TRUE, cor=TRUE)</code> function to plot the results of the model, with options from the {dismo} package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dismo)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>bioclim.mod <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">bioclim</span>(frog_climate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dismo)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>bioclim.mod <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">bioclim</span>(frog_climate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(bioclim.mod,<span class="at">pa=</span><span class="st">"pa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(bioclim.mod,<span class="at">pa=</span><span class="st">"pa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -577,18 +594,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Now, let’s build a stack with the <code>stack()</code> function, including all the bioclimatic layers from the original raster stack.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">stack</span>(climate<span class="sc">$</span>bio1,climate<span class="sc">$</span>bio2,climate<span class="sc">$</span>bio3,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio4,climate<span class="sc">$</span>bio5,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio6,climate<span class="sc">$</span>bio7,climate<span class="sc">$</span>bio8,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio9,climate<span class="sc">$</span>bio10,climate<span class="sc">$</span>bio11,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio12,climate<span class="sc">$</span>bio13,climate<span class="sc">$</span>bio14,</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio15,climate<span class="sc">$</span>bio16,climate<span class="sc">$</span>bio17,</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio18,climate<span class="sc">$</span>bio19)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(predictors,bioclim.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">stack</span>(climate<span class="sc">$</span>bio1,climate<span class="sc">$</span>bio2,climate<span class="sc">$</span>bio3,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio4,climate<span class="sc">$</span>bio5,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio6,climate<span class="sc">$</span>bio7,climate<span class="sc">$</span>bio8,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio9,climate<span class="sc">$</span>bio10,climate<span class="sc">$</span>bio11,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio12,climate<span class="sc">$</span>bio13,climate<span class="sc">$</span>bio14,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio15,climate<span class="sc">$</span>bio16,climate<span class="sc">$</span>bio17,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>                    climate<span class="sc">$</span>bio18,climate<span class="sc">$</span>bio19)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(predictors,bioclim.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(predictions,<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">125</span>,<span class="sc">-</span><span class="dv">100</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">35</span>,<span class="dv">55</span>),<span class="at">axes=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>raster<span class="sc">::</span><span class="fu">plot</span>(predictions,<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">125</span>,<span class="sc">-</span><span class="dv">100</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">35</span>,<span class="dv">55</span>),<span class="at">axes=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -653,7 +670,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -689,24 +723,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

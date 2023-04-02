@@ -157,7 +157,7 @@ We need to specify where the coordinates are located in our set, and set a **CRS
 
 
 # Build a tibble with the geo-location information
-frogs_coord <- oregonfrogs %>%
+frogs_coord <- oregonfrogs_raw %>%
   dplyr::select(UTME_83, UTMN_83)
 
 # Tranform it to lat and long
@@ -226,15 +226,23 @@ Bounding Box: https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388d
 
 Bounding Box\[-121.824775, 43.764375, -121.764923, 43.814821\]
 
-The area can be retrieved with {OpenStreetMap} package by : Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} doesn't work the same for all systems. You'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
+The area can be retrieved with {OpenStreetMap} package by Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} has changed some requirements, a turn around is to use the \*\*MapBox\*\* API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
 
-So, don't run this part if you incurr issues with {OpenStreetMap}, jump on the next one.
+So, don't run this part in case of arising issues with {OpenStreetMap}, but jump on the next one.
 
 ```{r}
 #| label: ch2-12
 #| eval: false
+
 library(OpenStreetMap)
-map <- openmap(c(43.764375,-121.824775),c(43.814821,-121.764923))
+apiKey <- paste0("?access_token=",
+                 "xxxx xxxx your mapbox xxxx")
+baseUrl <- "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}"
+###### ###### ###### ###### ###### ###### ###### ###### ###### 
+map <- openmap(c(43.764375,-121.824775),
+               c(43.814821,-121.764923),
+               minNumTiles=4,
+               type=paste0(baseUrl,apiKey))
 
 OpenStreetMap::plot.OpenStreetMap(map)
 wider_map <- openproj(map)
@@ -301,7 +309,7 @@ With a little modification of the dataset we can visualize the frogs by months. 
 #| paged.print: false
 
 
-frogs_location_tm <- tibble(ReportedDay = oregonfrogs$Ordinal,
+frogs_location_tm <- tibble(ReportedDay = oregonfrogs_raw$Ordinal,
                             geometry=frogs_coord$geometry) %>%
   mutate(time = as.Date("2018-01-01") + ReportedDay,
          month=lubridate::month(time))
@@ -341,8 +349,8 @@ Let's create a grid of points around the frogs' locations. In order to do that w
 
 
 # make a grid
-frogs_coord_freq <- tibble(oregonfrogs$UTME_83, oregonfrogs$UTMN_83,
-                      oregonfrogs$Frequency)
+frogs_coord_freq <- tibble(oregonfrogs_raw$UTME_83, oregonfrogs_raw$UTMN_83,
+                      oregonfrogs_raw$Frequency)
 
 points <- sf::st_as_sf(x = frogs_coord_freq, 
                        coords = c(1,2), 
@@ -363,11 +371,23 @@ grid = sf::st_make_grid(
   square = F)
 ```
 
+```{r}
+#| label: ch2-17-2
+#| message: false
+#| warning: false
+#| paged.print: false
+ggplot()+
+  geom_sf(data=grid,size=0.3)+
+  geom_sf(data=points)+
+  coord_sf()+
+  ggthemes::theme_map()
+```
+
 What we do now is to group the frogs by date.
 
 ```{r}
 #| label: ch2-18
-oregonfrogs%>%
+oregonfrogs_raw%>%
   mutate(SurveyDate=as.Date(SurveyDate,"%m/%d/%Y"))%>%
   arrange(SurveyDate)%>%
   count(SurveyDate,Ordinal)%>%
@@ -492,7 +512,7 @@ predictions
 #| label: ch2-30
 #| eval: false
 #| include: true
-plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
+raster::plot(predictions,xlim=c(-125,-100),ylim=c(35,55),axes=T)
 ```
 
 ```{r}
