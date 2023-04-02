@@ -131,6 +131,8 @@ Let's have a look at the data, we have 311 observations and 16 variables which i
 
 So, many interesting hypothesis can be done about their movements habitat use.
 
+Disclaimer: Load the `oregonfrogs_raw` data, which contains the variables that we use for spatial data manipulation, then rename it to `oregonfrogs`. In the updates of the package you'll find this as a new set already fitted with the new variables.
+
 ```{r}
 #| label: ch2-07
 #| comment: ""
@@ -148,7 +150,7 @@ Interesting is that it is expressed in meters, so it gives more opportunity in c
 
 Many are the GIS packages available in R to use, and sometime is difficult to make a choice as they are all very useful and interesting.
 
-To transform the UTM values into long and lat we use the `sf::st_as_sf()` function with some arguments which are compulsory for what we do.
+To **transform the UTM values into long and lat** we use the `sf::st_as_sf()` function with some arguments which are compulsory for what we do.
 
 We need to specify where the coordinates are located in our set, and set a **CRS** or coordinate reference system information.
 
@@ -174,7 +176,7 @@ frogs_coord <-
 frogs_coord %>% head(3)
 ```
 
-As you can see the first projection points to **utm** as the type of data provided and set the zone 10. While the second transformation applies to longlat types projection on **WGS84, (World Geodetic System 1984, known as EPSG:4326)**, which express the degree of longitude and latitude starting from a particular point of view, in this case **EPSG:4326**.
+As you can see the first projection points to **utm** as the type of data provided and set the zone 10. While the second transformation applies to **longlat** types projection on **WGS84, (World Geodetic System 1984, known as EPSG:4326)**, which express the degree of longitude and latitude starting from a particular point of view, in this case **EPSG:4326**.
 
 ```{r}
 #| label: ch2-09
@@ -229,13 +231,17 @@ Bounding Box: [https://www.sciencebase.gov/catalog/item/imap/60ba5a00d34e86b9388
 
 Bounding Box[-121.824775, 43.764375, -121.764923, 43.814821]
 
-The area can be retrieved with `{OpenStreetMap}` package by Ian Fellows and visualized with a nice resolution with the `plot.OpenStreetMap()` or simply the `plot()` function. The {OpenStreetMap} has changed some requirements, a turn around is to use the \*\*MapBox\*\* API Key that can be obtained from the website by opening an account, as well as adding your bank accounts details. Below is an example, the resolution is good. Otherwise you'll might need to use another package, such as {ggmap} which provide the same background map to use with {ggplot2}.
-
-So, don't run this part in case of arising issues with {OpenStreetMap}, but jump on the next one.
-
 ```{r}
 #| label: ch2-12
 #| eval: false
+#| include: false
+#| echo: false
+
+# The area can be retrieved with `{OpenStreetMap}` package by Ian Fellows and # visualized with a nice resolution with the `plot.OpenStreetMap()` or simply # the `plot()` function. 
+# 
+# The {OpenStreetMap} has changed some requirements, a turn around is to use # the \*\*MapBox\*\* API Key that can be obtained from the website by opening # an account, as well as adding your bank accounts details. Below is an # example, the resolution is good. Otherwise you'll might need to use another # package, such as {ggmap} which provide the same background map to use with # {ggplot2}.
+# 
+# So, don't run this part in case of arising issues with {OpenStreetMap}, but # jump onto the next one.
 
 library(OpenStreetMap)
 apiKey <- paste0("?access_token=",
@@ -262,17 +268,10 @@ base_map <- OpenStreetMap::autoplot.OpenStreetMap(wider_map) +
     color = "grey40"
   ) +
   xlab("Longitude (°E)") + ylab("Latitude (°S)")
-```
-
-```{r}
-#| label: ch2-12-1
-#| echo: false
-#| out.width: "50%"
-#| fig.cap: "Crane Prairie Reservoir"
 knitr::include_graphics("images/background_map.png")
 ```
 
-In this map is made with `{ggmap}` and `{ggplot2}` for the frogs locations.
+This is how to retrieve the base map and locate the frogs; we use the `{ggmap}` and `{ggplot2}` for the frogs locations.
 
 ```{r}
 #| label: ch2-13
@@ -420,8 +419,6 @@ Packages functionality from rgeos,raster,rgdal,terra packages are included in `{
 #| message: false
 #| warning: false
 #| paged.print: false
-
-
 library(dismo)  # for modeling
 ```
 
@@ -453,7 +450,8 @@ This is a raster stack composed of 19 raster layers.
 #| cache: true
 #| eval: false
 #| include: true
-frogs <- data.frame(long = do_gbif2$longitude, lat = do_gbif2$latitude)
+frogs <- data.frame(long = do_gbif2$longitude, 
+                    lat = do_gbif2$latitude)
 climate <-
   dismo::getData("worldclim",
                  download = T,
